@@ -1,4 +1,4 @@
-# My Deep Learning Course
+# Deep Learning Course
 
 Welcome to the course.
 
