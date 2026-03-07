@@ -28,3 +28,7 @@ sphinx:
   config:
     html_theme: furo
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    html_show_sphinx: false
+    copyright: "2026, Srijit Mukherjee"
+    html_theme_options:
+      footer_icons: []
