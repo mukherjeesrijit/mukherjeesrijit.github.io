@@ -1,0 +1,31 @@
+title: "Deep Learning Course"
+author: "Srijit Mukherjee"
+logo: ""
+
+execute:
+  execute_notebooks: "off"
+
+html:
+  use_edit_page_button: false
+  use_repository_button: false
+  use_issues_button: false
+  extra_navbar: ""
+  home_page_in_navbar: true
+  baseurl: "/deep-learning"
+  comments:
+    giscus:
+      repo: "mukherjeesrijit/deep-learning"
+      repo_id: "YOUR_REPO_ID"
+      category: "Announcements"
+      category_id: "YOUR_CATEGORY_ID"
+
+repository:
+  url: https://github.com/mukherjeesrijit/deep-learning
+
+sphinx:
+  extra_extensions:
+    - sphinx_tabs.tabs
+  config:
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    html_theme_options:
+      navigation_with_keys: true
