@@ -1,4 +1,4 @@
-title: "Deep Learning Course"
+title: "Srijit Mukherjee's Blog"
 author: "Srijit Mukherjee"
 logo: ""
 
@@ -11,16 +11,16 @@ html:
   use_issues_button: false
   extra_navbar: ""
   home_page_in_navbar: true
-  baseurl: "/deep-learning"
+  baseurl: "/blog"
   comments:
     giscus:
-      repo: "mukherjeesrijit/deep-learning"
+      repo: "mukherjeesrijit/mukherjeesrijit.github.io"
       repo_id: "YOUR_REPO_ID"
       category: "Announcements"
       category_id: "YOUR_CATEGORY_ID"
 
 repository:
-  url: https://github.com/mukherjeesrijit/deep-learning
+  url: https://github.com/mukherjeesrijit/mukherjeesrijit.github.io
 
 sphinx:
   extra_extensions:
