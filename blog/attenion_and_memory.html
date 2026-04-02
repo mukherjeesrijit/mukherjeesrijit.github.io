@@ -3,11 +3,11 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="&lt;no title&gt;" href="chapter3.html" /><link rel="prev" title="Chapter 1: Tensors" href="chapter1.html" />
-        <link rel="canonical" href="/notebooks/chapter2.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+        <link rel="canonical" href="/blog/attenion_and_memory.html" />
 
     <!-- Generated with Sphinx 5.0.2 and Furo 2023.03.27 -->
-        <title>Chapter 2: Autograd, - Srijit Mukherjee&#39;s Blog</title>
+        <title>Introduction - Srijit Mukherjee&#39;s Blog</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
@@ -140,7 +140,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -160,12 +160,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="chapter1.html">Chapter 1: Tensors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapter1.html#id1">What is a Tensor?</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Chapter 2: Autograd,</a></li>
-</ul>
-
+  
 </div>
 </div>
 
@@ -192,52 +187,26 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section class="tex2jax_ignore mathjax_ignore" id="chapter-2-autograd">
-<h1>Chapter 2: Autograd,<a class="headerlink" href="#chapter-2-autograd" title="Permalink to this heading">#</a></h1>
-<section id="computational-graph">
-<h2>2.1 Computational Graph<a class="headerlink" href="#computational-graph" title="Permalink to this heading">#</a></h2>
-<p>For <span class="math notranslate nohighlight">\(y = \mathbf{w}^\top \mathbf{x}\)</span>, gradient is:</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\frac{\partial y}{\partial \mathbf{w}} = \mathbf{x}\]</div>
-</div>
+          <section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h1>
+<p>In modern AI architectures, attention is an important architectural component for feature extraction. Every input signal <span class="math notranslate nohighlight">\(x\)</span> is first represented a sequence of exhaustive of <span class="math notranslate nohighlight">\(n\)</span> tokens <span class="math notranslate nohighlight">\([x_1, x_2, \cdots, x_n]\)</span> (row-wise like numpy/pytorch), where <span class="math notranslate nohighlight">\(x_i \in \mathbb{R}^d\)</span> encodes both the signal and positional information of the token <span class="math notranslate nohighlight">\(i\)</span>. This makes <span class="math notranslate nohighlight">\(x\)</span> a matrix of dimension <span class="math notranslate nohighlight">\((n,d)\)</span>.</p>
 </section>
-<section id="version-counter">
-<h2>2.2 Version Counter<a class="headerlink" href="#version-counter" title="Permalink to this heading">#</a></h2>
-<p>Every tensor has <code class="docutils literal notranslate"><span class="pre">_version</span></code>. Inplace ops increment it.
-If autograd saved the tensor before the inplace op → error on backward.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;version before inplace:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_version</span><span class="p">)</span>
-
-<span class="c1"># Safe: x not saved for backward by y</span>
-<span class="c1"># Unsafe: inplace on tensor saved for grad</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
-    <span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># safe: .data bypasses autograd</span>
-    <span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;grad:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<section class="tex2jax_ignore mathjax_ignore" id="cross-attention">
+<h1>Cross-Attention<a class="headerlink" href="#cross-attention" title="Permalink to this heading">#</a></h1>
+<p>Self-attention is a special case of cross-attention. Let’s say we have two signals <span class="math notranslate nohighlight">\(x = [x_1, x_2, \cdots, x_n]\)</span> and <span class="math notranslate nohighlight">\(y = [y_1, y_2, \cdots, y_m]\)</span>. Then, cross-attention is a process to</p>
 </section>
-<section id="exercise">
-<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
-<p>Replace <code class="docutils literal notranslate"><span class="pre">x.data.add_(1)</span></code> with <code class="docutils literal notranslate"><span class="pre">x.add_(1)</span></code>. What happens and why?</p>
-</section>
+<section class="tex2jax_ignore mathjax_ignore" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<p>[1] Understanding Transformer from the Perspective of Associative Memory <a class="reference external" href="https://arxiv.org/pdf/2505.19488v1">https://arxiv.org/pdf/2505.19488v1</a></p>
+<p>[2] Data-driven emergence of convolutional structure in neural networks <a class="reference external" href="https://arxiv.org/pdf/2202.00565">https://arxiv.org/pdf/2202.00565</a></p>
+<p>[3] Dense Associative Memory for Pattern Recognition <a class="reference external" href="https://arxiv.org/pdf/1606.01164">https://arxiv.org/pdf/1606.01164</a></p>
+<p>[4] Convolutional Neural Associative Memories: Massive Capacity with Noise Tolerance <a class="reference external" href="https://arxiv.org/pdf/1407.6513">https://arxiv.org/pdf/1407.6513</a></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -253,7 +222,7 @@ If autograd saved the tensor before the inplace op → error on backward.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./notebooks"
+            path: "./blog"
         },
         predefinedOutput: true
     }
@@ -264,26 +233,8 @@ If autograd saved the tensor before the inplace op → error on backward.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="chapter3.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">&lt;no title&gt;</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="chapter1.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Chapter 1: Tensors</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -301,29 +252,8 @@ If autograd saved the tensor before the inplace op → error on backward.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Chapter 2: Autograd,</a><ul>
-<li><a class="reference internal" href="#computational-graph">2.1 Computational Graph</a></li>
-<li><a class="reference internal" href="#version-counter">2.2 Version Counter</a></li>
-<li><a class="reference internal" href="#exercise">Exercise</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

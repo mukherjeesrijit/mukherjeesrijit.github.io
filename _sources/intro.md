@@ -8,4 +8,4 @@ Welcome to the course.
 - Autograd internals
 - Memory-efficient training
 
-Get started with {doc}`notebooks/chapter1`.
+Get started with {doc}`blog/attention_and_memory`.
