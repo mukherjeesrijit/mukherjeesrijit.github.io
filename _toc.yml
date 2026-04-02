@@ -1,7 +1,4 @@
 format: jb-book
 root: intro
 chapters:
-  - file: notebooks/chapter1
-  - file: notebooks/chapter2
-  - file: notebooks/chapter3
-  - file: notebooks/tensors_images
+  - file: blog/attention_and_memory
