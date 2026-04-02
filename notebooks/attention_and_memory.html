@@ -140,7 +140,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -162,7 +162,6 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#cross-attention">Cross-Attention</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#references">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attention_and_memory%20copy.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attention_and_memory%20copy.html#cross-attention">Cross-Attention</a></li>
@@ -195,7 +194,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -204,10 +203,10 @@
           <section class="tex2jax_ignore mathjax_ignore" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h1>
 <p>In modern AI architectures, attention is an important architectural component for feature extraction. Every input signal <span class="math notranslate nohighlight">\(x\)</span> is first represented a sequence of exhaustive of <span class="math notranslate nohighlight">\(n\)</span> tokens <span class="math notranslate nohighlight">\([x_1, x_2, \cdots, x_n]\)</span> (row-wise like numpy/pytorch), where <span class="math notranslate nohighlight">\(x_i \in \mathbb{R}^d\)</span> encodes both the signal and positional information of the token <span class="math notranslate nohighlight">\(i\)</span>. This makes <span class="math notranslate nohighlight">\(x\)</span> a matrix of dimension <span class="math notranslate nohighlight">\((n,d)\)</span>.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="cross-attention">
-<h1>Cross-Attention<a class="headerlink" href="#cross-attention" title="Permalink to this heading">#</a></h1>
+<section id="cross-attention">
+<h2>Cross-Attention<a class="headerlink" href="#cross-attention" title="Permalink to this heading">#</a></h2>
 <p>Self-attention is a special case of cross-attention. Let’s say we have two signals <span class="math notranslate nohighlight">\(x = [x_1, x_2, \cdots, x_n]\)</span> and <span class="math notranslate nohighlight">\(y = [y_1, y_2, \cdots, y_m]\)</span>. Then, cross-attention is a process to</p>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
@@ -278,8 +277,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#cross-attention">Cross-Attention</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
