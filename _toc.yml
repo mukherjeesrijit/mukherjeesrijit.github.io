@@ -1,4 +1,4 @@
 format: jb-book
 root: intro
 chapters:
-  - file: blog/attention_and_memory
+  - file: notebooks/attention_and_memory
