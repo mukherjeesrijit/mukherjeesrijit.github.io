@@ -30,6 +30,9 @@ footer:
     - type: github
       name: GitHub
       link: http://github.com/mukherjeesrijit
+    - type: youtube
+      name: YouTube
+      link: https://www.youtube.com/@mukherjeesrijit
 
 # Build settings
 markdown: kramdown
