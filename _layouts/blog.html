@@ -11,18 +11,20 @@
           <h1 class="page-heading">{{ page.title }}</h1>
           {{ content }}
 
-          <input
-            type="text"
-            id="tag-search"
-            placeholder="Search tags..."
-            onkeyup="filterTags(this.value)"
-            autocomplete="off"
-          />
-          <div id="tag-dropdown">
-            <div class="tag-option" onclick="selectTag('all')">All</div>
-            <div class="tag-option" onclick="selectTag('research')">Research</div>
-            <div class="tag-option" onclick="selectTag('notes')">Notes</div>
-            <div class="tag-option" onclick="selectTag('personal')">Personal</div>
+          <div id="tag-search-container">
+            <input
+              type="text"
+              id="tag-search"
+              placeholder="Search tags..."
+              onkeyup="filterTags(this.value)"
+              autocomplete="off"
+            />
+            <div id="tag-dropdown">
+              <div class="tag-option" onclick="selectTag('all')">All</div>
+              <div class="tag-option" onclick="selectTag('research')">Research</div>
+              <div class="tag-option" onclick="selectTag('notes')">Notes</div>
+              <div class="tag-option" onclick="selectTag('personal')">Personal</div>
+            </div>
           </div>
 
           <div id="posts-container">
@@ -46,28 +48,35 @@
     {% include foot.html %}
 
     <style>
+      #tag-search-container {
+        position: relative;
+        margin-bottom: 16px;
+      }
       #tag-search {
         width: 100%;
         padding: 8px;
-        margin-bottom: 16px;
         box-sizing: border-box;
         border: 1px solid #ccc;
         border-radius: 4px;
-        font-size: 14px;
+        font-size: 16px;
       }
       #tag-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
         border: 1px solid #ccc;
         border-radius: 4px;
         display: none;
         max-height: 160px;
         overflow-y: auto;
         background: white;
-        margin-bottom: 16px;
+        z-index: 100;
       }
       .tag-option {
         padding: 8px 12px;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 16px;
       }
       .tag-option:hover {
         background: #f0f0f0;
@@ -121,7 +130,6 @@
         });
       }
 
-      // default: show all
       selectTag('all');
     </script>
 
