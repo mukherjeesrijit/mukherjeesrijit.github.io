@@ -8,6 +8,21 @@
     <div class="page-content">
       <div class="wrapper">
         <div class="home">
+          <style>
+            .profile-pic {
+              float: right;
+              margin-left: 20px;
+            }
+
+            @media (max-width: 600px) {
+              .profile-pic {
+                float: none;
+                display: block;
+                margin: 0 auto 20px auto;
+              }
+            }
+          </style>
+
           <img
             src="{{ page.profile_picture.src | absolute_url }}"
             alt="{{ page.profile_picture.alt }}"
