@@ -13,6 +13,7 @@ header:
     - name: Home
       slug: /
     - name: Blog
+    - name: Teaching
 
 footer:
   show_powered_by: false
