@@ -1,0 +1,52 @@
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+title: Srijit Mukherjee
+description: Srijit Mukherjee's personal website.
+baseurl: ""
+url: "https://mukherjeesrijit.github.io"
+og_image: /assets/img/profile-pic.jpg
+google_analytics: "UA-121636368-3"
+
+header:
+  pages:
+    - name: Home
+      slug: /
+    - name: Blog
+
+footer:
+  show_powered_by: false
+  contact:
+    - type: email
+      name: Email
+      value: szm6596@psu.edu
+  follow:
+    - type: linkedin
+      name: LinkedIn
+      link: https://www.linkedin.com/in/srijit-mukherjee/
+    - type: github
+      name: GitHub
+      link: http://github.com/mukherjeesrijit
+
+# Build settings
+markdown: kramdown
+sass:
+    style: :compressed
+plugins:
+  - jekyll-feed
+
+# Excluded items
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - feed.xml
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Used for defeating caching
+version: 1
