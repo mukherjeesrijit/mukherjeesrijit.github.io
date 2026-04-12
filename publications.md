@@ -1,7 +1,7 @@
 ---
 layout: work
-title: Teaching
-slug: /teaching
+title: Pulications
+slug: /publications
 items:
   - title: GLAPAL-H: Global, Local And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI
     link: https://ieeexplore.ieee.org/document/11029195/
