@@ -21,7 +21,7 @@ footer:
   show_powered_by: false
   contact:
     - type: email
-      name: Email
+      name: szm6596@psu.edu
       value: szm6596@psu.edu
   follow:
     - type: linkedin
