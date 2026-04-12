@@ -13,8 +13,8 @@
 
           <h2 class="category-heading">Research</h2>
           <p class="blog-post-list">
-            {% for post in site.tags.research %}
-              {% if post.draft != true %}
+            {% for post in site.posts %}
+              {% if post.draft != true and post.tags contains 'research' %}
                 <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
                 <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
                   {{- post.title -}}
@@ -28,8 +28,8 @@
 
           <h2 class="category-heading">Notes</h2>
           <p class="blog-post-list">
-            {% for post in site.tags.notes %}
-              {% if post.draft != true %}
+            {% for post in site.posts %}
+              {% if post.draft != true and post.tags contains 'notes' %}
                 <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
                 <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
                   {{- post.title -}}
@@ -43,8 +43,8 @@
 
           <h2 class="category-heading">Personal</h2>
           <p class="blog-post-list">
-            {% for post in site.tags.personal %}
-              {% if post.draft != true %}
+            {% for post in site.posts %}
+              {% if post.draft != true and post.tags contains 'personal' %}
                 <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
                 <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
                   {{- post.title -}}
