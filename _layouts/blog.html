@@ -1,41 +1,64 @@
-<div class="blog">
-  <h1 class="page-heading">{{ page.title }}</h1>
-  {{ content }}
+<!DOCTYPE html>
+<html>
+  {% include head.html %}
 
-  <h2 class="category-heading">Research</h2>
-  <p class="blog-post-list">
-    {% for post in site.tags.research %}
-      {% if post.draft != true %}
-        <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
-        <a href="{{ post.url | relative_url }}" class="blog-post-title">{{ post.title }}</a>
-        <br />
-      {% endif %}
-    {% endfor %}
-  </p>
+  <body>
+    {% include header.html %}
 
-  <hr>
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="blog">
+          <h1 class="page-heading">{{ page.title }}</h1>
+          {{ content }}
 
-  <h2 class="category-heading">Notes</h2>
-  <p class="blog-post-list">
-    {% for post in site.tags.notes %}
-      {% if post.draft != true %}
-        <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
-        <a href="{{ post.url | relative_url }}" class="blog-post-title">{{ post.title }}</a>
-        <br />
-      {% endif %}
-    {% endfor %}
-  </p>
+          <h2 class="category-heading">Research</h2>
+          <p class="blog-post-list">
+            {% for post in site.tags.research %}
+              {% if post.draft != true %}
+                <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
+                <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
+                  {{- post.title -}}
+                </a>
+                <br />
+              {% endif %}
+            {% endfor %}
+          </p>
 
-  <hr>
+          <hr>
 
-  <h2 class="category-heading">Personal</h2>
-  <p class="blog-post-list">
-    {% for post in site.tags.personal %}
-      {% if post.draft != true %}
-        <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
-        <a href="{{ post.url | relative_url }}" class="blog-post-title">{{ post.title }}</a>
-        <br />
-      {% endif %}
-    {% endfor %}
-  </p>
-</div>
+          <h2 class="category-heading">Notes</h2>
+          <p class="blog-post-list">
+            {% for post in site.tags.notes %}
+              {% if post.draft != true %}
+                <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
+                <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
+                  {{- post.title -}}
+                </a>
+                <br />
+              {% endif %}
+            {% endfor %}
+          </p>
+
+          <hr>
+
+          <h2 class="category-heading">Personal</h2>
+          <p class="blog-post-list">
+            {% for post in site.tags.personal %}
+              {% if post.draft != true %}
+                <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
+                <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
+                  {{- post.title -}}
+                </a>
+                <br />
+              {% endif %}
+            {% endfor %}
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    {% include footer.html %}
+    {% include foot.html %}
+  </body>
+</html>
