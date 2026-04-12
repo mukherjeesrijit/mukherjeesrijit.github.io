@@ -12,8 +12,10 @@ header:
   pages:
     - name: Home
       slug: /
-    - name: Blog
+    - name: Publications
     - name: Teaching
+    - name: Blog
+
 
 footer:
   show_powered_by: false
