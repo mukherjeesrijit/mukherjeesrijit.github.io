@@ -3,7 +3,7 @@ layout: work
 title: Teaching
 slug: /teaching
 items:
-  - title: Deep Neural Networks
+  - title: "Deep Neural Networks"
     link: https://youtube.com/playlist?list=PLYXB138yx3ir49HzwMB4hNEVyO-KIYs-f&si=TEs99wENWLp4OHcI 
     image:
       src: /assets/img/teaching/dnn.png
