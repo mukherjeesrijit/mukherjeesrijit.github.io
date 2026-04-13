@@ -6,7 +6,9 @@ tags: [research]
 blurb: "This is my personal notes of selected papers of MICCAI 2025, that aligns with my research taste."
 og_image: 
 ---
-
+git add . 
+git commit -m "research update"
+git push -u origin main -f 
 $x^2$
 \(x^2\)
 $$x^2$$
