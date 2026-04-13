@@ -22,3 +22,19 @@ og_image:
 ![Figure 2](path/to/image2.png)
 
 </details>
+
+<details>
+<summary><strong>A Curvature-Guided Diffeomorphic Mesh Deformation Framework for Lifespan Brain Cortical Surface Reconstruction</strong></summary>
+
+<br>
+
+- Task:
+- Gap:
+
+- Core insight:
+
+### 🖼️ Figures
+![Figure 1](path/to/image1.png)
+![Figure 2](path/to/image2.png)
+
+</details>
