@@ -5,12 +5,13 @@ profile_picture:
   alt: website picture
 ---
 
-**PhD Candidate** [EECS Department, Pennsylvania State University](https://www.eecs.psu.edu/) \\
+**PhD Candidate**": [EECS Department, Pennsylvania State University](https://www.eecs.psu.edu/) \\
 *Group*: [Information Processing & Algorithms Laboratory](https://signal.ee.psu.edu/) \\
-*Advisors*: [Dr. Vishal Monga (Penn State)](https://signal.ee.psu.edu/index.html), [Dr. Steven Schiff (Yale)](https://medicine.yale.edu/profile/steven-schiff/)
+*Advisors*: [Dr. Vishal Monga (Penn State)](https://signal.ee.psu.edu/index.html), [Dr. Steven Schiff (Yale)](https://medicine.yale.edu/profile/steven-schiff/) \\
+*Research Interests*: Computer Vision, Biomedical Signals, Interpretability
 
 <p>
-  Hey |ʘ‿ʘ)╯, I'm Srijit — a Ph.D. candidate in EECS at Penn State. I build domain-enriched, ante-hoc interpretable machine learning algorithms for biomedical image analysis, in collaboration with clinicians at Harvard and Yale. My work focuses on computational algorithms for neonatal hydrocephalus diagnosis from low-SNR imagery such as low-field MRI. By embedding disease etiology and modality priors directly into model architecture, my methods are interpretable, robust, and achieve state-of-the-art performance even under imperfect, data-limited clinical conditions.
+  Hey |ʘ‿ʘ)╯, I'm Srijit - a 4th year Ph.D. candidate in EECS at Penn State. I build domain-enriched, ante-hoc interpretable machine learning algorithms for biomedical image analysis, in collaboration with clinicians at Harvard and Yale. My work focuses on computational algorithms for neonatal hydrocephalus diagnosis from low-SNR imagery such as low-field MRI. By embedding disease etiology and modality priors directly into model architecture, my methods are interpretable, robust, and achieve state-of-the-art performance even under imperfect, data-limited clinical conditions.
 </p>
 
 <center>
