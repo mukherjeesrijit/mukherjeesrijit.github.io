@@ -11,7 +11,7 @@ profile_picture:
 *Research Interests*: Computer Vision, Biomedical Imaging, Interpretability
 
 <p>
-**Research Overview**: I build domain-enriched, ante-hoc interpretable ML algorithms for biomedical image analysis, collaborating with clinicians at Harvard and Yale. My work targets neonatal hydrocephalus diagnosis from low-SNR clinical imagery (low-field MRI), embedding disease etiology and modality priors directly into model architecture — yielding interpretable, robust, state-of-the-art performance, especially in scarce, noisy, imperfect real-world clinical settings.
+I build domain-enriched, ante-hoc interpretable ML algorithms for biomedical image analysis, collaborating with clinicians at Harvard and Yale. My work targets neonatal hydrocephalus diagnosis from low-SNR clinical imagery (low-field MRI), embedding disease etiology and modality priors directly into model architecture — yielding interpretable, robust, state-of-the-art performance, especially in scarce, noisy, imperfect real-world clinical settings.
 </p>
 
 
