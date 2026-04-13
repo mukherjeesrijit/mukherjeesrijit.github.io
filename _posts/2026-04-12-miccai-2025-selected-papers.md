@@ -8,7 +8,7 @@ og_image:
 ---
 
 <details>
-<summary><strong>A Curvature-Guided Diffeomorphic Mesh Deformation Framework for Lifespan Brain Cortical Surface Reconstruction</strong></summary>
+<summary><strong>Wang, Jinfeng, et al. "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition." MICCAI, 2025.</strong></summary>
 
 <br>
 
@@ -26,7 +26,7 @@ og_image:
 --- 
 
 <details>
-<summary><strong>A Curvature-Guided Diffeomorphic Mesh Deformation Framework for Lifespan Brain Cortical Surface Reconstruction</strong></summary>
+<summary><strong>Teng, Lin, et al. "A Curvature-Guided Diffeomorphic Mesh Deformation Framework for Lifespan Brain Cortical Surface Reconstruction." MICCAI, 2025.</strong></summary>
 
 <br>
 
