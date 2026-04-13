@@ -17,6 +17,6 @@ items:
     description: This course teaches LLMs from first principles across 7 lessons — covering the mathematics of language and transformers, the deep learning training process, and building a small GPT from scratch, culminating in prompt engineering and a 3-hour LLM overview. This is dedicated to Andrej Karpathy, whose teachings have shaped my fundamentals.
 ---
 
-This is an example of a "Work" page, displaying your work, your interests, your projects.
+“I don’t believe I can really do without teaching. The reason is, I have to have something so that when I don’t have any ideas and I’m not getting anywhere I can say to myself, ‘At least I’m living; at least I’m doing something; I am making some contribution’ — it’s just psychological." ~ Richard Feynman.
 <br />
 <br />
