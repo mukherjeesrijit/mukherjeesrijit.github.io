@@ -2,7 +2,7 @@
 layout: post
 title: "GLAPAL-H"
 date: 2026-04-12 11:00:00
-tags: [research, notes]
+tags: [research]
 blurb: "GLAPAL-H: Global, Local And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI"
 og_image: /assets/img/content/post-example/Banner.jpg
 ---
