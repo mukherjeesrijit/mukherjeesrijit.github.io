@@ -5,13 +5,13 @@ profile_picture:
   alt: website picture
 ---
 
-**PhD Candidate**": 4th yr, [EECS Department, Pennsylvania State University](https://www.eecs.psu.edu/) \\
+**PhD Candidate**: 4th year, [EECS Department, Pennsylvania State University](https://www.eecs.psu.edu/) \\
 *Group*: [Information Processing & Algorithms Laboratory](https://signal.ee.psu.edu/) \\
 *Advisors*: [Dr. Vishal Monga (Penn State)](https://signal.ee.psu.edu/index.html), [Dr. Steven Schiff (Yale)](https://medicine.yale.edu/profile/steven-schiff/) \\
-*Research Interests*: Computer Vision, Biomedical Signals, Interpretability
+*Research Interests*: Computer Vision, Biomedical Imaging, Interpretability
 
 <p>
-  I build domain-enriched, ante-hoc interpretable machine learning algorithms for biomedical image analysis, in collaboration with clinicians at Harvard and Yale. My work focuses on computational algorithms for neonatal hydrocephalus diagnosis from low-SNR imagery such as low-field MRI. By embedding disease etiology and modality priors directly into model architecture, my methods are interpretable, robust, and achieve state-of-the-art performance especially under imperfect, data-limited clinical conditions.
+I build domain-enriched, ante-hoc interpretable ML algorithms for biomedical image analysis, collaborating with clinicians at Harvard and Yale. My work targets neonatal hydrocephalus diagnosis from low-SNR clinical imagery (low-field MRI), embedding disease etiology and modality priors directly into model architecture — yielding interpretable, robust, state-of-the-art solutions in scarce, noisy, imperfect real-world clinical settings.
 </p>
 
 <center>
