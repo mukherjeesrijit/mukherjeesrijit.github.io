@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Post example"
-date: 2019-10-26 10:00:40
+title: "GLAPAL-H"
+date: 2026-04-12 11:00:00
 tags: [research, notes]
-blurb: "A look at an example post using Bay Jekyll theme."
+blurb: "GLAPAL-H: Global, Local And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI"
 og_image: /assets/img/content/post-example/Banner.jpg
 ---
 
