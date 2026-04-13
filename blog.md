@@ -4,5 +4,5 @@ title: Blog
 slug: /blog
 ---
 
-This is an example of a "Blog" page, displaying a list of posts.
+When historian Charles Weiner looked over a pile of Richard Feynman’s notebooks, he called them a wonderful ‘record of his day-to-day work’. “No, no!”, Feynman objected strongly. “They aren’t a record of my thinking process. They are my thinking process. I actually did the work on the paper.”. So “I write because I don't know what I think until I read what I say.” as Flannery O'Connor said. 
 <br />
