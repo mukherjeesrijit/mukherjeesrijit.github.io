@@ -5,12 +5,12 @@ profile_picture:
   alt: website picture
 ---
 
-**PhD Candidate** • [Penn State: Electrical Engineering and Computer Science](https://www.eecs.psu.edu/) \\
+**PhD Candidate** [EECS Department, Pennsylvania State University](https://www.eecs.psu.edu/) \\
 *Group*: [Information Processing & Algorithms Laboratory](https://signal.ee.psu.edu/) \\
-*Advisors*: [Dr. Vishal Monga, Penn State](https://signal.ee.psu.edu/index.html), [Dr. Steven Schiff, Yale](https://medicine.yale.edu/profile/steven-schiff/)
+*Advisors*: [Dr. Vishal Monga (Penn State)](https://signal.ee.psu.edu/index.html), [Dr. Steven Schiff (Yale)](https://medicine.yale.edu/profile/steven-schiff/)
 
 <p>
-  Hey |ʘ‿ʘ)╯, I’m Srijit, a 4th-year PhD student in the Department of EECS at Penn State, collaborating with doctors and biomedical engineers at Harvard and Yale to develop interpretable AI systems for biomedical imaging and disease detection. I completed my undergraduate and graduate studies in Statistics at the Indian Statistical Institute, Kolkata. My research lies in engineering domain-enriched, interpretable AI systems, embedding expert knowledge directly into model design. This not only enhances accuracy but also creates robust, low-data, and explainable AI solutions that bridge the gap between algorithms and real-world science.
+  Hey |ʘ‿ʘ)╯, I'm Srijit — a Ph.D. candidate in EECS at Penn State. I build domain-enriched, ante-hoc interpretable machine learning algorithms for biomedical image analysis, in collaboration with clinicians at Harvard and Yale. My work focuses on computational algorithms for neonatal hydrocephalus diagnosis from low-SNR imagery such as low-field MRI. By embedding disease etiology and modality priors directly into model architecture, my methods are interpretable, robust, and achieve state-of-the-art performance even under imperfect, data-limited clinical conditions.
 </p>
 
 <center>
