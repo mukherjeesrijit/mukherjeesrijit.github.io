@@ -8,6 +8,9 @@ og_image:
 ---
 
 $x^2$
+\(x^2\)
+$$x^2$$
+\[x^2\]
 
 <details>
 <summary><strong>Wang, Jinfeng, et al. "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition." MICCAI, 2025.</strong></summary>
