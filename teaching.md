@@ -8,13 +8,13 @@ items:
     image:
       src: /assets/img/teaching/dnn.png
       alt: dnn
-    description: This course teaches you deep neural networks from scratch. It starts with Linear Regression and Logistic Regression as foundations to the simplest possible deep learning model. I then gradually build shallow neural networks to deep neural networks. This is followed by gradients calculation, optimization by gradient descent, back propagation using Numpy. Finally other optimization techniques and entire deep learning training procedure is  explained with PyTorch.
+    description: This course builds deep neural networks from scratch - starting from Linear and Logistic Regression, progressing through shallow to deep architectures, covering gradient computation, backpropagation, and optimization via NumPy, and culminating in the full deep learning training pipeline in PyTorch.
   - title: Large Language Models
     link: https://youtube.com/playlist?list=PLYXB138yx3ipYS-NlSrBmTO3rUKn4DWpt&si=hDlMr1AeRy7Nb_eR
     image:
       src: /assets/img/teaching/llm.png
       alt: llm
-    description: I have built this free LLM Course for you! I started from the basics of "What is the Mathematics of Language?". I am happy that people found a lot of help in this. I dedicate each aspect of this course to Andrej Karpathy 🙏 - from whom I have learned the fundamentals. Will keep on adding more! 😊
+    description: This course teaches LLMs from first principles across 7 lessons — covering the mathematics of language and transformers, the deep learning training process, and building a small GPT from scratch, culminating in prompt engineering and a 3-hour LLM overview. This is dedicated to Andrej Karpathy, whose teachings have shaped my fundamentals.
 ---
 
 This is an example of a "Work" page, displaying your work, your interests, your projects.
