@@ -1,4 +1,4 @@
-{% assign c = site.data.citations[include.id] %}
+{% assign c = site.data.citation[include.id] %}
 
 {% assign title = c | split: "title={" | last | split: "}" | first %}
 {% assign author = c | split: "author={" | last | split: "}" | first %}
