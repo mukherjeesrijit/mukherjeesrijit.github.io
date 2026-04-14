@@ -49,7 +49,9 @@
     {% include footer.html %}
     {% include foot.html %}
 
+    <!-- ========================= -->
     <!-- DETAILS POPUP -->
+    <!-- ========================= -->
     <div id="details-overlay"
          onclick="closeDetailsPopup()"
          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:999;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;">
@@ -69,12 +71,9 @@
     </div>
 
     <!-- ========================= -->
-    <!-- JAVASCRIPT ENGINE -->
+    <!-- DETAILS POPUP HANDLER -->
     <!-- ========================= -->
     <script>
-      /***************************************************
-       * DETAILS POPUP + LOCAL BIBLIOGRAPHY
-       ***************************************************/
       document.querySelectorAll('details').forEach(el => {
         el.addEventListener('click', function(e) {
           e.preventDefault();
@@ -85,7 +84,6 @@
           const body = el.cloneNode(true);
           body.querySelector('summary')?.remove();
 
-          // attach local bibliography
           const citations = el._citations || [];
 
           if (citations.length > 0) {
@@ -98,7 +96,7 @@
             citeBox.innerHTML =
               `<strong>References</strong><br>` +
               citations
-                .sort((a, b) => a.n - b.n)
+                .sort((a,b) => a.n - b.n)
                 .map(c =>
                   `${c.first} et al., ${c.title}, ${c.journal}, ${c.year}`
                 )
@@ -123,20 +121,25 @@
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeDetailsPopup();
       });
+    </script>
 
-      /***************************************************
-       * CITATION SYSTEM
-       ***************************************************/
-      (function() {
-        const refs = document.querySelectorAll('cite-ref');
+    <!-- ========================= -->
+    <!-- CITATION ENGINE (FIXED) -->
+    <!-- ========================= -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+
+        const refs = Array.from(document.querySelectorAll('cite-ref'));
         const registry = [];
+        const idToIndex = new Map();
 
+        /***********************
+         * PHASE 1: BUILD REGISTRY
+         ***********************/
         refs.forEach(el => {
           const id = el.getAttribute('data-id');
 
-          let idx = registry.findIndex(r => r.id === id);
-
-          if (idx === -1) {
+          if (!idToIndex.has(id)) {
             const bib = el.getAttribute('data-bib');
 
             const title   = (bib.match(/title=\{([^}]+)\}/)   || [])[1] || '';
@@ -147,38 +150,46 @@
             const first = author.split(' and ')[0].split(',')[0].trim();
 
             registry.push({ id, title, journal, year, first });
-            idx = registry.length - 1;
+            idToIndex.set(id, registry.length); // 1-based
           }
+        });
 
-          const n = idx + 1;
+        /***********************
+         * PHASE 2: RENDER CITATIONS
+         ***********************/
+        refs.forEach(el => {
+          const id = el.getAttribute('data-id');
+          const n = idToIndex.get(id);
 
-          // replace cite-ref with superscript number
           const sup = document.createElement('sup');
-          sup.innerHTML = `<a href="#ref-${id}" id="cite-${id}">[${n}]</a>`;
+          sup.innerHTML = `<a href="#ref-${id}">[${n}]</a>`;
+
+          const parentDetails = el.closest('details');
+
           el.replaceWith(sup);
 
-          /********************************************
-           * STORE PER-DETAILS CITATIONS (FULL DATA)
-           ********************************************/
-          const parentDetails = sup.closest('details');
-
+          /***********************
+           * STORE PER-DETAILS DATA
+           ***********************/
           if (parentDetails) {
             if (!parentDetails._citations) parentDetails._citations = [];
 
+            const entry = registry[n - 1];
+
             parentDetails._citations.push({
               n,
-              id,
-              first,
-              title,
-              journal,
-              year
+              id: entry.id,
+              first: entry.first,
+              title: entry.title,
+              journal: entry.journal,
+              year: entry.year
             });
           }
         });
 
-        /***************************************************
-         * GLOBAL REFERENCES LIST
-         ***************************************************/
+        /***********************
+         * PHASE 3: GLOBAL REFERENCES
+         ***********************/
         const refDiv = document.getElementById('references-list');
 
         if (refDiv && registry.length) {
@@ -194,7 +205,8 @@
             ).join('') +
             '</ol>';
         }
-      })();
+
+      });
     </script>
 
   </body>
