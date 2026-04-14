@@ -57,7 +57,6 @@
         const tempRegistry = [];
 
         citeRefs.forEach(el => {
-          // Handle multiple IDs like "id1, id2"
           const rawIds = el.getAttribute('data-id') || "";
           const ids = rawIds.split(',').map(s => s.trim()).filter(s => s !== "");
           const bib = el.getAttribute('data-bib') || "";
@@ -66,10 +65,18 @@
             let idx = tempRegistry.findIndex(r => r.id === id);
 
             if (idx === -1) {
-              const title   = (bib.match(new RegExp(`@.*?{${id},[\\s\\S]*?title\\s*=\\s*{([^}]+)}`, "i")) || bib.match(/title\s*=\s*\{([^}]+)\}/i) || [])[1] || 'No Title';
-              const author  = (bib.match(new RegExp(`@.*?{${id},[\\s\\S]*?author\\s*=\\s*{([^}]+)}`, "i")) || bib.match(/author\s*=\s*\{([^}]+)\}/i) || [])[1] || 'Unknown';
-              const journal = (bib.match(new RegExp(`@.*?{${id},[\\s\\S]*?journal\\s*=\\s*{([^}]+)}`, "i")) || bib.match(/journal\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
-              const year    = (bib.match(new RegExp(`@.*?{${id},[\\s\\S]*?year\\s*=\\s*{([^}]+)}`, "i")) || bib.match(/year\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
+              // HYBRID PARSING: Try specific ID search, then fallback to general search
+              const getField = (field) => {
+                const specificMatch = bib.match(new RegExp(`@.*?{${id},[\\s\\S]*?${field}\\s*=\\s*{([^}]+)}`, "i"));
+                if (specificMatch) return specificMatch[1];
+                const generalMatch = bib.match(new RegExp(`${field}\\s*=\\s*\\{([^}]+)\\}`, "i"));
+                return generalMatch ? generalMatch[1] : null;
+              };
+
+              const title   = getField('title') || 'No Title';
+              const author  = getField('author') || 'Unknown';
+              const journal = getField('journal') || '';
+              const year    = getField('year') || '';
               const firstAuthor = author.split(' and ')[0].split(',')[0].trim();
 
               tempRegistry.push({ id, title, journal, year, firstAuthor });
@@ -112,7 +119,6 @@
 
       function buildPopupReferences(container) {
         const links = container.querySelectorAll('.internal-cite');
-        // Prevent clicking citations inside popup from jumping the main page
         links.forEach(l => l.onclick = (e) => e.preventDefault());
 
         const uniqueIds = [...new Set(Array.from(links).map(l => l.getAttribute('data-ref-id')))];
