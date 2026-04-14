@@ -15,7 +15,6 @@ Citations:
 {% include cite.html id="mandell2015volumetric" %}
 
 {% include research-notes/dong2024fan.html %}
-
 <details>
 <summary><strong>Wang, Jinfeng, et al. "A novel Fourier Adjacency Transformer for advanced EEG emotion recognition." MICCAI, 2025.
 </strong></summary>

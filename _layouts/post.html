@@ -11,13 +11,23 @@
 
           <header class="post-header">
             {% if page.draft %}{% include draft-banner.html %}{% endif %}
+
             <h1 class="post-title">
-              {{ page.headline_formatted_title | default: page.title | newline_to_br }}
+              {% if page.headline_formatted_title %}
+                {{ page.headline_formatted_title | newline_to_br }}
+              {% else %}
+                {{ page.title }}
+              {% endif %}
             </h1>
-            {% if page.subtitle %}<h1 class="post-subtitle">{{ page.subtitle }}</h1>{% endif %}
+
+            {% if page.subtitle %}
+              <h1 class="post-subtitle">{{ page.subtitle }}</h1>
+            {% endif %}
+
             <p class="post-meta">
               <span class="post-date">{{ page.date | date: "%B %-d, %Y" }}</span>
               {% if page.author %} • {{ page.author }}{% endif %}
+              {% if page.meta %} • {{ page.meta }}{% endif %}
             </p>
           </header>
 
@@ -26,6 +36,9 @@
           </article>
 
           <div id="references-list"></div>
+
+          {% if page.draft %}{% include draft-banner.html %}{% endif %}
+
         </div>
       </div>
     </div>
@@ -33,23 +46,43 @@
     {% include footer.html %}
     {% include foot.html %}
 
-    <div id="details-overlay" onclick="closeDetailsPopup()"
-         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:999;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;">
+    <div id="details-overlay"
+         onclick="closeDetailsPopup()"
+         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);
+                z-index:999;align-items:flex-start;justify-content:center;
+                padding:40px 16px;overflow-y:auto;">
+
       <div onclick="event.stopPropagation()"
-           style="background:#fff;border:0.5px solid #ddd;border-radius:12px;width:min(720px,100%);margin:auto;overflow:hidden;color:inherit;">
-        <div style="display:flex;align-items:flex-start;gap:10px;padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
-          <div id="details-popup-title" style="flex:1;font-weight:600;line-height:1.55;"></div>
-          <button onclick="closeDetailsPopup()" style="background:none;border:none;cursor:pointer;font-size:18px;color:#888;">✕</button>
+           style="background:#fff;border:0.5px solid #ddd;border-radius:12px;
+                  width:min(720px,100%);margin:auto;overflow:hidden;color:inherit;">
+
+        <div style="display:flex;align-items:flex-start;gap:10px;
+                    padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
+          <div id="details-popup-title"
+               style="flex:1;font-weight:600;line-height:1.55;"></div>
+          <button onclick="closeDetailsPopup()"
+                  style="background:none;border:none;cursor:pointer;font-size:18px;color:#888;padding:0;line-height:1;">
+            ✕
+          </button>
         </div>
-        <div id="details-popup-body" style="padding:1rem 1.1rem; line-height:1.8; margin-top:-2.75rem;"></div>
-        <div id="popup-references-container" style="display:none; padding:1rem 1.1rem; border-top:0.5px solid #eee;">
+
+        <div id="details-popup-body"
+             style="padding:1rem 1.1rem; line-height:1.8; margin-top:-2.75rem;">
+        </div>
+
+        <div id="popup-references-container" 
+             style="display:none; padding:1rem 1.1rem; border-top:0.5px solid #eee;">
           <h3 style="margin-top:0; margin-bottom:10px;">References</h3>
           <ol id="popup-references-list" style="line-height:1.8; padding-left:1.2rem; margin:0;"></ol>
         </div>
+
       </div>
     </div>
 
     <script>
+      /************************************************
+       * 1. CITATION ENGINE
+       ************************************************/
       window.__BIB_DATA__ = []; 
 
       (function() {
@@ -57,37 +90,25 @@
         const tempRegistry = [];
 
         citeRefs.forEach(el => {
-          const rawIds = el.getAttribute('data-id') || "";
-          const ids = rawIds.split(',').map(s => s.trim()).filter(s => s !== "");
-          const bib = el.getAttribute('data-bib') || "";
+          const id = el.getAttribute('data-id');
+          let idx = tempRegistry.findIndex(r => r.id === id);
 
-          const citationLinks = ids.map(id => {
-            let idx = tempRegistry.findIndex(r => r.id === id);
+          if (idx === -1) {
+            const bib = el.getAttribute('data-bib') || "";
+            const title   = (bib.match(/title\s*=\s*\{([^}]+)\}/i)   || [])[1] || 'No Title';
+            const author  = (bib.match(/author\s*=\s*\{([^}]+)\}/i)  || [])[1] || 'Unknown';
+            const journal = (bib.match(/journal\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
+            const year    = (bib.match(/year\s*=\s*\{([^}]+)\}/i)    || [])[1] || '';
+            const firstAuthor = author.split(' and ')[0].split(',')[0].trim();
 
-            if (idx === -1) {
-              // HYBRID PARSING: Try specific ID search, then fallback to general search
-              const getField = (field) => {
-                const specificMatch = bib.match(new RegExp(`@.*?{${id},[\\s\\S]*?${field}\\s*=\\s*{([^}]+)}`, "i"));
-                if (specificMatch) return specificMatch[1];
-                const generalMatch = bib.match(new RegExp(`${field}\\s*=\\s*\\{([^}]+)\\}`, "i"));
-                return generalMatch ? generalMatch[1] : null;
-              };
+            tempRegistry.push({ id, title, journal, year, firstAuthor });
+            idx = tempRegistry.length - 1;
+          }
 
-              const title   = getField('title') || 'No Title';
-              const author  = getField('author') || 'Unknown';
-              const journal = getField('journal') || '';
-              const year    = getField('year') || '';
-              const firstAuthor = author.split(' and ')[0].split(',')[0].trim();
-
-              tempRegistry.push({ id, title, journal, year, firstAuthor });
-              idx = tempRegistry.length - 1;
-            }
-            return `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}" style="text-decoration:none; color:inherit; font-weight:bold;">[${idx + 1}]</a>`;
-          });
-
+          const globalNum = idx + 1;
           const sup = document.createElement('sup');
           sup.style.marginLeft = "2px";
-          sup.innerHTML = citationLinks.join('');
+          sup.innerHTML = `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}" style="text-decoration:none; color:inherit; font-weight:bold;">[${globalNum}]</a>`;
           el.replaceWith(sup);
         });
 
@@ -96,22 +117,32 @@
         const refDiv = document.getElementById('references-list');
         if (refDiv && tempRegistry.length) {
           refDiv.innerHTML = '<hr style="margin-top:40px;"><h3>References</h3><ol style="line-height:1.8;">' +
-            tempRegistry.map(r => `<li id="ref-${r.id}" style="margin-bottom:8px;">${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}</li>`).join('') + '</ol>';
+            tempRegistry.map(r => `
+              <li id="ref-${r.id}" style="margin-bottom:8px;">
+                ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
+              </li>
+            `).join('') + '</ol>';
         }
       })();
 
+      /************************************************
+       * 2. POPUP LOGIC
+       ************************************************/
       document.querySelectorAll('details').forEach(el => {
         el.addEventListener('click', function(e) {
           e.preventDefault();
           const summary = el.querySelector('summary');
+          const titleText = summary ? summary.innerText : 'Details';
           const clone = el.cloneNode(true);
-          if (clone.querySelector('summary')) clone.querySelector('summary').remove();
+          const summaryClone = clone.querySelector('summary');
+          if (summaryClone) summaryClone.remove();
 
-          document.getElementById('details-popup-title').innerText = summary ? summary.innerText : 'Details';
+          document.getElementById('details-popup-title').innerText = titleText;
           const bodyContainer = document.getElementById('details-popup-body');
           bodyContainer.innerHTML = clone.innerHTML;
 
           buildPopupReferences(bodyContainer);
+
           document.getElementById('details-overlay').style.display = 'flex';
           document.getElementById('details-overlay').scrollTop = 0;
         });
@@ -119,29 +150,38 @@
 
       function buildPopupReferences(container) {
         const links = container.querySelectorAll('.internal-cite');
-        links.forEach(l => l.onclick = (e) => e.preventDefault());
-
-        const uniqueIds = [...new Set(Array.from(links).map(l => l.getAttribute('data-ref-id')))];
+        const uniqueIdsInPopup = [...new Set(Array.from(links).map(l => l.getAttribute('data-ref-id')))];
+        
         const listDiv = document.getElementById('popup-references-list');
         const containerDiv = document.getElementById('popup-references-container');
 
-        if (uniqueIds.length > 0) {
-          listDiv.innerHTML = uniqueIds.map(id => {
+        if (uniqueIdsInPopup.length > 0) {
+          const htmlItems = uniqueIdsInPopup.map(id => {
             const dataIdx = window.__BIB_DATA__.findIndex(r => r.id === id);
             if (dataIdx !== -1) {
               const r = window.__BIB_DATA__[dataIdx];
-              return `<li value="${dataIdx + 1}" style="margin-bottom:8px;">${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}</li>`;
+              // Use value attribute to force the global list number
+              return `<li value="${dataIdx + 1}" style="margin-bottom:8px;">
+                        ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
+                      </li>`;
             }
             return '';
           }).join('');
+
+          listDiv.innerHTML = htmlItems;
           containerDiv.style.display = 'block';
         } else {
           containerDiv.style.display = 'none';
         }
       }
 
-      function closeDetailsPopup() { document.getElementById('details-overlay').style.display = 'none'; }
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailsPopup(); });
+      function closeDetailsPopup() {
+        document.getElementById('details-overlay').style.display = 'none';
+      }
+
+      document.addEventListener('keydown', e => { 
+        if (e.key === 'Escape') closeDetailsPopup(); 
+      });
     </script>
   </body>
 </html>
