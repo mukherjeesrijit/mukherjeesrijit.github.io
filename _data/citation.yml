@@ -1,3 +1,65 @@
 mukherjee2025glapal: "@article{mukherjee2025glapal, title={GLAPAL-H: Global, Local, And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI}, author={Mukherjee, Srijit and Templeton, Kelsey and Monga, Vishal}, journal={IEEE Transactions on Biomedical Engineering}, year={2025}}"
 
 dong2024fan: "@article{dong2024fan, title={Fan: Fourier analysis networks}, author={Dong, Yihong and Li, Ge and Xu, Jingjing}, journal={arXiv}, year={2024}}"
+arnold2023low: "@article{arnold2023low,
+  title={Low-field MRI: clinical promise and challenges},
+  author={Arnold, Thomas Campbell and Freeman, Colbey W and Litt, Brian and Stein, Joel M},
+  journal={Journal of Magnetic Resonance Imaging},
+  volume={57},
+  number={1},
+  pages={25--44},
+  year={2023},
+  publisher={Wiley Online Library}
+}"
+
+mavskova2024assessment: "@article{mavskova2024assessment,
+  title={Assessment of the diagnostic efficacy of low-field magnetic resonance imaging: a systematic review},
+  author={Ma{\v{s}}kov{\'a}, Barbora and Ro{\v{z}}{\'a}nek, Martin and Gajdo{\v{s}}, Ond{\v{r}}ej and Karnoub, Evgeniia and Kamensk{\`y}, Vojt{\v{e}}ch and Donin, Gleb},
+  journal={Diagnostics},
+  volume={14},
+  number={14},
+  pages={1564},
+  year={2024},
+  publisher={MDPI}
+}"
+
+kimberly2023brain: "@article{kimberly2023brain,
+  title={Brain imaging with portable low-field MRI},
+  author={Kimberly, W Taylor and Sorby-Adams, Annabel J and Webb, Andrew G and Wu, Ed X and Beekman, Rachel and Bowry, Ritvij and Schiff, Steven J and de Havenon, Adam and Shen, Francis X and Sze, Gordon and others},
+  journal={Nature reviews bioengineering},
+  volume={1},
+  number={9},
+  pages={617--630},
+  year={2023},
+  publisher={Nature Publishing Group UK London}
+}"
+
+abate2024unity: "@article{abate2024unity,
+  title={UNITY: A low-field magnetic resonance neuroimaging initiative to characterize neurodevelopment in low and middle-income settings},
+  author={Abate, F and Adu-Amankwah, A and Ae-Ngibise, KA and Agbokey, F and Agyemang, VA and Agyemang, CT and Akgun, C and Ametepe, J and Arichi, T and Asante, KP and others},
+  journal={Developmental Cognitive Neuroscience},
+  volume={69},
+  pages={101397},
+  year={2024},
+  publisher={Elsevier}
+}"
+
+schiff2021assessing: "@article{schiff2021assessing,
+  title={Assessing the utilit of lo resolution brain imaging: treatment of infant h drocephalus},
+  author={Schiff, S},
+  journal={NeuroImage: Clinical},
+  volume={32},
+  pages={102896},
+  year={2021}
+}"
+
+mandell2015volumetric: "@article{mandell2015volumetric,
+  title={Volumetric brain analysis in neurosurgery: Part 2. Brain and CSF volumes discriminate neurocognitive outcomes in hydrocephalus},
+  author={Mandell, Jason G and Kulkarni, Abhaya V and Warf, Benjamin C and Schiff, Steven J},
+  journal={Journal of Neurosurgery: Pediatrics},
+  volume={15},
+  number={2},
+  pages={125--132},
+  year={2015},
+  publisher={American Association of Neurological Surgeons}
+}"
