@@ -1,0 +1,13 @@
+{% assign c = site.data.citations[include.id] %}
+
+{% assign title = c | split: "title={" | last | split: "}" | first %}
+{% assign author = c | split: "author={" | last | split: "}" | first %}
+{% assign journal = c | split: "journal={" | last | split: "}" | first %}
+{% assign year = c | split: "year={" | last | split: "}" | first %}
+
+<span class="citation-item">
+  {{ author | split: " and " | first }} et al.,
+  <i>{{ title }}</i>,
+  {{ journal }},
+  {{ year }}
+</span>
