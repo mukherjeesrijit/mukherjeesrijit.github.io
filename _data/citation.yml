@@ -1,16 +1,7 @@
 mukherjee2025glapal: "@article{mukherjee2025glapal, title={GLAPAL-H: Global, Local, And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI}, author={Mukherjee, Srijit and Templeton, Kelsey and Monga, Vishal}, journal={IEEE Transactions on Biomedical Engineering}, year={2025}}"
 
 dong2024fan: "@article{dong2024fan, title={Fan: Fourier analysis networks}, author={Dong, Yihong and Li, Ge and Xu, Jingjing}, journal={arXiv}, year={2024}}"
-arnold2023low: "@article{arnold2023low,
-  title={Low-field MRI: clinical promise and challenges},
-  author={Arnold, Thomas Campbell and Freeman, Colbey W and Litt, Brian and Stein, Joel M},
-  journal={Journal of Magnetic Resonance Imaging},
-  volume={57},
-  number={1},
-  pages={25--44},
-  year={2023},
-  publisher={Wiley Online Library}
-}"
+arnold2023low: "@article{arnold2023low, title={Low-field MRI: clinical promise and challenges}, author={Arnold, Thomas Campbell and Freeman, Colbey W and Litt, Brian and Stein, Joel M}, journal={Journal of Magnetic Resonance Imaging}, volume={57}, number={1}, pages={25--44}, year={2023}, publisher={Wiley Online Library}}"
 
 mavskova2024assessment: "@article{mavskova2024assessment,
   title={Assessment of the diagnostic efficacy of low-field magnetic resonance imaging: a systematic review},
