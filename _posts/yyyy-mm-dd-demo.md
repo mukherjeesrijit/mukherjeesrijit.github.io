@@ -8,6 +8,7 @@ og_image:
 ---
 
 This is an example of a demo post.
+Citations: {% include cite.html id="arnold2023low" %}
 
 <img src="{{ "/assets/img/content/post-example/Banner.jpg" | absolute_url }}" alt="bay" class="post-pic"/>
 <br />
