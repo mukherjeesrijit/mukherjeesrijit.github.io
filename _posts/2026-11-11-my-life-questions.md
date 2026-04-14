@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Questions about Life."
-date: 2026-22-22 11:00:00
+date: 2026-11-11 11:00:00
 tags: [personal]
 blurb: "questions about life & more."
 og_image: 
