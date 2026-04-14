@@ -72,10 +72,8 @@
 
         <div id="popup-references-container" 
              style="display:none; padding:1rem 1.1rem; border-top:0.5px solid #eee;">
-          <div style="font-weight:bold; margin-bottom:8px;">
-            References:
-          </div>
-          <div id="popup-references-list" style="line-height:1.6;"></div>
+          <h3 style="margin-top:0; margin-bottom:10px;">References</h3>
+          <ol id="popup-references-list" style="line-height:1.8; padding-left:1.2rem; margin:0;"></ol>
         </div>
 
       </div>
@@ -108,10 +106,8 @@
           }
 
           const globalNum = idx + 1;
-
           const sup = document.createElement('sup');
           sup.style.marginLeft = "2px";
-          // Styled to look like standard text within the post
           sup.innerHTML = `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}" style="text-decoration:none; color:inherit; font-weight:bold;">[${globalNum}]</a>`;
           el.replaceWith(sup);
         });
@@ -135,10 +131,8 @@
       document.querySelectorAll('details').forEach(el => {
         el.addEventListener('click', function(e) {
           e.preventDefault();
-
           const summary = el.querySelector('summary');
           const titleText = summary ? summary.innerText : 'Details';
-          
           const clone = el.cloneNode(true);
           const summaryClone = clone.querySelector('summary');
           if (summaryClone) summaryClone.remove();
@@ -149,9 +143,8 @@
 
           buildPopupReferences(bodyContainer);
 
-          const overlay = document.getElementById('details-overlay');
-          overlay.style.display = 'flex';
-          overlay.scrollTop = 0;
+          document.getElementById('details-overlay').style.display = 'flex';
+          document.getElementById('details-overlay').scrollTop = 0;
         });
       });
 
@@ -167,10 +160,10 @@
             const dataIdx = window.__BIB_DATA__.findIndex(r => r.id === id);
             if (dataIdx !== -1) {
               const r = window.__BIB_DATA__[dataIdx];
-              return `<div style="margin-bottom:8px;">
-                        <strong>[${dataIdx + 1}]</strong> 
-                        ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.year}
-                      </div>`;
+              // Use value attribute to force the global list number
+              return `<li value="${dataIdx + 1}" style="margin-bottom:8px;">
+                        ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
+                      </li>`;
             }
             return '';
           }).join('');
@@ -190,6 +183,5 @@
         if (e.key === 'Escape') closeDetailsPopup(); 
       });
     </script>
-
   </body>
 </html>
