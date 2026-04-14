@@ -15,7 +15,7 @@ Something interesting happens in my brain (probably in everyone's brain) between
 <br>
 We have all being very focussed on the multi-layer perceptron & its extensions of structure into convolution and transformers. Kolmogorov-Arnold Networks have challenged this fundamental structure in 2024 the functional representation of a function $f$ based on Kolmogor Arnold Representation Theorem just like Universal Approximation Theorem for MLP. This process motivated some works for replacing MLP using the domain-enriched structures. For example in real life signals, where periodicity reigns, Fourier Analysis gives the most insightful answer, and also Fourier representation theorem can uniquely represent a a reasonably behaved periodic function (piecewise smooth and continuous). In Fourier Analysis Networks, the authors first wrote down the entire Fourier Decomposition, and replaced the coefficients by learnable weights as shown in the equation below. Just like KAN based transformers, and convolutions have been built, FAN based transformerer and convolution layers have been built too. Interestingly FAN has 25% less parameters and gives efficient performance for periodic representation learning for examples like modular arithmetic, and composition of trigonometric functions with other smoother functions.
 
-<img src="{{ "assets/img/blog/fan.png" | absolute_url }}" alt="fan" class="post-pic"/>
+<img src="{{ "assets/img/blog/fan.png" | absolute_url }}" alt="fan" class="post-pic" style="width: 60%; max-width: 480px; height: auto; display: block; margin: 0.5rem auto;" />
 <br />
 <br />
 
