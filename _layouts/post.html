@@ -47,7 +47,7 @@
     {% include footer.html %}
     {% include foot.html %}
 
-    <!-- DETAILS POPUP -->
+    <!-- POPUP -->
     <div id="details-overlay"
          onclick="closeDetailsPopup()"
          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);
@@ -58,77 +58,81 @@
            style="background:#fff;border:0.5px solid #ddd;border-radius:12px;
                   width:min(720px,100%);margin:auto;font-family:sans-serif;">
 
-        <div style="display:flex;align-items:flex-start;gap:10px;
-                    padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
+        <div style="display:flex;justify-content:space-between;
+                    padding:1rem;border-bottom:0.5px solid #eee;">
 
           <div id="details-popup-title"
-               style="flex:1;font-size:14px;font-weight:500;line-height:1.55;"></div>
+               style="font-size:14px;font-weight:500;"></div>
 
           <button onclick="closeDetailsPopup()"
-                  style="background:none;border:none;cursor:pointer;font-size:16px;color:#888;">
-            ✕
-          </button>
+                  style="background:none;border:none;font-size:16px;">✕</button>
         </div>
 
         <div id="details-popup-body"
-             style="padding:1rem 1.1rem;font-size:13px;color:#444;line-height:1.8;margin-top:-2.75rem;">
-        </div>
+             style="padding:1rem;font-size:13px;line-height:1.8;"></div>
 
         <!-- POPUP REFERENCES -->
         <div id="popup-references"
-             style="padding:1rem 1.1rem;border-top:0.5px solid #eee;">
-        </div>
+             style="padding:1rem;border-top:0.5px solid #eee;"></div>
 
       </div>
     </div>
 
     <script>
       /***********************
-       * GLOBAL CITATION SYSTEM
+       * GLOBAL REGISTRY
        ***********************/
       window.__CITATION_REGISTRY__ = [];
 
       (function() {
         const refs = document.querySelectorAll('cite-ref');
-        const registry = [];
 
         refs.forEach(el => {
           const id = el.getAttribute('data-id');
+          const bib = el.getAttribute('data-bib');
 
-          let idx = registry.findIndex(r => r.id === id);
+          let registry = window.__CITATION_REGISTRY__;
 
-          if (idx === -1) {
-            const bib     = el.getAttribute('data-bib');
+          let existing = registry.find(r => r.id === id);
+
+          if (!existing) {
             const title   = (bib.match(/title=\{([^}]+)\}/) || [])[1] || '';
             const author  = (bib.match(/author=\{([^}]+)\}/) || [])[1] || '';
             const journal = (bib.match(/journal=\{([^}]+)\}/) || [])[1] || '';
             const year    = (bib.match(/year=\{([^}]+)\}/) || [])[1] || '';
             const first   = author.split(' and ')[0].split(',')[0].trim();
 
-            registry.push({ id, title, journal, year, first });
-            window.__CITATION_REGISTRY__ = registry;
+            existing = {
+              id, title, journal, year, first,
+              index: registry.length + 1
+            };
+
+            registry.push(existing);
           }
 
-          const n = registry.findIndex(r => r.id === id) + 1;
-
           const sup = document.createElement('sup');
-          sup.innerHTML = `<a href="#ref-${id}" id="cite-${id}">[${n}]</a>`;
+          sup.innerHTML = `<a href="#ref-${id}">[${existing.index}]</a>`;
           el.replaceWith(sup);
         });
 
-        const refDiv = document.getElementById('references-list');
-
-        if (refDiv && registry.length) {
-          refDiv.innerHTML =
-            '<hr><h3>References</h3><ol>' +
-            registry.map(r =>
-              `<li id="ref-${r.id}">
-                ${r.first} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
-              </li>`
-            ).join('') +
-            '</ol>';
-        }
+        renderGlobalReferences();
       })();
+
+      function renderGlobalReferences() {
+        const div = document.getElementById('references-list');
+        const r = window.__CITATION_REGISTRY__;
+
+        if (!div || !r.length) return;
+
+        div.innerHTML =
+          '<hr><h3>References</h3><ol>' +
+          r.map(x =>
+            `<li id="ref-${x.id}">
+              ${x.first} et al., <em>${x.title}</em>, ${x.journal}, ${x.year}
+            </li>`
+          ).join('') +
+          '</ol>';
+      }
 
       /***********************
        * POPUP LOGIC
@@ -141,17 +145,41 @@
           const title = summary ? summary.innerText : '';
 
           const clone = el.cloneNode(true);
-          const summaryClone = clone.querySelector('summary');
-          if (summaryClone) summaryClone.remove();
+          clone.querySelector('summary')?.remove();
 
           document.getElementById('details-popup-title').innerText = title;
           document.getElementById('details-popup-body').innerHTML = clone.innerHTML;
 
-          buildPopupReferences(clone);
+          renderPopupReferences(clone);
 
           document.getElementById('details-overlay').style.display = 'flex';
         });
       });
+
+      function renderPopupReferences(clone) {
+        const used = new Map();
+        const registry = window.__CITATION_REGISTRY__;
+
+        clone.querySelectorAll('cite-ref').forEach(el => {
+          const id = el.getAttribute('data-id');
+          const ref = registry.find(r => r.id === id);
+          if (ref) used.set(id, ref);
+        });
+
+        const div = document.getElementById('popup-references');
+
+        if (!used.size) {
+          div.innerHTML = "";
+          return;
+        }
+
+        div.innerHTML =
+          '<hr><h3>References</h3><ol>' +
+          [...used.values()].map(r =>
+            `<li>[${r.index}] ${r.first} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}</li>`
+          ).join('') +
+          '</ol>';
+      }
 
       function closeDetailsPopup() {
         document.getElementById('details-overlay').style.display = 'none';
@@ -160,44 +188,6 @@
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeDetailsPopup();
       });
-
-      /***********************
-       * POPUP REFERENCES ONLY
-       ***********************/
-      function buildPopupReferences(clone) {
-        const refs = clone.querySelectorAll('cite-ref');
-        const used = [];
-
-        refs.forEach(el => {
-          const id = el.getAttribute('data-id');
-
-          const global = window.__CITATION_REGISTRY__;
-          const idx = global.findIndex(r => r.id === id);
-
-          if (idx !== -1) {
-            used.push({
-              ...global[idx],
-              number: idx + 1
-            });
-          }
-        });
-
-        const div = document.getElementById('popup-references');
-
-        if (!div || used.length === 0) {
-          div.innerHTML = "";
-          return;
-        }
-
-        div.innerHTML =
-          '<hr><h3>References</h3><ol>' +
-          used.map(r =>
-            `<li>
-              [${r.number}] ${r.first} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
-            </li>`
-          ).join('') +
-          '</ol>';
-      }
     </script>
 
   </body>
