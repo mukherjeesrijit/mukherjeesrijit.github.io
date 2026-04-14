@@ -1,17 +1,1 @@
-<!-- {% assign c = site.data.citation[include.id] %}
-
-{% assign title = c | split: "title={" | last | split: "}" | first %}
-{% assign author = c | split: "author={" | last | split: "}" | first %}
-{% assign journal = c | split: "journal={" | last | split: "}" | first %}
-{% assign year = c | split: "year={" | last | split: "}" | first %}
-
-{% assign first_author = author | split: " and " | first | split: "," | first %}
-
-<span class="citation-item">
-  {{ first_author }} et al.,
-  {{ title }},
-  {{ journal }},
-  {{ year }}
-</span> -->
-
 {% assign c = site.data.citation[include.id] %}<cite-ref data-id="{{ include.id }}" data-bib="{{ c | escape }}"></cite-ref>
