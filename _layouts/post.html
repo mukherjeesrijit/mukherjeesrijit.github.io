@@ -21,6 +21,7 @@
             </h1>
 
             {% if page.subtitle %}<h1 class="post-subtitle">{{ page.subtitle }}</h1>{% endif %}
+
             <p class="post-meta">
               <span class="post-date">{{ page.date | date: "%B %-d, %Y" }}</span>
               {% if page.author %} • {{ page.author }}{% endif %}
@@ -32,6 +33,7 @@
             {{ content }}
           </article>
 
+          <!-- REFERENCES LIST -->
           <div id="references-list"></div>
 
           {% if page.draft %}{% include draft-banner.html %}{% endif %}
@@ -44,67 +46,131 @@
     {% include foot.html %}
 
     <!-- DETAILS POPUP -->
-    <div id="details-overlay" onclick="closeDetailsPopup()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:999;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;">
-      <div onclick="event.stopPropagation()" style="background:#fff;border:0.5px solid #ddd;border-radius:12px;width:min(720px,100%);margin:auto;font-family:sans-serif;">
+    <div id="details-overlay"
+         onclick="closeDetailsPopup()"
+         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:999;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;">
+
+      <div onclick="event.stopPropagation()"
+           style="background:#fff;border:0.5px solid #ddd;border-radius:12px;width:min(720px,100%);margin:auto;font-family:sans-serif;">
+
         <div style="display:flex;align-items:flex-start;gap:10px;padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
           <div id="details-popup-title" style="flex:1;font-size:14px;font-weight:500;line-height:1.55;"></div>
           <button onclick="closeDetailsPopup()" style="background:none;border:none;cursor:pointer;font-size:16px;color:#888;">✕</button>
         </div>
-        <div id="details-popup-body" style="padding:1rem 1.1rem;font-size:13px;color:#444;line-height:1.8;margin-top:-2.75rem;"></div>
+
+        <div id="details-popup-body"
+             style="padding:1rem 1.1rem;font-size:13px;color:#444;line-height:1.8;margin-top:-2.75rem;"></div>
+
       </div>
     </div>
 
     <script>
-      // DETAILS POPUP
+      /***********************
+       * DETAILS POPUP
+       ***********************/
       document.querySelectorAll('details').forEach(el => {
         el.addEventListener('click', function(e) {
           e.preventDefault();
+
           const summary = el.querySelector('summary');
           const title = summary ? summary.innerText : '';
+
           const body = el.cloneNode(true);
           body.querySelector('summary').remove();
+
+          /* -------------------------
+             ADD LOCAL CITATIONS HERE
+          -------------------------- */
+          const citations = el._citations ? Array.from(el._citations).sort((a,b)=>a-b) : [];
+
+          if (citations.length > 0) {
+            const citeBox = document.createElement("div");
+            citeBox.style.marginBottom = "10px";
+            citeBox.style.fontSize = "12px";
+            citeBox.style.color = "#666";
+            citeBox.innerHTML =
+              `<strong>References:</strong> ${citations.map(n => `[${n}]`).join(' ')}`;
+            body.prepend(citeBox);
+          }
+
           document.getElementById('details-popup-title').innerText = title;
           document.getElementById('details-popup-body').innerHTML = body.innerHTML;
+
           const overlay = document.getElementById('details-overlay');
           overlay.style.display = 'flex';
           overlay.scrollTop = 0;
         });
       });
+
       function closeDetailsPopup() {
         document.getElementById('details-overlay').style.display = 'none';
       }
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailsPopup(); });
 
-      // CITATIONS
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDetailsPopup();
+      });
+
+      /***********************
+       * CITATION SYSTEM
+       ***********************/
       (function() {
         const refs = document.querySelectorAll('cite-ref');
         const registry = [];
 
         refs.forEach(el => {
           const id = el.getAttribute('data-id');
+
           let idx = registry.findIndex(r => r.id === id);
+
           if (idx === -1) {
-            const bib     = el.getAttribute('data-bib');
+            const bib = el.getAttribute('data-bib');
+
             const title   = (bib.match(/title=\{([^}]+)\}/)   || [])[1] || '';
             const author  = (bib.match(/author=\{([^}]+)\}/)  || [])[1] || '';
             const journal = (bib.match(/journal=\{([^}]+)\}/) || [])[1] || '';
             const year    = (bib.match(/year=\{([^}]+)\}/)    || [])[1] || '';
-            const first   = author.split(' and ')[0].split(',')[0].trim();
+
+            const first = author.split(' and ')[0].split(',')[0].trim();
+
             registry.push({ id, title, journal, year, first });
             idx = registry.length - 1;
           }
+
+          /* GLOBAL INDEX */
           const n = idx + 1;
+
+          /* replace cite-ref with [n] */
           const sup = document.createElement('sup');
           sup.innerHTML = `<a href="#ref-${id}" id="cite-${id}">[${n}]</a>`;
           el.replaceWith(sup);
+
+          /* -------------------------
+             STORE PER-DETAILS CITATIONS
+          -------------------------- */
+          const parentDetails = sup.closest('details');
+          if (parentDetails) {
+            if (!parentDetails._citations) parentDetails._citations = new Set();
+            parentDetails._citations.add(n);
+          }
         });
 
+        /* -------------------------
+           BUILD GLOBAL REFERENCES
+        -------------------------- */
         const refDiv = document.getElementById('references-list');
+
         if (refDiv && registry.length) {
-          refDiv.innerHTML = '<hr><h3>References</h3><ol>' +
+          refDiv.innerHTML =
+            '<hr><h3>References</h3><ol>' +
             registry.map(r =>
-              `<li id="ref-${r.id}">${r.first} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}</li>`
-            ).join('') + '</ol>';
+              `<li id="ref-${r.id}">
+                ${r.first} et al.,
+                <em>${r.title}</em>,
+                ${r.journal},
+                ${r.year}
+              </li>`
+            ).join('') +
+            '</ol>';
         }
       })();
     </script>
