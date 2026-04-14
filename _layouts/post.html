@@ -10,40 +10,40 @@
         <div class="post">
 
           <header class="post-header">
-
-            {% if page.draft %}
-              {% include draft-banner.html %}
-            {% endif %}
+            {% if page.draft %}{% include draft-banner.html %}{% endif %}
 
             <h1 class="post-title">
-            {% if page.headline_formatted_title %}
-              {{ page.headline_formatted_title | newline_to_br }}
-            {% else %}
-              {{ page.title }}
-            {% endif %}
+              {% if page.headline_formatted_title %}
+                {{ page.headline_formatted_title | newline_to_br }}
+              {% else %}
+                {{ page.title }}
+              {% endif %}
             </h1>
 
             {% if page.subtitle %}<h1 class="post-subtitle">{{ page.subtitle }}</h1>{% endif %}
-            <p class="post-meta"><span class="post-date">{{ page.date | date: "%B %-d, %Y" }}
-            </span>{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+            <p class="post-meta">
+              <span class="post-date">{{ page.date | date: "%B %-d, %Y" }}</span>
+              {% if page.author %} • {{ page.author }}{% endif %}
+              {% if page.meta %} • {{ page.meta }}{% endif %}
+            </p>
           </header>
 
           <article class="post-content">
             {{ content }}
           </article>
 
-          {% if page.draft %}
-              {% include draft-banner.html %}
-          {% endif %}
+          <div id="references-list"></div>
 
-      </div>
+          {% if page.draft %}{% include draft-banner.html %}{% endif %}
+
+        </div>
       </div>
     </div>
 
     {% include footer.html %}
     {% include foot.html %}
 
-    <!-- ADD THIS BLOCK -->
+    <!-- DETAILS POPUP -->
     <div id="details-overlay" onclick="closeDetailsPopup()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:999;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;">
       <div onclick="event.stopPropagation()" style="background:#fff;border:0.5px solid #ddd;border-radius:12px;width:min(720px,100%);margin:auto;font-family:sans-serif;">
         <div style="display:flex;align-items:flex-start;gap:10px;padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
@@ -53,7 +53,9 @@
         <div id="details-popup-body" style="padding:1rem 1.1rem;font-size:13px;color:#444;line-height:1.8;margin-top:-2.75rem;"></div>
       </div>
     </div>
+
     <script>
+      // DETAILS POPUP
       document.querySelectorAll('details').forEach(el => {
         el.addEventListener('click', function(e) {
           e.preventDefault();
@@ -72,7 +74,40 @@
         document.getElementById('details-overlay').style.display = 'none';
       }
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailsPopup(); });
+
+      // CITATIONS
+      (function() {
+        const refs = document.querySelectorAll('cite-ref');
+        const registry = [];
+
+        refs.forEach(el => {
+          const id = el.getAttribute('data-id');
+          let idx = registry.findIndex(r => r.id === id);
+          if (idx === -1) {
+            const bib     = el.getAttribute('data-bib');
+            const title   = (bib.match(/title=\{([^}]+)\}/)   || [])[1] || '';
+            const author  = (bib.match(/author=\{([^}]+)\}/)  || [])[1] || '';
+            const journal = (bib.match(/journal=\{([^}]+)\}/) || [])[1] || '';
+            const year    = (bib.match(/year=\{([^}]+)\}/)    || [])[1] || '';
+            const first   = author.split(' and ')[0].split(',')[0].trim();
+            registry.push({ id, title, journal, year, first });
+            idx = registry.length - 1;
+          }
+          const n = idx + 1;
+          const sup = document.createElement('sup');
+          sup.innerHTML = `<a href="#ref-${id}" id="cite-${id}">[${n}]</a>`;
+          el.replaceWith(sup);
+        });
+
+        const refDiv = document.getElementById('references-list');
+        if (refDiv && registry.length) {
+          refDiv.innerHTML = '<hr><h3>References</h3><ol>' +
+            registry.map(r =>
+              `<li id="ref-${r.id}">${r.first} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}</li>`
+            ).join('') + '</ol>';
+        }
+      })();
     </script>
-    <!-- END BLOCK -->
+
   </body>
 </html>
