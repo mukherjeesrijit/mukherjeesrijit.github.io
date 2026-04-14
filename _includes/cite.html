@@ -5,9 +5,11 @@
 {% assign journal = c | split: "journal={" | last | split: "}" | first %}
 {% assign year = c | split: "year={" | last | split: "}" | first %}
 
+{% assign first_author = author | split: " and " | first | split: "," | first %}
+
 <span class="citation-item">
-  {{ author | split: " and " | first }} et al.,
-  <i>{{ title }}</i>,
+  {{ first_author }} et al.,
+  {{ title }},
   {{ journal }},
   {{ year }}
 </span>

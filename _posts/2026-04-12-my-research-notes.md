@@ -26,7 +26,4 @@ My Notes
 My Notes
 </details>
 
-<div id="bibliography">
-  <h2>References</h2>
-  {{ content }}
-</div>
+{{ content }}
