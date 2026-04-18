@@ -6,3 +6,5 @@ tags: [research]
 blurb: "all about what is my research taste, and why is it so?"
 og_image: 
 ---
+
+{% include research-questions/why_research_blog.html %}

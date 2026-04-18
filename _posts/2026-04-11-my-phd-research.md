@@ -6,3 +6,5 @@ tags: [research]
 blurb: "my phd explorations, research, questions, and more."
 og_image: 
 ---
+
+{% include research-questions/why_research_blog.html %}
