@@ -7,6 +7,6 @@ blurb: "personal notes of selected research papers, that aligns with my research
 og_image: 
 ---
 
-{% include research-notes/why_research_blog.html %}
+{% include research-questions/why_research_blog.html %}
 {% include research-notes/dong2024fan.html %}
 {% include research-notes/wang2025novel.html %}
