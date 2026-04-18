@@ -14,3 +14,4 @@ Cite: <cite-ref data-id="kimberly2023brain"></cite-ref>
 {% include research-notes/dong2024fan.html %}
 {% include research-notes/wang2025novel.html %}
 
+{{content}}
