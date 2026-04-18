@@ -3,7 +3,7 @@ layout: post
 title: "My Research Notes."
 date: 2026-04-12 11:00:00
 tags: [research]
-blurb: "This is my personal notes of selected research papers, that aligns with my research taste."
+blurb: "personal notes of selected research papers, that aligns with my research taste."
 og_image: 
 ---
 
