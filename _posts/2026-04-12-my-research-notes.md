@@ -12,4 +12,3 @@ Something interesting happens in my brain (probably in everyone's brain) between
 {% include research-notes/dong2024fan.html %}
 {% include research-notes/wang2025novel.html %}
 
-{{ content }}
