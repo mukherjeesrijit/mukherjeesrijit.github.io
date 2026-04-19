@@ -8,7 +8,6 @@
     <div class="page-content">
       <div class="wrapper">
 
-        <!-- ===================== MAIN POST ===================== -->
         <div class="post kali-post">
 
           <!-- BACKGROUND LAYER -->
@@ -42,57 +41,53 @@
 
           <div id="references-list"></div>
 
-          {% if page.draft %}{% include draft-banner.html %}{% endif %}
-
         </div>
-
       </div>
     </div>
 
     {% include footer.html %}
     {% include foot.html %}
 
-    <!-- ===================== STYLES ===================== -->
+    <!-- ================= CSS ================= -->
     <style>
       .post-date {
         display: none;
       }
 
-      /* IMPORTANT: ensures background is visible */
+      /* IMPORTANT: give height context */
       .post.kali-post {
         position: relative;
-        overflow: hidden;
-        isolation: isolate;
         min-height: 100vh;
+        overflow: hidden;
       }
 
-      /* background layer */
+      /* BACKGROUND FIXED LAYER */
       .kali-bg {
         position: absolute;
         inset: 0;
 
-        background-image: url("{{ '/assets/img/kali/Kali.jpg' | relative_url }}");
+        background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
         background-size: cover;
-        background-repeat: no-repeat;
         background-position: center;
+        background-repeat: no-repeat;
 
-        opacity: 0.10;
-        filter: blur(1px);
+        opacity: 0.08;
+        filter: blur(1.5px);
 
-        transform: scale(1.2);
         z-index: 0;
-
-        pointer-events: none;
+        transform: scale(1.05); /* avoids blur edge clipping */
       }
 
-      /* content above background */
-      .post.kali-post > * {
+      /* CONTENT ABOVE BG */
+      .post.kali-post > *:not(.kali-bg) {
         position: relative;
         z-index: 1;
       }
+
+      /* popup stays unchanged */
     </style>
 
-    <!-- ===================== POPUP ===================== -->
+    <!-- ================= POPUP ================= -->
     <div id="details-overlay"
          onclick="closeDetailsPopup()"
          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);
@@ -107,7 +102,6 @@
                     padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
           <div id="details-popup-title"
                style="flex:1;font-weight:600;line-height:1.55;"></div>
-
           <button onclick="closeDetailsPopup()"
                   style="background:none;border:none;cursor:pointer;font-size:18px;color:#888;">
             ✕
@@ -115,7 +109,8 @@
         </div>
 
         <div id="details-popup-body"
-             style="padding:1rem 1.1rem; line-height:1.8;"></div>
+             style="padding:1rem 1.1rem; line-height:1.8;">
+        </div>
 
         <div id="popup-references-container"
              style="display:none; padding:1rem 1.1rem; border-top:0.5px solid #eee;">
@@ -126,107 +121,8 @@
       </div>
     </div>
 
-    <!-- ===================== SCRIPT ===================== -->
+    <!-- ================= JS ================= -->
     <script>
-      /************************************************
-       * 1. CITATION ENGINE
-       ************************************************/
-      window.__BIB_DATA__ = [];
-
-      (function () {
-        const citeRefs = document.querySelectorAll('cite-ref');
-        const tempRegistry = [];
-
-        citeRefs.forEach(el => {
-          const id = el.getAttribute('data-id');
-          let idx = tempRegistry.findIndex(r => r.id === id);
-
-          if (idx === -1) {
-            const bib = el.getAttribute('data-bib') || "";
-            const title = (bib.match(/title\s*=\s*\{([^}]+)\}/i) || [])[1] || 'No Title';
-            const author = (bib.match(/author\s*=\s*\{([^}]+)\}/i) || [])[1] || 'Unknown';
-            const journal = (bib.match(/journal\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
-            const year = (bib.match(/year\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
-            const firstAuthor = author.split(' and ')[0].split(',')[0].trim();
-
-            tempRegistry.push({ id, title, journal, year, firstAuthor });
-            idx = tempRegistry.length - 1;
-          }
-
-          const globalNum = idx + 1;
-          const sup = document.createElement('sup');
-
-          sup.innerHTML =
-            `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}">
-              [${globalNum}]
-            </a>`;
-
-          el.replaceWith(sup);
-        });
-
-        window.__BIB_DATA__ = tempRegistry;
-
-        const refDiv = document.getElementById('references-list');
-        if (refDiv && tempRegistry.length) {
-          refDiv.innerHTML =
-            '<hr><h3>References</h3><ol>' +
-            tempRegistry.map(r => `
-              <li id="ref-${r.id}">
-                ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
-              </li>
-            `).join('') +
-            '</ol>';
-        }
-      })();
-
-      /************************************************
-       * 2. DETAILS POPUP (FIXED EVENT DELEGATION)
-       ************************************************/
-      document.addEventListener('click', function (e) {
-        const el = e.target.closest('details');
-        if (!el) return;
-
-        e.preventDefault();
-
-        const summary = el.querySelector('summary');
-        const titleText = summary ? summary.innerText : 'Details';
-
-        const clone = el.cloneNode(true);
-        const summaryClone = clone.querySelector('summary');
-        if (summaryClone) summaryClone.remove();
-
-        document.getElementById('details-popup-title').innerText = titleText;
-        document.getElementById('details-popup-body').innerHTML = clone.innerHTML;
-
-        buildPopupReferences(document.getElementById('details-popup-body'));
-
-        document.getElementById('details-overlay').style.display = 'flex';
-      });
-
-      function buildPopupReferences(container) {
-        const links = container.querySelectorAll('.internal-cite');
-        const ids = [...new Set([...links].map(l => l.dataset.refId))];
-
-        const list = document.getElementById('popup-references-list');
-        const box = document.getElementById('popup-references-container');
-
-        if (!ids.length) {
-          box.style.display = 'none';
-          return;
-        }
-
-        list.innerHTML = ids.map(id => {
-          const i = window.__BIB_DATA__.findIndex(r => r.id === id);
-          if (i === -1) return '';
-          const r = window.__BIB_DATA__[i];
-          return `<li value="${i + 1}">
-            ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
-          </li>`;
-        }).join('');
-
-        box.style.display = 'block';
-      }
-
       function closeDetailsPopup() {
         document.getElementById('details-overlay').style.display = 'none';
       }
@@ -235,29 +131,23 @@
         if (e.key === 'Escape') closeDetailsPopup();
       });
 
-      /************************************************
-       * 3. PARALLAX BACKGROUND (SAFE)
-       ************************************************/
-      window.addEventListener('DOMContentLoaded', () => {
-        const bg = document.querySelector('.kali-bg');
-        const container = document.querySelector('.kali-post');
+      /* details popup (fixed safe version) */
+      document.querySelectorAll('details').forEach(el => {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
 
-        function update() {
-          if (!bg || !container) return;
+          const summary = el.querySelector('summary');
+          const titleText = summary ? summary.innerText : 'Details';
 
-          const rect = container.getBoundingClientRect();
+          const clone = el.cloneNode(true);
+          const summaryClone = clone.querySelector('summary');
+          if (summaryClone) summaryClone.remove();
 
-          const progress =
-            (window.innerHeight - rect.top) /
-            (window.innerHeight + rect.height);
+          document.getElementById('details-popup-title').innerText = titleText;
+          document.getElementById('details-popup-body').innerHTML = clone.innerHTML;
 
-          const y = progress * 60;
-
-          bg.style.transform = `translateY(${y}px) scale(1.2)`;
-        }
-
-        window.addEventListener('scroll', update, { passive: true });
-        update();
+          document.getElementById('details-overlay').style.display = 'flex';
+        });
       });
     </script>
 
