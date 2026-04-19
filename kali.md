@@ -1,11 +1,13 @@
 ---
 layout: kali
-title: Kali
+title: Adya Kali
 permalink: /kali/
 ---
 
-You have arrived in that corner of my existence, which makes me who I am. Feel free to explore the page. In case, this page doesn't make sense to you, kindly leave this page. This is beyond time (Kal) itself. She (Kali) holds time under Her right feet. Hence, it may not make sense to you. Then, why keep this page? If you know, you know. Therefore, if it makes sense, it just makes sense, else it doesn't. Now, it's just about Her. 
+You have arrived in that corner of my existence, beyond time (Kal) itself. She (Kali) holds time under Her right feet. Now, it's only about Her. Who is She?  
 
-<!-- {% include joy-maa/kali_and_me.html %} -->
+{% include joy-maa/who_is_kali.html %}
 
 <!-- <br /> -->
+
+She is the oldest causal force that transforms and moves the thick, dense, unmoving potential energy of existence into moving kinetic energy. Everything moves under Her command. Of course, there is no specific visual form of the oldest (Adya) creative force. I am a mere human being. I build my perception using the five senses I am born with, visual perception being the strongest. So, I visualize a form - the form in the background of this very specific page. A form embedded in a culture helps in discovering the truth, because the brain constantly captures signals and learns. This is the cultural unconscious, and it helps anyone, at any age, to enjoy Kal with Kali. Similarly, to build my perception, I can use sound, smell, touch, and taste. I have explored only sound, but not the other sensory experiences. The thick, dense, unmoving potential energy (MahaKal) complements the very force that transforms MahaKal into MahaKali - Adya MahaKali. Why am I saying He and She, or bringing gender into the picture? The reason is that the English language itself discriminates in this way. There are alternative language systems, like Sanskrit, where they are simply called MahaKal and MahaKali. However, I will refer to MahaKal as He, and Adya MahaKali as She, since I am writing in English - because it provides a reference for great analogies with the physical existence of life. English is very space and physical body-oriented. It has its own uses, but not for traversing existence beyond space and time.
