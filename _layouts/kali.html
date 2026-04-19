@@ -9,7 +9,7 @@
       <div class="wrapper">
         <div class="post kali-post">
 
-          <!-- Background layer -->
+          <!-- BACKGROUND LAYER -->
           <div class="kali-bg"></div>
 
           <header class="post-header">
@@ -59,30 +59,29 @@
         position: relative;
         overflow: hidden;
         isolation: isolate;
+        min-height: 100vh;
       }
 
-      /* foreground content */
-      .post.kali-post > * {
-        position: relative;
-        z-index: 1;
-      }
-
-      /* background layer */
       .kali-bg {
         position: absolute;
         inset: 0;
         background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
         background-size: cover;
-        background-position: center 0%;
-        opacity: 0.06;
+        background-position: center;
+        opacity: 0.08;
         filter: blur(1px);
-        transform: scale(1.1);
-        will-change: transform;
+        transform: scale(1.15);
         z-index: 0;
+        pointer-events: none;
+      }
+
+      .post.kali-post > * {
+        position: relative;
+        z-index: 1;
       }
     </style>
 
-    <!-- ===================== POPUP SYSTEM (UNCHANGED) ===================== -->
+    <!-- ===================== POPUP ===================== -->
     <div id="details-overlay"
          onclick="closeDetailsPopup()"
          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);
@@ -98,32 +97,31 @@
           <div id="details-popup-title"
                style="flex:1;font-weight:600;line-height:1.55;"></div>
           <button onclick="closeDetailsPopup()"
-                  style="background:none;border:none;cursor:pointer;font-size:18px;color:#888;padding:0;line-height:1;">
+                  style="background:none;border:none;cursor:pointer;font-size:18px;color:#888;">
             ✕
           </button>
         </div>
 
         <div id="details-popup-body"
-             style="padding:1rem 1.1rem; line-height:1.8; margin-top:-2.75rem;">
-        </div>
+             style="padding:1rem 1.1rem; line-height:1.8;"></div>
 
-        <div id="popup-references-container" 
+        <div id="popup-references-container"
              style="display:none; padding:1rem 1.1rem; border-top:0.5px solid #eee;">
-          <h3 style="margin-top:0; margin-bottom:10px;">References</h3>
-          <ol id="popup-references-list" style="line-height:1.8; padding-left:1.2rem; margin:0;"></ol>
+          <h3>References</h3>
+          <ol id="popup-references-list"></ol>
         </div>
 
       </div>
     </div>
 
-    <!-- ===================== SCRIPTS ===================== -->
+    <!-- ===================== SCRIPT ===================== -->
     <script>
       /************************************************
-       * 1. CITATION ENGINE (UNCHANGED)
+       * 1. CITATION ENGINE
        ************************************************/
-      window.__BIB_DATA__ = []; 
+      window.__BIB_DATA__ = [];
 
-      (function() {
+      (function () {
         const citeRefs = document.querySelectorAll('cite-ref');
         const tempRegistry = [];
 
@@ -133,10 +131,10 @@
 
           if (idx === -1) {
             const bib = el.getAttribute('data-bib') || "";
-            const title   = (bib.match(/title\s*=\s*\{([^}]+)\}/i)   || [])[1] || 'No Title';
-            const author  = (bib.match(/author\s*=\s*\{([^}]+)\}/i)  || [])[1] || 'Unknown';
+            const title = (bib.match(/title\s*=\s*\{([^}]+)\}/i) || [])[1] || 'No Title';
+            const author = (bib.match(/author\s*=\s*\{([^}]+)\}/i) || [])[1] || 'Unknown';
             const journal = (bib.match(/journal\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
-            const year    = (bib.match(/year\s*=\s*\{([^}]+)\}/i)    || [])[1] || '';
+            const year = (bib.match(/year\s*=\s*\{([^}]+)\}/i) || [])[1] || '';
             const firstAuthor = author.split(' and ')[0].split(',')[0].trim();
 
             tempRegistry.push({ id, title, journal, year, firstAuthor });
@@ -145,8 +143,10 @@
 
           const globalNum = idx + 1;
           const sup = document.createElement('sup');
-          sup.style.marginLeft = "2px";
-          sup.innerHTML = `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}" style="text-decoration:none; color:inherit; font-weight:bold;">[${globalNum}]</a>`;
+          sup.innerHTML =
+            `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}">
+              [${globalNum}]
+            </a>`;
           el.replaceWith(sup);
         });
 
@@ -155,36 +155,63 @@
         const refDiv = document.getElementById('references-list');
         if (refDiv && tempRegistry.length) {
           refDiv.innerHTML =
-            '<hr style="margin-top:40px;"><h3>References</h3><ol style="line-height:1.8;">' +
+            '<hr><h3>References</h3><ol>' +
             tempRegistry.map(r => `
-              <li id="ref-${r.id}" style="margin-bottom:8px;">
+              <li id="ref-${r.id}">
                 ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
               </li>
-            `).join('') + '</ol>';
+            `).join('') +
+            '</ol>';
         }
       })();
 
       /************************************************
-       * 2. POPUP LOGIC (UNCHANGED)
+       * 2. DETAILS POPUP (FIXED: EVENT DELEGATION)
        ************************************************/
-      document.querySelectorAll('details').forEach(el => {
-        el.addEventListener('click', function(e) {
-          e.preventDefault();
-          const summary = el.querySelector('summary');
-          const titleText = summary ? summary.innerText : 'Details';
-          const clone = el.cloneNode(true);
-          const summaryClone = clone.querySelector('summary');
-          if (summaryClone) summaryClone.remove();
+      document.addEventListener('click', function (e) {
+        const el = e.target.closest('details');
+        if (!el) return;
 
-          document.getElementById('details-popup-title').innerText = titleText;
-          const bodyContainer = document.getElementById('details-popup-body');
-          bodyContainer.innerHTML = clone.innerHTML;
+        e.preventDefault();
 
-          buildPopupReferences(bodyContainer);
+        const summary = el.querySelector('summary');
+        const titleText = summary ? summary.innerText : 'Details';
 
-          document.getElementById('details-overlay').style.display = 'flex';
-        });
+        const clone = el.cloneNode(true);
+        const summaryClone = clone.querySelector('summary');
+        if (summaryClone) summaryClone.remove();
+
+        document.getElementById('details-popup-title').innerText = titleText;
+        document.getElementById('details-popup-body').innerHTML = clone.innerHTML;
+
+        buildPopupReferences(document.getElementById('details-popup-body'));
+
+        document.getElementById('details-overlay').style.display = 'flex';
       });
+
+      function buildPopupReferences(container) {
+        const links = container.querySelectorAll('.internal-cite');
+        const ids = [...new Set([...links].map(l => l.dataset.refId))];
+
+        const list = document.getElementById('popup-references-list');
+        const box = document.getElementById('popup-references-container');
+
+        if (!ids.length) {
+          box.style.display = 'none';
+          return;
+        }
+
+        list.innerHTML = ids.map(id => {
+          const i = window.__BIB_DATA__.findIndex(r => r.id === id);
+          if (i === -1) return '';
+          const r = window.__BIB_DATA__[i];
+          return `<li value="${i + 1}">
+            ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
+          </li>`;
+        }).join('');
+
+        box.style.display = 'block';
+      }
 
       function closeDetailsPopup() {
         document.getElementById('details-overlay').style.display = 'none';
@@ -195,13 +222,13 @@
       });
 
       /************************************************
-       * 3. KALI PARALLAX BACKGROUND (FIXED + SMOOTH)
+       * 3. PARALLAX BACKGROUND (FIXED)
        ************************************************/
       window.addEventListener('DOMContentLoaded', () => {
         const bg = document.querySelector('.kali-bg');
         const container = document.querySelector('.kali-post');
 
-        function updateBackground() {
+        function update() {
           if (!bg || !container) return;
 
           const rect = container.getBoundingClientRect();
@@ -210,13 +237,13 @@
             (window.innerHeight - rect.top) /
             (window.innerHeight + rect.height);
 
-          const translateY = progress * 60; // softness factor
+          const y = progress * 60;
 
-          bg.style.transform = `translateY(${translateY}px) scale(1.1)`;
+          bg.style.transform = `translateY(${y}px) scale(1.15)`;
         }
 
-        window.addEventListener('scroll', updateBackground, { passive: true });
-        updateBackground();
+        window.addEventListener('scroll', update, { passive: true });
+        update();
       });
     </script>
 
