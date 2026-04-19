@@ -7,5 +7,7 @@ blurb: "thoughts about life & more."
 og_image: 
 ---
 
+* Kali
 {% include life-thoughts/ghazals.html %}
 {% include life-thoughts/politics.html %}
+
