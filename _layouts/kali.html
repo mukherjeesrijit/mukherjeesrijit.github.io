@@ -4,9 +4,11 @@
 
   <body>
     {% include header.html %}
-    
+
     <div class="page-content">
       <div class="wrapper">
+
+        <!-- ===================== MAIN POST ===================== -->
         <div class="post kali-post">
 
           <!-- BACKGROUND LAYER -->
@@ -43,6 +45,7 @@
           {% if page.draft %}{% include draft-banner.html %}{% endif %}
 
         </div>
+
       </div>
     </div>
 
@@ -55,6 +58,7 @@
         display: none;
       }
 
+      /* IMPORTANT: ensures background is visible */
       .post.kali-post {
         position: relative;
         overflow: hidden;
@@ -62,19 +66,26 @@
         min-height: 100vh;
       }
 
+      /* background layer */
       .kali-bg {
         position: absolute;
         inset: 0;
-        background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
+
+        background-image: url("{{ '/assets/img/kali/Kali.jpg' | relative_url }}");
         background-size: cover;
+        background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.08;
+
+        opacity: 0.10;
         filter: blur(1px);
-        transform: scale(1.15);
+
+        transform: scale(1.2);
         z-index: 0;
+
         pointer-events: none;
       }
 
+      /* content above background */
       .post.kali-post > * {
         position: relative;
         z-index: 1;
@@ -96,6 +107,7 @@
                     padding:1rem 1.1rem 0.75rem;border-bottom:0.5px solid #eee;">
           <div id="details-popup-title"
                style="flex:1;font-weight:600;line-height:1.55;"></div>
+
           <button onclick="closeDetailsPopup()"
                   style="background:none;border:none;cursor:pointer;font-size:18px;color:#888;">
             ✕
@@ -143,10 +155,12 @@
 
           const globalNum = idx + 1;
           const sup = document.createElement('sup');
+
           sup.innerHTML =
             `<a href="#ref-${id}" class="internal-cite" data-ref-id="${id}">
               [${globalNum}]
             </a>`;
+
           el.replaceWith(sup);
         });
 
@@ -166,7 +180,7 @@
       })();
 
       /************************************************
-       * 2. DETAILS POPUP (FIXED: EVENT DELEGATION)
+       * 2. DETAILS POPUP (FIXED EVENT DELEGATION)
        ************************************************/
       document.addEventListener('click', function (e) {
         const el = e.target.closest('details');
@@ -222,7 +236,7 @@
       });
 
       /************************************************
-       * 3. PARALLAX BACKGROUND (FIXED)
+       * 3. PARALLAX BACKGROUND (SAFE)
        ************************************************/
       window.addEventListener('DOMContentLoaded', () => {
         const bg = document.querySelector('.kali-bg');
@@ -239,7 +253,7 @@
 
           const y = progress * 60;
 
-          bg.style.transform = `translateY(${y}px) scale(1.15)`;
+          bg.style.transform = `translateY(${y}px) scale(1.2)`;
         }
 
         window.addEventListener('scroll', update, { passive: true });
