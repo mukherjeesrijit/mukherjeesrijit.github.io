@@ -1,5 +1,5 @@
 ---
-layout: kali
+layout: post
 title: Kali
 slug: /kali
 ---
