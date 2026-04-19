@@ -68,17 +68,18 @@
 
         background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
 
-        /* 🔥 KEY FIX: NO ZOOM, ONLY TILING */
-        background-size: 500px auto;   /* fixed tile size */
-        background-repeat: repeat;     /* periodic repetition */
+        /* ✅ FIXED WIDTH */
+        background-size: 600px auto;
 
-        background-position: 0 0;
+        /* ✅ ONLY VERTICAL REPEAT */
+        background-repeat: repeat-y;
+
+        /* lock horizontal alignment */
+        background-position: center top;
 
         opacity: 0.06;
-        filter: none; /* remove blur = avoids “invisible” effect */
-
-        z-index: 0;
         pointer-events: none;
+        z-index: 0;
       }
 
       /* CONTENT ABOVE BACKGROUND */
