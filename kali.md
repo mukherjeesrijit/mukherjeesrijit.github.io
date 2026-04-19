@@ -1,5 +1,5 @@
 ---
-layout: blog
+layout: kali
 title: Kali
 slug: /kali
 ---
