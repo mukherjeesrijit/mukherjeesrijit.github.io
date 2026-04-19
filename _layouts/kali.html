@@ -4,6 +4,8 @@
 
   <body>
     {% include header.html %}
+
+    <div class="kali-background"></div>
 a
     <div class="page-content">
       <div class="wrapper">
@@ -49,6 +51,17 @@ a
     <style>
   .post-date {
     display: none;
+  }
+
+  .kali-background {
+    position: fixed;
+    inset: 0;
+    background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.06;
+    filter: blur(1px);
+    z-index: -1;
   }
 </style>
 
