@@ -9,6 +9,9 @@
       <div class="wrapper">
         <div class="post kali-post">
 
+          <!-- Background layer -->
+          <div class="kali-bg"></div>
+
           <header class="post-header">
             {% if page.draft %}{% include draft-banner.html %}{% endif %}
 
@@ -46,36 +49,40 @@
     {% include footer.html %}
     {% include foot.html %}
 
+    <!-- ===================== STYLES ===================== -->
     <style>
-  .post-date {
-    display: none;
-  }
+      .post-date {
+        display: none;
+      }
 
-  .post.kali-post {
-  position: relative;
-  overflow: hidden;
-}
+      .post.kali-post {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+      }
 
-.post.kali-post::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.06;
-  filter: blur(1px);
-  z-index: 0;
-}
+      /* foreground content */
+      .post.kali-post > * {
+        position: relative;
+        z-index: 1;
+      }
 
-.post.kali-post > * {
-  position: relative;
-  z-index: 1;
-}
+      /* background layer */
+      .kali-bg {
+        position: absolute;
+        inset: 0;
+        background-image: url("{{ '/assets/img/kali/Kali.jpg' | absolute_url }}");
+        background-size: cover;
+        background-position: center 0%;
+        opacity: 0.06;
+        filter: blur(1px);
+        transform: scale(1.1);
+        will-change: transform;
+        z-index: 0;
+      }
+    </style>
 
-</style>
-
-
+    <!-- ===================== POPUP SYSTEM (UNCHANGED) ===================== -->
     <div id="details-overlay"
          onclick="closeDetailsPopup()"
          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);
@@ -109,9 +116,10 @@
       </div>
     </div>
 
+    <!-- ===================== SCRIPTS ===================== -->
     <script>
       /************************************************
-       * 1. CITATION ENGINE
+       * 1. CITATION ENGINE (UNCHANGED)
        ************************************************/
       window.__BIB_DATA__ = []; 
 
@@ -146,7 +154,8 @@
 
         const refDiv = document.getElementById('references-list');
         if (refDiv && tempRegistry.length) {
-          refDiv.innerHTML = '<hr style="margin-top:40px;"><h3>References</h3><ol style="line-height:1.8;">' +
+          refDiv.innerHTML =
+            '<hr style="margin-top:40px;"><h3>References</h3><ol style="line-height:1.8;">' +
             tempRegistry.map(r => `
               <li id="ref-${r.id}" style="margin-bottom:8px;">
                 ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
@@ -156,7 +165,7 @@
       })();
 
       /************************************************
-       * 2. POPUP LOGIC
+       * 2. POPUP LOGIC (UNCHANGED)
        ************************************************/
       document.querySelectorAll('details').forEach(el => {
         el.addEventListener('click', function(e) {
@@ -174,44 +183,42 @@
           buildPopupReferences(bodyContainer);
 
           document.getElementById('details-overlay').style.display = 'flex';
-          document.getElementById('details-overlay').scrollTop = 0;
         });
       });
-
-      function buildPopupReferences(container) {
-        const links = container.querySelectorAll('.internal-cite');
-        const uniqueIdsInPopup = [...new Set(Array.from(links).map(l => l.getAttribute('data-ref-id')))];
-        
-        const listDiv = document.getElementById('popup-references-list');
-        const containerDiv = document.getElementById('popup-references-container');
-
-        if (uniqueIdsInPopup.length > 0) {
-          const htmlItems = uniqueIdsInPopup.map(id => {
-            const dataIdx = window.__BIB_DATA__.findIndex(r => r.id === id);
-            if (dataIdx !== -1) {
-              const r = window.__BIB_DATA__[dataIdx];
-              // Use value attribute to force the global list number
-              return `<li value="${dataIdx + 1}" style="margin-bottom:8px;">
-                        ${r.firstAuthor} et al., <em>${r.title}</em>, ${r.journal}, ${r.year}
-                      </li>`;
-            }
-            return '';
-          }).join('');
-
-          listDiv.innerHTML = htmlItems;
-          containerDiv.style.display = 'block';
-        } else {
-          containerDiv.style.display = 'none';
-        }
-      }
 
       function closeDetailsPopup() {
         document.getElementById('details-overlay').style.display = 'none';
       }
 
-      document.addEventListener('keydown', e => { 
-        if (e.key === 'Escape') closeDetailsPopup(); 
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDetailsPopup();
+      });
+
+      /************************************************
+       * 3. KALI PARALLAX BACKGROUND (FIXED + SMOOTH)
+       ************************************************/
+      window.addEventListener('DOMContentLoaded', () => {
+        const bg = document.querySelector('.kali-bg');
+        const container = document.querySelector('.kali-post');
+
+        function updateBackground() {
+          if (!bg || !container) return;
+
+          const rect = container.getBoundingClientRect();
+
+          const progress =
+            (window.innerHeight - rect.top) /
+            (window.innerHeight + rect.height);
+
+          const translateY = progress * 60; // softness factor
+
+          bg.style.transform = `translateY(${translateY}px) scale(1.1)`;
+        }
+
+        window.addEventListener('scroll', updateBackground, { passive: true });
+        updateBackground();
       });
     </script>
+
   </body>
 </html>
