@@ -20,6 +20,10 @@ header:
     - name: Teaching
     - name: Blog
 
+collections:
+  kali:
+    output: true
+    permalink: /kali/:name/
 
 footer:
   show_powered_by: false
