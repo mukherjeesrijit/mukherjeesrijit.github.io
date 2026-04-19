@@ -10,10 +10,10 @@ google_analytics: "G-GT7M9B1WK5"
 
 header:
   pages:
-    - name: Home
-      slug: /
     - name: Kali
       slug: /kali/
+    - name: Home
+      slug: /
     - name: CV
       slug: /assets/MyCV_MukherjeeSrijit.pdf
     - name: Publications
