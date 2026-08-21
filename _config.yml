@@ -18,6 +18,8 @@ header:
       slug: /assets/MyCV_MukherjeeSrijit.pdf
     - name: Publications
     - name: Teaching
+    - name: Writings
+      slug: https://srijitmath.com/
 
 collections:
   kali:
