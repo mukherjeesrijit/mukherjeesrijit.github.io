@@ -19,6 +19,6 @@ My research focuses on developing disease-informed and interpretable machine lea
 <center>
   <a href="mailto:szm6596@psu.edu">Email</a> • 
   <a href="assets/MyCV_MukherjeeSrijit.pdf">CV</a> • 
-  <a href="https://srijitmukherjee.com/publications">Publications</a> •
+  <a href="https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en">Publications</a> •
   <a href="https://srijitmukherjee.com/teaching">Teaching</a>
 </center>

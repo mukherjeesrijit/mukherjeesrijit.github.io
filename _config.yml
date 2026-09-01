@@ -17,6 +17,7 @@ header:
     - name: CV
       slug: /assets/Curriculum Vitae Srijit Mukherjee.pdf
     - name: Publications
+      slug: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
     - name: Teaching
     - name: Writings
       slug: https://srijitmath.com/
