@@ -7,7 +7,7 @@ profile_picture:
 
 **PhD Candidate**: 4th year, [EECS Department, Penn State](https://www.eecs.psu.edu/) \\
 *Group*: [Information Processing & Algorithms Laboratory](https://signal.ee.psu.edu/) \\
-*Advisors*: [Vishal Monga (Penn State)](https://signal.ee.psu.edu/index.html), [Steven Schiff (NIH)](https://medicine.yale.edu/profile/steven-schiff/) \\
+*Advisors*: [Vishal Monga (Penn State)](https://signal.ee.psu.edu/index.html), [Steven Schiff (NIH)](https://www.fic.nih.gov/About/Pages/director-bio.aspx) \\
 *Research Interests*: Computer Vision, Medical Image Analysis, Multimodal AI, Interpretable Machine Learning, Shape Analysis, Biomedical Signal Analysis
 
 <p>
