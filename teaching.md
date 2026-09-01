@@ -3,7 +3,7 @@ layout: work
 title: Teaching
 slug: /teaching
 items:
- - title: "EE 350 - Continuous-Time Linear Systems"
+  - title: EE 350 - Continuous-Time Linear Systems
     link: /2026/08/31/ee350-continuous-time-linear-systems
     image:
       src: /assets/img/neural-system.jpg
