@@ -13,7 +13,7 @@ profile_picture:
 <p>
 My research focuses on developing disease-informed and interpretable machine learning and statistical methods for biomedical image analysis, particularly in clinical settings with scarce, noisy, and imperfect data. I incorporate disease etiology, anatomical structure, geometry, and multi-modal information directly into computational models to achieve a balance of performance, robustness, and interpretability. My current research focuses on neonatal hydrocephalus diagnosis and quantitative analysis from low-field MRI, generalizing the framework to histopathology disease grading and biomedical signal (ICP, ECG) analysis. I mentored two Master’s and two Ph.D. students on biomedical AI projects involving hemi-brain growth analysis, high-field MRI/CT segmentation, histopathological disease grading (DBIBD-Net), and intracranial-pressure (ICP) analysis, guiding them in problem formulation, literature review, methodology, experimentation, and technical communication. I also contributed to NIH and NSF proposals through research framing, methodological design, and technical writing.</p>
 
-*Recent News*: Dissertation Award: 2026 Dr. Nirmal K Bose Dissertation Excellence Award by Electrical Engineering Department, Pennsylvania State University. Dissertation Thesis Title: Hydrocephalic Etiology Guided Low-Field MRI Analysis.
+*Recent News*: Dissertation Award: 2026 Dr. Nirmal K Bose Dissertation Excellence Award by Electrical Engineering Department, Penn State. Dissertation Title: Hydrocephalic Etiology Guided Low-Field MRI Analysis.
 
 
 <center>
