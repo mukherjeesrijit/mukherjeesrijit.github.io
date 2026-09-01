@@ -19,8 +19,8 @@ header:
     - name: Publications
       slug: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
     - name: Teaching
-    - name: Writings
-      slug: https://srijitmath.com/
+    # - name: Writings
+    #   slug: https://srijitmath.com/
 
 collections:
   kali:
