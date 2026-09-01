@@ -8,7 +8,7 @@ items:
     image:
       src: /assets/img/neural-system.jpg
       alt: ee350
-    description: My TA materials for EE 350, Continuous-Time Linear Systems - recitation notes and course resources shared with students. I am pretty excited about TA-ing this course, because I am also learning neural computation, and I learned that a neuron can be expressed as a circuit and it has its own beautiful dynamics - The Hodgkin-Huxley Equations. 
+    description: My TA materials for EE 350, Continuous-Time Linear Systems - recitation notes and course resources shared with students. I am pretty excited about TA-ing this course, because I am also learning neural computation. Recently, I learned that a neuron can be expressed as a circuit and it has its own beautiful dynamics - The Hodgkin-Huxley Equations. Having fun!
   - title: Large Language Models
     link: https://youtube.com/playlist?list=PLYXB138yx3ipYS-NlSrBmTO3rUKn4DWpt&si=hDlMr1AeRy7Nb_eR
     image:
