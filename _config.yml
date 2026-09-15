@@ -17,7 +17,7 @@ header:
     - name: Publications
       slug: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
     - name: Teaching
-    - name: Blog
+    # - name: Blog
     # - name: Writings
     #   slug: https://srijitmath.com/
 
