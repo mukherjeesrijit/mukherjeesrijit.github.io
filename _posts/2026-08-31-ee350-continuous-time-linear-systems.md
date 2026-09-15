@@ -15,7 +15,7 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
 * [Recitation 1 - Switched Circuits](https://drive.google.com/file/d/1vDBfpxXRsWT3rRxxWCv35d9IHKr-YM9l/view?usp=drive_link)
 * [Recitation 2 - Signal Classification](https://drive.google.com/file/d/1dMX0bMrc-9xd6Ww-apA_3W41_-BeV_uR/view?usp=drive_link)
 * [Recitation 3 - Systems Classification](https://docs.google.com/document/d/1Rum0pqgLDqgpMnobGEE_u9xa3QY8uGNVCwG8hBYXk3s/edit?usp=sharing)
-* Recitation 4 - [ODE Analysis & Solutions](https://docs.google.com/document/d/1O_7xTKkQZPmiBsbu5ogMKmvGE8-35tVa4LvYMb6t9Pw/edit?usp=sharing)
+* [Recitation 4 - ODE Analysis & Solutions](https://docs.google.com/document/d/1O_7xTKkQZPmiBsbu5ogMKmvGE8-35tVa4LvYMb6t9Pw/edit?usp=sharing)
 
 <br />
 <br />
