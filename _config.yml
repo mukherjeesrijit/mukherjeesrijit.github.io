@@ -41,6 +41,9 @@ footer:
     #   name: YouTube
     #   link: https://www.youtube.com/@mukherjeesrijit 
     
+# Post URLs use just the title (filename), no date segments
+permalink: /:title/
+
 # Build settings
 markdown: kramdown
 sass:
@@ -60,6 +63,8 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - notebooks/
+  - scripts/
 
 # Used for defeating caching
 version: 1

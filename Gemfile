@@ -6,6 +6,12 @@ source "https://rubygems.org"
 #     bundle exec jekyll serve
 gem "jekyll", "~> 4.3.4"
 
+# Modern Ruby (3.4+/4.0) removed these from default gems; Jekyll 4.3.4 still needs them.
+gem "logger"
+gem "csv"
+gem "base64"
+gem "webrick"
+
 # Plugins
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.17"
@@ -18,5 +24,8 @@ install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
   gem "tzinfo-data"
 end
 
-# Performance-booster for watching directories on Windows
-gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform? 
+# Performance-booster for watching directories on Windows.
+# Disabled: its native extension fails to build on modern Ruby (uses a
+# removed GVL API). Without it, Jekyll just polls for file changes instead
+# of using OS-level file events -- slightly slower, but works.
+# gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?

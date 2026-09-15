@@ -29,7 +29,7 @@
 
           <div id="posts-container">
             {% for post in site.posts %}
-              {% if post.draft != true %}
+              {% if post.list != false %}
                 <div class="blog-post-entry" data-tags="{{ post.tags | join: ',' | downcase }}">
                   <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
                   <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">

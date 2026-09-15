@@ -2,9 +2,10 @@
 layout: work
 title: Teaching
 slug: /teaching
+permalink: /teaching/
 items:
   - title: EE 350 - Continuous-Time Linear Systems
-    link: /2026/08/31/ee350-continuous-time-linear-systems
+    link: /ee350-continuous-time-linear-systems
     image:
       src: /assets/img/neural-system.jpg
       alt: ee350

@@ -5,6 +5,8 @@ date: 2026-08-31 10:00:00
 tags: [teaching]
 blurb: "Recitation notes and materials from TA-ing EE 350."
 og_image: 
+list: false
+published: true
 ---
 
 I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've shared with students so far. Note that all the notes are derived from [Professor Schiano's](https://www.eecs.psu.edu/departments/directory-detail-g.aspx?q=JLS32) lecture notes and recitation sessions with my added commentaries, which may help the students. None of the core content is mine apart from the fact that I permute them for my own understanding and students' understanding.
