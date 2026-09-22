@@ -18,6 +18,7 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
 * [Recitation 4 - ODE Analysis & Solutions](https://docs.google.com/document/d/1O_7xTKkQZPmiBsbu5ogMKmvGE8-35tVa4LvYMb6t9Pw/edit?usp=sharing)
 * [Recitation 5 - Exam Review & ODE Stability](https://docs.google.com/document/d/12XzWRz9UOGgiZTi7cJQC4vFZb11p-lb3O6MIZLwqtWI/edit?usp=sharing)
 * [Exam 1 Review Cheatsheet](https://drive.google.com/file/d/1ewhqJ3qYMH_B1GR4cZtNDIAi_XpwvK3L/view?usp=sharing)
+* [TA Feedback Form (compulsory)](https://docs.google.com/forms/d/e/1FAIpQLSdbajQjoZhr8IsHasA0gVkLTofbOrR-TjRBYe421A6mYQnNOg/viewform?usp=sharing&ouid=117156825440782326164)
 
 
 <br />
