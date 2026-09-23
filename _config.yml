@@ -18,8 +18,8 @@ header:
       slug: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
     - name: Teaching
     # - name: Blog
-    # - name: Writings
-    #   slug: https://srijitmath.com/
+    - name: Newsletter
+      slug: https://srijitmukherjee.substack.com/
 
 footer:
   show_powered_by: false
@@ -37,9 +37,12 @@ footer:
     - type: github
       name: GitHub
       link: http://github.com/mukherjeesrijit
-    # - type: youtube
-    #   name: YouTube
-    #   link: https://www.youtube.com/@mukherjeesrijit 
+    - type: youtube
+      name: YouTube
+      link: https://www.youtube.com/@mukherjeesrijit 
+    - type: substack
+      name: Substack
+      link: https://srijitmukherjee.substack.com/
     
 # Post URLs use just the title (filename), no date segments
 permalink: /:title/
