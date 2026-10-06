@@ -20,6 +20,6 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
 * [Exam 1 Review Cheatsheet & Distribution](https://drive.google.com/file/d/1ewhqJ3qYMH_B1GR4cZtNDIAi_XpwvK3L/view?usp=sharing)
 * [TA Feedback Form (compulsory) ENGR 888](https://docs.google.com/forms/d/e/1FAIpQLSdbajQjoZhr8IsHasA0gVkLTofbOrR-TjRBYe421A6mYQnNOg/viewform?usp=sharing&ouid=117156825440782326164)
 * [Recitation 6 - Impulse Response Function](https://docs.google.com/document/d/1Qoa2lmHZ7apTsnx7ShY0UuNMe9MZrXmJZshWBMI0GV0/edit?usp=sharing)
-
+* [Recitation 7 - Convolution and Sinusoidal SSA](https://docs.google.com/document/d/1qnoVGaLd5TWpBT4MMYPGQIwn__RigqmcWL8KpMUrzKE/edit?usp=sharing)
 <br />
 <br />
