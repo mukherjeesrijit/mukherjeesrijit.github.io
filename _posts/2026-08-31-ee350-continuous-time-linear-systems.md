@@ -22,5 +22,6 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
 * [Recitation 6 - Impulse Response Function](https://docs.google.com/document/d/1Qoa2lmHZ7apTsnx7ShY0UuNMe9MZrXmJZshWBMI0GV0/edit?usp=sharing)
 * [Recitation 7 - Convolution and Sinusoidal SSA](https://docs.google.com/document/d/1qnoVGaLd5TWpBT4MMYPGQIwn__RigqmcWL8KpMUrzKE/edit?usp=sharing)
 * [Exam 2 Review Cheatsheet & Distribution](https://drive.google.com/file/d/1UtD3uRdEckWTVfWBkTjBDOUDEZvHTX1R/view?usp=drive_link)
+* [Recitation 8 - Exam Review & Fourier Analysis](https://docs.google.com/document/d/1_00rGlvITKP9JYmmMIKwQvdPKuCJYVyChG2sDykMrXM/edit?usp=sharing)
 <br />
 <br />
