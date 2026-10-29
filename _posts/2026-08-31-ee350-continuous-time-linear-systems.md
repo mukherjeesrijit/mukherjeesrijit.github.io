@@ -27,8 +27,7 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
   
 * [Recitation 9 - ](https://drive.google.com/file/d/1a-mBtDX6iBAcxcGxJeEVtwuap6cs6Z8G/view?usp=drive_link)
   * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1odkNz4XJbcovgDyPFMnLpXZDbYSMztPDguACzBl0_sE/edit?usp=sharing)
-* [Recitation 10 - ](https://drive.google.com/file/d/1YJAxTgVYgOEQK6Hma_WRs2Yi-VrXDGqE/view?usp=drive_link)
-  * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1Wziz38C6yfE4ZyEj7IhaDAX1Vx6GIdnvUpb1aNT74K8/edit?usp=sharing)
+* [Recitation 10 - ](https://drive.google.com/file/d/1WoS5TbYnJmr4NNVS3LcSlM0QFobI6rj7/view?usp=sharing)
 * [Recitation 11 - ](https://drive.google.com/file/d/1JLIgBiRycQXx_1Vnttu37TaPMFXbw2ex/view?usp=drive_link)
   * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1b0ZTw9MWXAuRIqxqq2iXEWLSisu67AbxIMSEa5wRuYY/edit?usp=sharing)
 * [Recitation 12 - ](https://drive.google.com/file/d/15kAqsJv6GyS9rj7gbsHDJBHH6i_Cpl6O/view?usp=drive_link)
