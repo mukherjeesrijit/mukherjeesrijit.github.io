@@ -20,5 +20,5 @@ My research focuses on developing disease-informed and interpretable machine lea
   <a href="assets/MyCV_MukherjeeSrijit.pdf">CV</a> • 
   <a href="https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en">Publications</a> •
   <a href="https://srijitmukherjee.com/teaching">Teaching</a> •
-  <a href="https://srijitmukherjee.substack.com/">Newsletter</a>
 </center>
+  <!-- <a href="https://srijitmukherjee.substack.com/">Newsletter</a> -->
