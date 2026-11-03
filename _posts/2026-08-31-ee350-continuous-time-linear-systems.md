@@ -25,21 +25,16 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
 * [Recitation 8 - Exam Review & Fourier Analysis](https://docs.google.com/document/d/1_00rGlvITKP9JYmmMIKwQvdPKuCJYVyChG2sDykMrXM/edit?usp=sharing)
 * [Exam 2 Review Cheatsheet & Distribution (Exam on Oct 19)](https://drive.google.com/file/d/1UtD3uRdEckWTVfWBkTjBDOUDEZvHTX1R/view?usp=drive_link)
   
-* [Recitation 9 - ](https://drive.google.com/file/d/1a-mBtDX6iBAcxcGxJeEVtwuap6cs6Z8G/view?usp=drive_link)
+* [Recitation 9 - Convolution, Periodicity, Fourier Series](https://drive.google.com/file/d/1a-mBtDX6iBAcxcGxJeEVtwuap6cs6Z8G/view?usp=drive_link)
   * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1odkNz4XJbcovgDyPFMnLpXZDbYSMztPDguACzBl0_sE/edit?usp=sharing)
-* [Recitation 10 - ](https://drive.google.com/file/d/1WoS5TbYnJmr4NNVS3LcSlM0QFobI6rj7/view?usp=sharing)
-* [Recitation 11 - ](https://drive.google.com/file/d/1JLIgBiRycQXx_1Vnttu37TaPMFXbw2ex/view?usp=drive_link)
-  * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1b0ZTw9MWXAuRIqxqq2iXEWLSisu67AbxIMSEa5wRuYY/edit?usp=sharing)
+* [Recitation 10 - Fourier series coefficients](https://drive.google.com/file/d/1WoS5TbYnJmr4NNVS3LcSlM0QFobI6rj7/view?usp=sharing)
+* [Recitation 11 - Complex exponential Fourier](https://drive.google.com/file/d/1EbmMXmeSAhYiC8WKhihA8tNgTmR88gcj/view?usp=sharing)
 * [Recitation 12 - ](https://drive.google.com/file/d/15kAqsJv6GyS9rj7gbsHDJBHH6i_Cpl6O/view?usp=drive_link)
-  * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1oaJzmtx8VtgRNz-ex_O52V0YnhDa0bcD1G96ilrolfA/edit?usp=sharing)
 * Exam 3 Review Cheat Sheet & Distribution (Exam on Nov 16)
  
 * [Recitation 13 - ](https://drive.google.com/file/d/1UOWmNpODgHFzBepHlBr798Kd5GkNbq0D/view?usp=drive_link)
-  * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/15lMMDG4JYa1MMFjxyfkXIGn-HDhc2n-TrmZe7mnjYJM/edit?usp=sharing)
 * [Recitation 14 - ](https://drive.google.com/file/d/1Sek6X06j5AXv4bXTQnMMYHBQ_XqpGg0F/view?usp=drive_link)
-  * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1Hgu9C8IHhBEfyEm4O4GZ3yQCHw_2uqd49ha6J1RYz5c/edit?usp=sharing)
 * [Recitation 15 - ](https://drive.google.com/file/d/1NE5Q1NraU0Rgf7s6rZVA301cxNOQvzpV/view?usp=drive_link)
-  * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1MxJ1CTOJGS5PCIoGuld80-S18r7gX_Uz1CSUPhtResA/edit?usp=sharing)
 * Exam 4 Review Cheat Sheet & Distribution
 <br />
 <br />
