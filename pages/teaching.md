@@ -10,7 +10,7 @@ items:
     image:
       src: /assets/img/srijitmath.png
       alt: srijitmath
-    description: I built this for myself, as a place to solve maths problems every day, and then opened it up as a free site for students. Learners solve by hand and post their working, and I grade each solution, with help from an AI that knows my taste. They can discuss with each other, follow a roadmap from high school to college maths, and learn from the books I recommend. This is a lifelong journey tbh.
+    description: I built this for myself, as a place to solve maths problems every day, and then opened it up as a free site for students. Learners solve by hand and post their working, and I grade each solution, with help from an AI that knows my taste. They can discuss with each other, follow a roadmap from high school to college maths, and learn from the books I recommend. This is a lifelong journey for the learners and me.
 
   - title: EE 350 - Continuous-Time Linear Systems
     link: /ee350-continuous-time-linear-systems
