@@ -19,19 +19,16 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
 * [Recitation 5 - Exam Review & ODE Stability](https://docs.google.com/document/d/12XzWRz9UOGgiZTi7cJQC4vFZb11p-lb3O6MIZLwqtWI/edit?usp=sharing)
 * [Exam 1 Review Cheatsheet & Distribution](https://drive.google.com/file/d/1ewhqJ3qYMH_B1GR4cZtNDIAi_XpwvK3L/view?usp=sharing)
 * [TA Feedback Form (compulsory) ENGR 888](https://docs.google.com/forms/d/e/1FAIpQLSdbajQjoZhr8IsHasA0gVkLTofbOrR-TjRBYe421A6mYQnNOg/viewform?usp=sharing&ouid=117156825440782326164)
-
 * [Recitation 6 - Impulse Response Function](https://docs.google.com/document/d/1Qoa2lmHZ7apTsnx7ShY0UuNMe9MZrXmJZshWBMI0GV0/edit?usp=sharing)
 * [Recitation 7 - Convolution and Sinusoidal SSA](https://docs.google.com/document/d/1qnoVGaLd5TWpBT4MMYPGQIwn__RigqmcWL8KpMUrzKE/edit?usp=sharing)
 * [Recitation 8 - Exam Review & Fourier Analysis](https://docs.google.com/document/d/1_00rGlvITKP9JYmmMIKwQvdPKuCJYVyChG2sDykMrXM/edit?usp=sharing)
 * [Exam 2 Review Cheatsheet & Distribution (Exam on Oct 19)](https://drive.google.com/file/d/1UtD3uRdEckWTVfWBkTjBDOUDEZvHTX1R/view?usp=drive_link)
-  
 * [Recitation 9 - Convolution, Periodicity, Fourier Series](https://drive.google.com/file/d/1a-mBtDX6iBAcxcGxJeEVtwuap6cs6Z8G/view?usp=drive_link)
   * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1odkNz4XJbcovgDyPFMnLpXZDbYSMztPDguACzBl0_sE/edit?usp=sharing)
 * [Recitation 10 - Fourier series coefficients](https://drive.google.com/file/d/1WoS5TbYnJmr4NNVS3LcSlM0QFobI6rj7/view?usp=sharing)
 * [Recitation 11 - Complex exponential Fourier](https://drive.google.com/file/d/1EbmMXmeSAhYiC8WKhihA8tNgTmR88gcj/view?usp=sharing)
 * [Recitation 12 - ]()
 * Exam 3 Review Cheat Sheet & Distribution (Exam on Nov 16)
- 
 * [Recitation 13 - ]()
 * [Recitation 14 - ]()
 * [Recitation 15 - ]()
