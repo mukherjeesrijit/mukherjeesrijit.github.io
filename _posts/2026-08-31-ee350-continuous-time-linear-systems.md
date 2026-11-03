@@ -27,11 +27,11 @@ I am TA-ing EE 350 - Continuous-Time Linear Systems. Here are the materials I've
   * [My Notes and Whiteboard Captures](https://docs.google.com/document/d/1odkNz4XJbcovgDyPFMnLpXZDbYSMztPDguACzBl0_sE/edit?usp=sharing)
 * [Recitation 10 - Fourier series coefficients](https://drive.google.com/file/d/1WoS5TbYnJmr4NNVS3LcSlM0QFobI6rj7/view?usp=sharing)
 * [Recitation 11 - Complex exponential Fourier](https://drive.google.com/file/d/1EbmMXmeSAhYiC8WKhihA8tNgTmR88gcj/view?usp=sharing)
-* [Recitation 12 - ]()
+* Recitation 12
 * Exam 3 Review Cheat Sheet & Distribution (Exam on Nov 16)
-* [Recitation 13 - ]()
-* [Recitation 14 - ]()
-* [Recitation 15 - ]()
+* Recitation 13
+* Recitation 14
+* Recitation 15
 * Exam 4 Review Cheat Sheet & Distribution
 <br />
 <br />
