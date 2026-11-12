@@ -1,142 +1,23 @@
-<!DOCTYPE html>
-<html>
-  {% include head.html %}
-
-  <body>
-    {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrapper">
-        <div class="blog">
-          <h1 class="page-heading">{{ page.title }}</h1>
-          {{ content }}
-
-          <!-- <div id="tag-search-container">
-            <input
-              type="text"
-              id="tag-search"
-              placeholder="Search tags..."
-              onkeyup="filterTags(this.value)"
-              autocomplete="off"
-            />
-            <div id="tag-dropdown">
-              <div class="tag-option" onclick="selectTag('all')">All</div>
-              <div class="tag-option" onclick="selectTag('research')">Research</div>
-              <div class="tag-option" onclick="selectTag('notes')">Notes</div>
-              <div class="tag-option" onclick="selectTag('personal')">Personal</div>
-            </div>
-          </div> -->
-
-          <div id="posts-container">
-            {% for post in site.posts %}
-              {% if post.list != false %}
-                <div class="blog-post-entry" data-tags="{{ post.tags | join: ',' | downcase }}">
-                  <span class="blog-post-date">{{ post.date | date: "%-m/%-d/%y" }}</span>
-                  <a href="{{ post.url | replace:".html","" | prepend: site.baseurl }}" class="blog-post-title">
-                    {{- post.title -}}
-                  </a>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    {% include footer.html %}
-    {% include foot.html %}
-
-    <style>
-
-      .blog-post-date {
-      display: none;
-      }
-      
-      #tag-search-container {
-        position: relative;
-        margin-bottom: 16px;
-      }
-      #tag-search {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-      }
-      #tag-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        display: none;
-        max-height: 160px;
-        overflow-y: auto;
-        background: white;
-        z-index: 100;
-      }
-      .tag-option {
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-      .tag-option:hover {
-        background: #f0f0f0;
-      }
-      .blog-post-entry {
-        display: block;
-        margin-bottom: 8px;
-      }
-    </style>
-
-    <script>
-      var activeTag = 'all';
-
-      var input = document.getElementById('tag-search');
-      var dropdown = document.getElementById('tag-dropdown');
-
-      input.addEventListener('focus', function() {
-        dropdown.style.display = 'block';
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.style.display = 'none';
-        }
-      });
-
-      function filterTags(val) {
-        dropdown.style.display = 'block';
-        var options = dropdown.querySelectorAll('.tag-option');
-        options.forEach(function(opt) {
-          opt.style.display = opt.textContent.toLowerCase().includes(val.toLowerCase()) ? 'block' : 'none';
-        });
-      }
-
-      function selectTag(tag) {
-        activeTag = tag;
-        input.value = tag === 'all' ? 'All' : tag.charAt(0).toUpperCase() + tag.slice(1);
-        dropdown.style.display = 'none';
-        filterPosts();
-      }
-
-      function filterPosts() {
-        var entries = document.querySelectorAll('.blog-post-entry');
-        entries.forEach(function(entry) {
-          var tags = entry.getAttribute('data-tags').split(',');
-          if (activeTag === 'all' || tags.includes(activeTag)) {
-            entry.style.display = 'block';
-          } else {
-            entry.style.display = 'none';
-          }
-        });
-      }
-
-      selectTag('all');
-    </script>
-
-  </body>
-</html>
+---
+layout: default
+---
+{%- assign listed = site.posts | where_exp: "p", "p.list != false" -%}
+<div class="blog-list">
+  <header class="list-head">
+    <p class="kicker">{{ site.title }}</p>
+    <h1>{{ page.title }}</h1>
+    <div class="dek">{{ content }}</div>
+  </header>
+  <ul class="posts">
+    {%- for post in listed %}
+    <li><a href="{{ post.url | relative_url }}">
+      <h2>{{ post.title }}</h2>
+      {%- if post.blurb %}<p class="dek">{{ post.blurb }}</p>{% endif %}
+      {%- if site.post_dates %}<p class="byline">{{ post.date | date: "%B %-d, %Y" }}</p>{% endif %}
+    </a></li>
+    {%- else %}
+    <li class="none">The first posts are on their way.</li>
+    {%- endfor %}
+  </ul>
+  <p class="feed"><a href="{{ '/feed.xml' | relative_url }}">RSS feed</a></p>
+</div>

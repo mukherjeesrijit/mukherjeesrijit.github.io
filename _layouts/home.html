@@ -1,41 +1,68 @@
-<!DOCTYPE html>
-<html>
-  {% include head.html %}
-
-  <body>
-    {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrapper">
-        <div class="home">
-          <style>
-            .profile-pic {
-              float: right;
-              margin-left: 20px;
-            }
-
-            @media (max-width: 600px) {
-              .profile-pic {
-                float: none;
-                display: block;
-                margin: 0 auto 20px auto;
-              }
-            }
-          </style>
-
-          <img
-            src="{{ page.profile_picture.src | absolute_url }}"
-            alt="{{ page.profile_picture.alt }}"
-            class="profile-pic"
-          />
-
-          {{ content }}
-        </div>
+---
+layout: default
+---
+<div class="wrap home">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="kicker">{{ page.kicker }}</p>
+      <h1>Srijit <span class="hl">Mukherjee<svg class="scribble" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
+        <path class="mark" d="M6 38 C 70 30, 140 44, 210 34 S 340 30, 394 36"/>
+        <path class="mark two" d="M14 46 C 90 40, 170 50, 250 42 S 350 40, 388 44"/></svg></span></h1>
+      <p class="sub">{{ page.tagline }}</p>
+      <div class="cta">
+        <a class="btn accent" href="mailto:{{ site.email }}">Email me</a>
+        <a class="quiet" href="{{ site.cv | relative_url }}">CV →</a>
+        <a class="quiet" href="{{ site.links[0].link }}" target="_blank" rel="noopener">Google Scholar →</a>
       </div>
     </div>
+    <img class="portrait" src="{{ page.portrait | relative_url }}" alt="Srijit Mukherjee teaching at a blackboard" width="642" height="748">
+  </section>
 
-    {% include footer.html %}
+  {%- if page.news %}
+  <section class="news" aria-label="News">
+    {%- for n in page.news %}
+    <p><span class="tag">{{ n.when }}</span> <span>{{ n.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span></p>
+    {%- endfor %}
+  </section>
+  {%- endif %}
 
-    {% include foot.html %}
-  </body>
-</html>
+  <section class="split">
+    <h2 class="label">Research</h2>
+    <div class="prose">
+      {{ content }}
+      {%- if page.interests %}
+      <ul class="chips" aria-label="Research interests">
+        {%- for i in page.interests %}<li>{{ i }}</li>{% endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+  </section>
+
+  {%- if page.facts %}
+  <section class="split">
+    <h2 class="label">Penn State</h2>
+    <dl class="facts">
+      {%- for f in page.facts %}
+      <dt>{{ f.k }}</dt><dd>{{ f.v | markdownify | remove: '<p>' | remove: '</p>' | strip }}</dd>
+      {%- endfor %}
+    </dl>
+  </section>
+  {%- endif %}
+
+  {%- if page.cards %}
+  <section class="split">
+    <h2 class="label">Work</h2>
+    <div class="cards">
+      {%- for c in page.cards %}
+      <a class="card" href="{{ c.link | relative_url }}"{% if c.link contains '://' %} target="_blank" rel="noopener"{% endif %}>
+        <img src="{{ c.image | relative_url }}" alt="" loading="lazy">
+        <span class="card-k">{{ c.kicker }}</span>
+        <b>{{ c.title }}</b>
+        <span class="card-d">{{ c.text }}</span>
+        <small>{{ c.cta }} →</small>
+      </a>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+</div>

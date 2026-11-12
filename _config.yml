@@ -1,73 +1,54 @@
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+# Restart `bundle exec jekyll serve` after changing this file.
 
 title: Srijit Mukherjee
-description: Srijit Mukherjee's personal website.
+description: "PhD candidate at Penn State building disease-informed, interpretable machine learning for biomedical image analysis."
 baseurl: ""
-url: "https://mukherjeesrijit.github.io"
-og_image: /assets/img/profile-pic.jpg
+url: "https://srijitmukherjee.com"
+og_image: /assets/img/profile-pic.png
 google_analytics: "G-GT7M9B1WK5"
 
-header:
-  pages:
-    - name: Home
-      slug: /
-    - name: CV
-      slug: /assets/Curriculum Vitae Srijit Mukherjee.pdf
-    - name: Publications
-      slug: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
-    - name: Teaching
-    # - name: Blog
-    # - name: Newsletter
-    #   slug: https://srijitmath.substack.com/
+email: szm6596@psu.edu
+cv: "/assets/Curriculum Vitae Srijit Mukherjee.pdf"
 
-footer:
-  show_powered_by: false
-  contact:
-    - type: email
-      name: szm6596@psu.edu
-      value: mailto:szm6596@psu.edu
-  follow:
-    - type: googlescholar
-      name: Google Scholar
-      link: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
-    # - type: linkedin
-    #   name: LinkedIn
-    #   link: https://www.linkedin.com/in/srijit-mukherjee/
-    - type: github
-      name: GitHub
-      link: http://github.com/mukherjeesrijit
-    # - type: youtube
-    #   name: YouTube
-    #   link: https://www.youtube.com/@srijitmath 
-    # - type: substack
-    #   name: Substack
-    #   link: https://srijitmath.substack.com/
-    
+# Top menu. "Blog" is added by itself once a post is published (and its `list` is not false).
+nav:
+  - name: Publications
+    link: /publications/
+  - name: Teaching
+    link: /teaching/
+  - name: CV
+    link: "/assets/Curriculum Vitae Srijit Mukherjee.pdf"
+
+# Footer links
+links:
+  - name: Google Scholar
+    link: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
+  - name: GitHub
+    link: https://github.com/mukherjeesrijit
+  - name: LinkedIn
+    link: https://www.linkedin.com/in/srijit-mukherjee/
+  - name: srijitmath.com
+    link: https://srijitmath.com/
+
+# Show dates on posts and in the blog list
+post_dates: false
+
 # Post URLs use just the title (filename), no date segments
 permalink: /:title/
 
-# Build settings
 markdown: kramdown
-sass:
-    style: :compressed
 plugins:
   - jekyll-feed
 
-# Excluded items
 exclude:
   - .sass-cache/
   - .jekyll-cache/
-  - feed.xml
   - gemfiles/
   - Gemfile
   - Gemfile.lock
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
+  - vendor/
   - notebooks/
   - scripts/
-
-# Used for defeating caching
-version: 1
+  - README.md
+  - CHANGELOG.md
+  - LICENSE.md

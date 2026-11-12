@@ -1,56 +1,31 @@
-<!DOCTYPE html>
-<html>
-  {% include head.html %}
+---
+layout: default
+---
+<div class="wrap list">
+  <header class="list-head">
+    <p class="kicker">{{ page.kicker | default: site.title }}</p>
+    <h1>{{ page.title }}</h1>
+    <div class="intro">{{ content }}</div>
+  </header>
 
-  <body>
-    {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrapper">
-        <div class="work">
-
-          <h1 class="page-heading">{{ page.title }}</h1>
-          {{ content }}
-
-          {% for item in page.items %}
-          <div class="work-item">
-
-            <!-- Image -->
-            <img
-              src="{{ item.image.src | absolute_url }}"
-              alt="{{ item.image.alt }}"
-              class="work-bubble"
-            />
-
-            <!-- Text -->
-            <span class="work-text">
-              <strong>
-                {% if item.link %}
-                  {% if item.link contains "http" %}
-                    <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
-                      {{ item.title }}
-                    </a>
-                  {% else %}
-                    <a href="{{ item.link | prepend: site.baseurl }}">
-                      {{ item.title }}
-                    </a>
-                  {% endif %}
-                {% else %}
-                  {{ item.title }}
-                {% endif %}
-              </strong>
-              &mdash;
-              {{ item.description }}
-            </span>
-
-          </div>
-          {% endfor %}
-
+  <ul class="items">
+    {%- for item in page.items %}
+    {%- assign ext = false %}{% if item.link contains '://' %}{% assign ext = true %}{% endif %}
+    <li>
+      <a class="item" href="{{ item.link | relative_url }}"{% if ext %} target="_blank" rel="noopener"{% endif %}>
+        {%- if item.image %}<img src="{{ item.image.src | relative_url }}" alt="{{ item.image.alt }}" loading="lazy">{% endif %}
+        <div class="item-text">
+          {%- if item.meta %}<span class="item-meta">{{ item.meta }}</span>{% endif %}
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.description }}</p>
+          <small>{{ item.cta | default: "Open" }} {% if ext %}↗{% else %}→{% endif %}</small>
         </div>
-      </div>
-    </div>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
 
-    {% include footer.html %}
-    {% include foot.html %}
-  </body>
-</html>
+  {%- if page.more %}
+  <p class="more"><a class="quiet" href="{{ page.more.link }}" target="_blank" rel="noopener">{{ page.more.text }} →</a></p>
+  {%- endif %}
+</div>

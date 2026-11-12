@@ -1,17 +1,21 @@
 ---
 layout: work
 title: Publications
-slug: /publications
+kicker: Research
 permalink: /publications/
+blurb: "Domain-enriched, ante-hoc interpretable machine learning for biomedical image analysis."
+more:
+  text: All publications on Google Scholar
+  link: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
 items:
   - title: "GLAPAL-H: Global, Local And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI"
+    meta: IEEE Transactions on Biomedical Engineering · 2025
     link: https://ieeexplore.ieee.org/document/11029195/
+    cta: Read the paper
     image:
       src: /assets/img/publications/glapalh.png
-      alt: glapalh
-    description: The study aims to develop a method for differentiating between healthy, post-infectious hydrocephalus (PIH), and non-post-infectious hydrocephalus (NPIH) in infants using low-field MRI, which is a safer, low-cost alternative to CT scans. The study develops a custom approach that captures hydrocephalus etiology while simultaneously addressing quality issues encountered in low-field MRI. 
+      alt: GLAPAL-H architecture
+    description: The study aims to develop a method for differentiating between healthy, post-infectious hydrocephalus (PIH), and non-post-infectious hydrocephalus (NPIH) in infants using low-field MRI, which is a safer, low-cost alternative to CT scans. The study develops a custom approach that captures hydrocephalus etiology while simultaneously addressing quality issues encountered in low-field MRI.
 ---
 
 My research focuses on building domain-enriched, ante-hoc interpretable ML algorithms for biomedical image analysis. I embed disease etiology and modality priors directly into model architecture - yielding interpretable, robust, state-of-the-art performance, especially in scarce, noisy, and imperfect clinical conditions.
-<br />
-<br />

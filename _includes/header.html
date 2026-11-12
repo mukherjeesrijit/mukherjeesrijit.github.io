@@ -1,25 +1,21 @@
-<header class="site-header">
-  <div class="wrapper">
-    <a class="site-title" href="{{ "" | prepend: site.baseurl | prepend: site.url }}/">
-      <img src="{{ "/assets/img/title.png" | absolute_url }}" alt="{{ site.title }}" />
-    </a>
-
-    <nav class="site-nav">
-      <a href="#" class="menu-icon"></a>
-
-      <div class="menu">
-        {% for page in site.header.pages %}
-          {% if page.slug and page.slug != "" and page.slug != nil %}
-            {% assign page_link = page.slug %}
-          {% else %}
-            {% assign page_link = "/" | append: page.name | downcase %}
-          {% endif %}
-          {% assign page_link = page_link | absolute_url %}
-          <a class="page-link" href="{{ page_link }}">
-            {{- page.name -}}
-          </a>
-        {% endfor %}
-      </div>
+{%- assign listed = site.posts | where_exp: "p", "p.list != false" -%}
+<header class="top">
+  <a class="brand" href="{{ '/' | relative_url }}">Srijit Mukherjee<i>.</i></a>
+  <nav class="nav" aria-label="Main">
+    {%- for item in site.nav %}
+    <a href="{{ item.link | relative_url }}"{% if page.url == item.link %} aria-current="page"{% endif %}>{{ item.name }}</a>
+    {%- endfor %}
+    {%- if listed.size > 0 %}
+    <a href="{{ '/blog/' | relative_url }}"{% if page.url == '/blog/' or page.layout == 'post' %} aria-current="page"{% endif %}>Blog</a>
+    {%- endif %}
+  </nav>
+  <details class="menu">
+    <summary aria-label="Menu">☰</summary>
+    <nav class="menulist" aria-label="Main">
+      {%- for item in site.nav %}
+      <a href="{{ item.link | relative_url }}">{{ item.name }}</a>
+      {%- endfor %}
+      {%- if listed.size > 0 %}<a href="{{ '/blog/' | relative_url }}">Blog</a>{% endif %}
     </nav>
-  </div>
+  </details>
 </header>

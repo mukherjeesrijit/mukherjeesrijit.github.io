@@ -6,6 +6,8 @@ tags: [teaching]
 blurb: "Recitation notes and materials from TA-ing EE 350."
 og_image: 
 list: false
+back: Teaching
+back_link: /teaching/
 published: true
 ---
 
