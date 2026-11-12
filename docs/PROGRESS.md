@@ -34,7 +34,7 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
-### 2026-11-11: site redesign (branch `redesign`, not yet on `main`)
+### 2026-11-11: site redesign (live on srijitmukherjee.com since 2026-11-11)
 
 Look: same brand as srijitmath.com. Inter, white / black, one accent `#e8590c`, pill buttons, the orange scribble.
 
@@ -62,7 +62,7 @@ Look: same brand as srijitmath.com. Inter, white / black, one accent `#e8590c`, 
 - **Kept working:** GitHub Actions deploy on push to `main`; `scripts/publish_notebook.py`; all old URLs.
 - **README:** how to write posts and run locally.
 
-**To go live:** merge `redesign` into `main` and push.
+Pushed to `main` on 2026-11-11; the deploy succeeded and every page checked (home, publications, teaching, blog, EE 350, CV).
 
 ---
 
@@ -84,7 +84,7 @@ Domain DNS today: both srijitmukherjee.com and srijitmath.com use Google Domains
 
 ## 4. Plan, in order
 
-0. **Redesign:** done, waiting to be pushed to `main`.
+0. **Redesign:** done and live.
 1. **Base:** `os.srijitmukherjee.com`, sign-in lock, Worker + D1 + R2, nightly encrypted backup.
 2. **Blog:** write privately in the OS (srijitmath's editor); **Publish** sends the post to this repo's `_posts/`
    and the public site shows it.
