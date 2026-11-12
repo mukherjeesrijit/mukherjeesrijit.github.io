@@ -32,3 +32,5 @@ blurb: "One line under the title and in the blog list."
 BUNDLE_PATH=vendor/bundle bundle install
 BUNDLE_PATH=vendor/bundle bundle exec jekyll serve
 ```
+
+Progress, change log and the plan for the private OS: [docs/PROGRESS.md](docs/PROGRESS.md).
