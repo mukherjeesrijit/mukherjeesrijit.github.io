@@ -46,7 +46,7 @@ export async function schedulePage(os) {
   async function load(first) {
     const [from, to] = range();
     // the tasks and projects come once; moving between weeks asks only for that week's placements
-    const d = await call("GET", `/os/schedule?from=${from}&to=${to}${first ? "&tasks=1&projects=1" : ""}`);
+    const d = await call("GET", `/os/schedule?from=${from}&to=${to}${first ? "&projects=1" : "&tasks=0"}`);
     if (first) os.setProjects(d);
     data = { ...d, tasks: d.tasks || data.tasks }; draw();
   }
