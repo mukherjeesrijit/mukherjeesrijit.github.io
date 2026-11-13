@@ -48,12 +48,14 @@ textarea.write { font-size: 18px; min-height: 140px; padding: 16px 18px; }
 
 /* writing */
 .os[data-page="journal"] .os-main { max-width: 1000px; }
-.compose { border: 1.5px solid var(--line); border-radius: 20px; padding: 10px; background: var(--soft); }
-/* a roomy page to think on: about half the screen's height, more on a big screen, never cramped on a small one */
-.compose textarea.write { min-height: clamp(280px, 52vh, 640px); font-size: 19px; line-height: 1.8; padding: 26px 30px; border-radius: 14px; }
-.compose textarea.write { border-color: transparent; background: var(--bg); }
-.compose textarea.write:focus { border-color: var(--accent); }
-.compose .row { padding: 8px 6px 4px; }
+/* an open page, like a document: no box, no border, just room to write (about half the screen's height, more on a big
+   screen, never cramped on a small one) */
+.compose { padding: 0; }
+.compose textarea.write { min-height: clamp(280px, 52vh, 640px); font-size: 20px; line-height: 1.8; padding: 4px 0;
+  border: 0; border-radius: 0; background: transparent; }
+.compose textarea.write::placeholder { color: #b4b6bb; }
+.compose textarea.write:focus, .compose textarea.write:focus-visible { outline: none; }
+.compose .row { padding: 14px 0 0; }
 .compose select { max-width: 340px; }
 .filters { margin: 40px 0 8px; }
 .filters select { max-width: 280px; }
@@ -118,8 +120,7 @@ textarea.write { font-size: 18px; min-height: 140px; padding: 16px 18px; }
   .os-main { padding-top: 28px; }
   .os-cards { grid-template-columns: minmax(0, 1fr); }
   .compose select, .filters select { max-width: 100%; flex: 1; }
-  .compose { padding: 6px; border-radius: 16px; }
-  .compose textarea.write { min-height: max(240px, 44vh); font-size: 17px; line-height: 1.7; padding: 16px 16px; }
+  .compose textarea.write { min-height: max(240px, 44vh); font-size: 18px; line-height: 1.7; }
   .proj-row { flex-wrap: wrap; gap: 2px 12px; padding-left: calc(var(--d) * 18px); }
   .proj-row::before { left: calc(var(--d) * 18px - 12px); width: 7px; }
   .proj-row .count { width: 100%; }
