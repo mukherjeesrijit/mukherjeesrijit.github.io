@@ -9,13 +9,13 @@ more:
   link: https://scholar.google.com/citations?user=bmQgd0MAAAAJ&hl=en
 
 # Newest first. The first link is where the title goes. "S Mukherjee" is shown in bold.
-# Sources (checked 2026-11-12): Google Scholar, PubMed, Crossref, OpenAlex, arXiv.
+# Sources (checked 2026-11-12): Google Scholar, PubMed, Crossref, OpenAlex, arXiv, and the CV (2026-11-13).
 papers:
   - title: "Hydrocephalic Brain Volume Estimation from Low-Field MRI: Topologically-Enriched Cross-Modal Enhancement and Segmentation"
     year: 2026
     kind: Preprint
     authors: S Mukherjee, K Templeton, SJ Schiff, V Monga
-    venue: medRxiv · August 2026
+    venue: medRxiv · August 2026 · under review at the Journal of Neural Engineering
     about: >-
       EnSegNet-Cross measures brain and CSF volume in infants with hydrocephalus from low-field MRI alone. It learns from
       paired CT scans during training, with a 3D topological loss based on persistent homology that makes the CSF
@@ -29,6 +29,7 @@ papers:
   - title: "Hemibrain growth as a biomarker for whole-brain growth"
     year: 2026
     kind: Journal article
+    note: Joint first author
     authors: US Bajaj, M Yu, K Templeton, S Mukherjee, H Zhang, N Nunn, AV Kulkarni, JRW Kestle, V Monga, SJ Schiff
     venue: "Journal of Neurosurgery: Pediatrics 38(5), 700–710 · 2026"
     about: >-
@@ -44,16 +45,17 @@ papers:
         url: https://doi.org/10.1101/2025.09.28.25336850
 
   - title: "GLAPAL-H: Global, Local, And Parts Aware Learner for Hydrocephalus Infection Diagnosis in Low-Field MRI"
-    year: 2025
+    year: 2026
     kind: Journal article
     authors: S Mukherjee, K Templeton, S Tindimwebwa, PY Lin, J Sutin, M Yu, M Peterson, C Truwit, SJ Schiff, V Monga
-    venue: IEEE Transactions on Biomedical Engineering 73(1), 139–152 · 2025
+    venue: IEEE Transactions on Biomedical Engineering 73(1), 139–152 · 2026
     about: >-
       The study aims to develop a method for differentiating between healthy, post-infectious hydrocephalus (PIH), and
       non-post-infectious hydrocephalus (NPIH) in infants using low-field MRI, which is a safer, low-cost alternative to
       CT scans. The study develops a custom approach that captures hydrocephalus etiology while simultaneously
       addressing quality issues encountered in low-field MRI. Its global, local and parts branches outperform
-      state-of-the-art alternatives, including CT-based approaches, in accuracy, interpretability and generalizability.
+      state-of-the-art alternatives, including CT-based approaches, in accuracy, interpretability and generalizability
+      (73 infants, AUC 0.92).
     links:
       - name: Paper
         url: https://ieeexplore.ieee.org/document/11029195/
@@ -76,6 +78,16 @@ papers:
         url: https://doi.org/10.1016/j.dam.2023.01.001
       - name: arXiv
         url: https://arxiv.org/abs/2212.04253
+
+# Shown under the papers, without links, until they are out.
+in_prep:
+  - title: "HydroGeom: Brain and CSF Geometry Aware Representation for Hydrocephalus Diagnosis"
+    authors: S Mukherjee, K Templeton, et al.
+    about: >-
+      A topology- and geometry-aware representation of the brain and CSF, with an efficient HydroNet that reaches 87.3%
+      accuracy (AUC 0.88), ahead of state-of-the-art baselines in detecting both hydrocephalus and the pathology behind it.
+  - title: "DBIBD-Net: A Dual-Branch Multiple-Instance Learning Framework for Histopathological Scoring of Inflammatory Bowel Disease"
+    authors: Y Luo, S Mukherjee, et al.
 ---
 
 My research focuses on building domain-enriched, ante-hoc interpretable ML algorithms for biomedical image analysis. I embed disease etiology and modality priors directly into model architecture - yielding interpretable, robust, state-of-the-art performance, especially in scarce, noisy, and imperfect clinical conditions.

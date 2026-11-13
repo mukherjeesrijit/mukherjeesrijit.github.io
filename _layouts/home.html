@@ -38,14 +38,21 @@ layout: default
     </div>
   </section>
 
-  {%- if page.facts %}
+  {%- if page.education %}
   <section class="split">
-    <h2 class="label">Penn State</h2>
-    <dl class="facts">
-      {%- for f in page.facts %}
-      <dt>{{ f.k }}</dt><dd>{{ f.v | markdownify | remove: '<p>' | remove: '</p>' | strip }}</dd>
+    <h2 class="label">Education</h2>
+    <ol class="rows edu">
+      {%- for e in page.education %}
+      <li>
+        <span class="when">{{ e.when }}</span>
+        <div>
+          <b>{{ e.title }}</b>
+          <span class="place">{{ e.place | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span>
+          {%- for l in e.lines %}<span class="line">{{ l | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span>{% endfor %}
+        </div>
+      </li>
       {%- endfor %}
-    </dl>
+    </ol>
   </section>
   {%- endif %}
 
@@ -63,6 +70,28 @@ layout: default
       </a>
       {%- endfor %}
     </div>
+  </section>
+  {%- endif %}
+
+  {%- if page.awards %}
+  <section class="split">
+    <h2 class="label">Awards</h2>
+    <ol class="rows">
+      {%- for a in page.awards %}
+      <li><span class="when">{{ a.when }}</span><div>{{ a.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</div></li>
+      {%- endfor %}
+    </ol>
+  </section>
+  {%- endif %}
+
+  {%- if page.service %}
+  <section class="split">
+    <h2 class="label">Mentoring &amp; service</h2>
+    <ol class="rows">
+      {%- for s in page.service %}
+      <li><span class="when">{{ s.when }}</span><div>{{ s.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</div></li>
+      {%- endfor %}
+    </ol>
   </section>
   {%- endif %}
 </div>

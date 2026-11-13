@@ -34,6 +34,23 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-13: home page from the CV
+
+Read the CV (`assets/Curriculum Vitae Srijit Mukherjee.pdf`) and rebuilt the home page from it, all in `index.md`'s
+front matter (`_layouts/home.html` draws it):
+
+- **Kicker** now "PhD Candidate · Electrical Engineering, Penn State" (the degree's name on the CV).
+- **News:** five dated items (Bose award; EnSegNet-Cross preprint, under review at J Neural Eng; EE 350 TA with
+  Prof. Jeffrey Schiano; Hemibrain growth, joint first author; GLAPAL-H in IEEE TBME).
+- **Education** (replaces the "Penn State" facts): Ph.D. EE, Penn State 2022 – 2027, with advisors, dissertation and
+  lab; Master's and Bachelor's in Statistics, ISI Kolkata, with specialization only (no projects or grades, by choice).
+- **Awards:** dissertation award, three fellowships, four mathematics competitions.
+- **Mentoring & service:** students mentored and NIH/NSF proposals (moved out of the Research text), reviewing (IEEE
+  SPL, Sensors, CAMSAP, ICASSP), PJAS judge, Quant Finance Club instructor.
+- **Publications** brought in line with the CV: GLAPAL-H dated 2026 (vol. 73 no. 1), Hemibrain marked joint first
+  author, EnSegNet-Cross "under review at the Journal of Neural Engineering", and a new "In preparation" list
+  (HydroGeom; DBIBD-Net).
+
 ### 2026-11-12: the blog system (live)
 
 The same system as srijitmath.com/blog, for this site. Code: `site-blog/` in the private repo

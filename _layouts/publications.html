@@ -13,7 +13,7 @@ layout: default
     <li class="pub">
       <span class="pub-year">{{ p.year }}</span>
       <div class="pub-text">
-        {%- if p.kind %}<span class="pub-kind">{{ p.kind }}</span>{% endif %}
+        {%- if p.kind %}<span class="pub-kind">{{ p.kind }}{% if p.note %} · {{ p.note }}{% endif %}</span>{% endif %}
         <h2><a href="{{ p.links[0].url }}" target="_blank" rel="noopener">{{ p.title }}</a></h2>
         <p class="pub-authors">{{ p.authors | replace: "S Mukherjee", "<b>S Mukherjee</b>" }}</p>
         <p class="pub-venue">{{ p.venue }}</p>
@@ -25,6 +25,22 @@ layout: default
     </li>
     {%- endfor %}
   </ol>
+
+  {%- if page.in_prep %}
+  <h2 class="pubs-sub">In preparation</h2>
+  <ol class="pubs">
+    {%- for p in page.in_prep %}
+    <li class="pub">
+      <span class="pub-year">{{ p.year | default: "2026" }}</span>
+      <div class="pub-text">
+        <h2>{{ p.title }}</h2>
+        <p class="pub-authors">{{ p.authors | replace: "S Mukherjee", "<b>S Mukherjee</b>" }}</p>
+        {%- if p.about %}<p class="pub-about">{{ p.about }}</p>{% endif %}
+      </div>
+    </li>
+    {%- endfor %}
+  </ol>
+  {%- endif %}
 
   {%- if page.more %}
   <p class="more"><a class="quiet" href="{{ page.more.link }}" target="_blank" rel="noopener">{{ page.more.text }} →</a></p>
