@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<div class="wrap list">
+  <header class="list-head">
+    <p class="kicker">{{ page.kicker | default: site.title }}</p>
+    <h1>{{ page.title }}</h1>
+    <div class="intro">{{ content }}</div>
+  </header>
+
+  <ol class="pubs">
+    {%- for p in page.papers %}
+    <li class="pub">
+      <span class="pub-year">{{ p.year }}</span>
+      <div class="pub-text">
+        {%- if p.kind %}<span class="pub-kind">{{ p.kind }}</span>{% endif %}
+        <h2><a href="{{ p.links[0].url }}" target="_blank" rel="noopener">{{ p.title }}</a></h2>
+        <p class="pub-authors">{{ p.authors | replace: "S Mukherjee", "<b>S Mukherjee</b>" }}</p>
+        <p class="pub-venue">{{ p.venue }}</p>
+        <p class="pub-about">{{ p.about }}</p>
+        <p class="pub-links">
+          {%- for l in p.links %}<a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.name }} ↗</a>{% endfor %}
+        </p>
+      </div>
+    </li>
+    {%- endfor %}
+  </ol>
+
+  {%- if page.more %}
+  <p class="more"><a class="quiet" href="{{ page.more.link }}" target="_blank" rel="noopener">{{ page.more.text }} →</a></p>
+  {%- endif %}
+</div>

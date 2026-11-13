@@ -1,6 +1,6 @@
 # srijitmukherjee.com: progress and plan
 
-Last updated: 2026-11-11
+Last updated: 2026-11-12
 
 The public website is the front door. Later, a private personal operating system (journal, tasks, calendar view,
 research second brain, blog drafts) will sit next to it. Data stays private; code can live on GitHub.
@@ -33,6 +33,39 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 ---
 
 ## 2. Done
+
+### 2026-11-12: the blog system (live)
+
+The same system as srijitmath.com/blog, for this site. Code: `site-blog/` in the private repo
+`mukherjeesrijit/srijitmath-work` (its README has every detail).
+
+- **Write at srijitmukherjee.com/blog/write/**: the Milkdown block editor, Markdown with `$…$` / `$$…$$` maths,
+  Write / Preview / Markdown views, autosave, pictures pasted or dropped in (shrunk to WebP in the browser).
+- **Only Srijit can write, with no sign-in:** a long secret **write key** held in the browser. The Worker keeps only
+  its SHA-256 and refuses every request without it. The key is in the macOS Keychain ("srijitmukherjee.com blog write
+  key") and the database's `vault`. Another device: "Copy a link that opens this on another device" on the editor's
+  list page (a link ending in `#key=…`), or type the key on the editor's page. Visitors see "Only Srijit writes here".
+- **Backend:** Cloudflare Worker `srijitmukherjee-site` (srijitmukherjee-site.srijitmath.workers.dev) and D1
+  database `srijitmukherjee-site` (`blog_posts`, `blog_images`, `vault`). This is also the start of the private OS's
+  backend (section 3).
+- **Publish / Update / Unpublish:** the Worker starts **Publish site blog** in srijitmath-work, which builds the post
+  (maths rendered in advance) into this repo: `_posts/<date>-<slug>.html` (served at `/blog/<slug>/`), the Markdown
+  source in `_blog/<slug>.md`, pictures in `assets/blog/<slug>/`, and the editor in `blog/write/`. It pushes with a
+  deploy key, and the site's Build and Deploy publishes it: about 2–3 minutes; the editor says when it is live.
+- **On this site:** posts get the byline "date · N min read"; the Blog menu item appears once a post is published;
+  on a device holding the key, Blog (to the editor), "Edit this post" and "Write" always show.
+- **Not carried over:** the ❤️ (srijitmath's is for signed-in learners; this site has no reader sign-in).
+- **Tested end to end** on 2026-11-12 (draft, picture, maths, build, the Worker starting the workflow, the push,
+  the deploy); the test draft was deleted. No post is published yet.
+
+### 2026-11-12: Publications rewritten
+
+All four papers on Google Scholar, newest first, each with authors (mine in bold), venue, a short plain description
+taken from its abstract, and links (paper, open access, preprint, code, arXiv): the low-field MRI volume preprint
+(EnSegNet-Cross, medRxiv 2026), Hemibrain growth (J Neurosurg Pediatr 2026), GLAPAL-H (IEEE TBME 2025), and
+Triangle-free projective-planar graphs (Discrete Applied Mathematics 2023). New layout `_layouts/publications.html`;
+the papers live in `pages/publications.md` (front matter `papers:`). Abstracts and links checked against PubMed,
+Crossref, OpenAlex and arXiv (Scholar blocks automated reading).
 
 ### 2026-11-11: site redesign (live on srijitmukherjee.com since 2026-11-11)
 
@@ -71,7 +104,7 @@ Pushed to `main` on 2026-11-11; the deploy succeeded and every page checked (hom
 | Part | Where | Who sees it |
 |---|---|---|
 | `srijitmukherjee.com`: home, publications, teaching, blog | GitHub Pages (this repo) | Everyone |
-| `os.srijitmukherjee.com`: the app | Cloudflare | Only me, behind sign-in |
+| `os.srijitmukherjee.com`: the app | Cloudflare | Only me, behind sign-in (or the write key, as the blog) |
 | My data: journal, tasks, notes, project index, drafts | Cloudflare D1 (database) + R2 (files) via a Worker | Only me |
 | Claude's access to the OS | An MCP server on the same Worker | Me, through Claude |
 
@@ -86,8 +119,7 @@ Domain DNS today: both srijitmukherjee.com and srijitmath.com use Google Domains
 
 0. **Redesign:** done and live.
 1. **Base:** `os.srijitmukherjee.com`, sign-in lock, Worker + D1 + R2, nightly encrypted backup.
-2. **Blog:** write privately in the OS (srijitmath's editor); **Publish** sends the post to this repo's `_posts/`
-   and the public site shows it.
+2. **Blog:** done 2026-11-12 (section 2). When the OS exists, the editor moves inside it.
 3. **Today page:** daily tasks + journal entry on one screen, with today's Google Calendar events beside them
    (read from Google Calendar; Google stays the source of truth for alerts and invites).
 4. **Research second brain:**
