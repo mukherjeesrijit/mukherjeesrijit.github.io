@@ -106,7 +106,10 @@ function typedOnly(el) {
   el.addEventListener("drop", no);
   el.addEventListener("beforeinput", (e) => { if (/^insertFrom(Paste|Drop|Yank)/.test(e.inputType)) no(e); });
   el.setAttribute("autocomplete", "off");
-  if (el.tagName === "TEXTAREA") { const grow = () => { el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; }; el.addEventListener("input", grow); requestAnimationFrame(grow); }
+  if (el.tagName === "TEXTAREA") { // grows with the writing; empty or short, the stylesheet decides its size (by screen)
+    const grow = () => { el.style.height = ""; if (el.scrollHeight > el.clientHeight + 1) el.style.height = el.scrollHeight + 2 + "px"; };
+    el.addEventListener("input", grow); requestAnimationFrame(grow);
+  }
   return el;
 }
 
