@@ -34,6 +34,25 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-13: the private OS begins: Journal and Projects (live)
+
+- **srijitmukherjee.com/os/** (today: entries today, projects, recent entries), **/os/journal/**, **/os/projects/**.
+  Only a device holding the write key (the blog's key) sees anything; to everyone else the pages are an empty lock
+  screen ("Only Srijit can open this"), not indexed by search engines, no analytics.
+- **The data is only in Cloudflare** (D1 `srijitmukherjee-site`: `os_journal`, `os_projects`), reached through the
+  Worker. These pages in GitHub hold code only, never an entry.
+- **Journal:** type a thought, pick a project (or none), Save (⌘/Ctrl + Enter). Each entry keeps its **time** (set by
+  the server), the time zone it was written in, and how long it took to type. **Typed only:** pasting and dropping
+  text are blocked. Entries grouped by day, filter by project (a project includes its sub-projects), search, edit
+  (marked "edited"), delete. An unsaved draft stays on the device.
+- **Projects:** projects inside projects (PhD Thesis → Third contribution → …), each with a name and description you
+  can change at any time, move under another project, archive; only an empty project can be deleted. A project's
+  page shows its sub-projects and every entry under it, with "Write about it".
+- Code: pages `_layouts/os.html`, `os/`, `assets/js/os.js`, `assets/css/os.css` here; the Worker routes `/os/*` in
+  `srijitmath-work/site-blog/worker/` (README there).
+- **Decision taken for now** (section 5, journal encryption): option (a), not end-to-end encrypted, so Claude can read
+  it later (Cloudflare encrypts D1 at rest). Can change.
+
 ### 2026-11-13: home page from the CV
 
 Read the CV (`assets/Curriculum Vitae Srijit Mukherjee.pdf`) and rebuilt the home page from it, all in `index.md`'s
@@ -135,6 +154,7 @@ Domain DNS today: both srijitmukherjee.com and srijitmath.com use Google Domains
 ## 4. Plan, in order
 
 0. **Redesign:** done and live.
+   **Journal + Projects:** done 2026-11-13 at /os/ (section 2), on the blog's Worker and key; the base below can grow from it.
 1. **Base:** `os.srijitmukherjee.com`, sign-in lock, Worker + D1 + R2, nightly encrypted backup.
 2. **Blog:** done 2026-11-12 (section 2). When the OS exists, the editor moves inside it.
 3. **Today page:** daily tasks + journal entry on one screen, with today's Google Calendar events beside them

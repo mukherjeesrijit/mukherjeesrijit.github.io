@@ -10,13 +10,14 @@
   </div>
 </footer>
 <script>
-/* Srijit's ways in to the blog editor, only on a device that holds his write key (set by /blog/write/). Visitors see nothing. */
+/* Srijit's ways in to the blog editor and his private OS (/os/), only on a device that holds his write key (set by /blog/write/). Visitors see nothing. */
 (function () {
   var k; try { k = localStorage.getItem("sm_write_key"); } catch (e) {}
   if (!k) return;
   var link = function (href, text) { var a = document.createElement("a"); a.href = href; a.textContent = text; a.className = "owner-link"; return a; };
   document.querySelectorAll(".nav, .menulist").forEach(function (nav) {
     if (!nav.querySelector('a[href="/blog/"]')) nav.appendChild(link("/blog/write/", "Blog"));
+    nav.appendChild(link("/os/", "OS"));
   });
   var post = document.querySelector(".blog-post[data-post]");
   if (post) post.querySelector(".kicker").append(" · ", link("/blog/write/#" + post.dataset.post, "Edit this post"));
