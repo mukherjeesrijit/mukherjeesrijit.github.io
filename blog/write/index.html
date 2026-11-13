@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-<link rel="stylesheet" href="dist/editor.css?v=66b9f59b1f">
+<link rel="stylesheet" href="dist/editor.css?v=2611d8c771">
 <style>
 /* srijitmukherjee.com's look (= srijitmath.com's): white, black, one orange accent, Inter (assets/css/site.css) */
 :root { --bg: #ffffff; --ink: #0b0b0c; --muted: #5d6067; --line: #e6e6e8; --soft: #f6f6f7; --accent: #e8590c; --accent-soft: #fff1e8; }
@@ -72,7 +72,9 @@ body[data-view="gate"] .bar > :not(.back) { display: none; }
 #gate form { display: flex; gap: 8px; margin-top: 28px; } #gate input { flex: 1; min-width: 0; font: 14px Menlo, Monaco, monospace; padding: 8px 12px;
   border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--ink); } #gate .err { color: #b42318; font-size: 14px; }
 .device { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
-.device button { border: 0; background: none; padding: 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+#gate .gbtn { margin-top: 28px; min-height: 44px; } #gate .keyway { margin-top: 24px; } #gate .keyway summary { cursor: pointer; font-size: 14px; color: var(--muted); }
+#gate .keyway form { margin-top: 12px; }
+.device a { text-decoration: none; } .device button { border: 0; background: none; padding: 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 #list .list-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 #list h1 { font-size: 32px; margin: 0; }
 .mine { list-style: none; margin: 0; padding: 0; } .mine li { padding: 18px 0; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
@@ -122,5 +124,5 @@ body[data-view="gate"] .bar > :not(.back) { display: none; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
-<script type="module" src="dist/editor.js?v=66b9f59b1f"></script>
+<script type="module" src="dist/editor.js?v=2611d8c771"></script>
 </body></html>
