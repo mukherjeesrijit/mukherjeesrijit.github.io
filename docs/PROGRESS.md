@@ -34,6 +34,13 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-13: Journal renamed Strategy; every write one round trip
+
+- **Strategy** everywhere: the menu, page name, headings, project pages, home card; address **/os/strategy/**
+  (/os/journal/ forwards). The database table keeps its internal name.
+- A new Strategy entry, task or placement now takes **one database round trip** (the check that its project or task
+  exists happens inside the insert).
+
 ### 2026-11-13: the Schedule (live)
 
 - **srijitmukherjee.com/os/schedule/**: the paper weekly schedule (Mon–Sun, 6 AM – midnight), online.
@@ -180,7 +187,7 @@ Domain DNS today: both srijitmukherjee.com and srijitmath.com use Google Domains
 ## 4. Plan, in order
 
 0. **Redesign:** done and live.
-   **Journal + Projects:** done 2026-11-13 at /os/ (section 2), on the blog's Worker and key; the base below can grow from it.
+   **Strategy (was Journal) + Projects:** done 2026-11-13 at /os/ (section 2), on the blog's Worker and key; the base below can grow from it.
 1. **Base:** `os.srijitmukherjee.com`, sign-in lock, Worker + D1 + R2, nightly encrypted backup.
 2. **Blog:** done 2026-11-12 (section 2). When the OS exists, the editor moves inside it.
    **Schedule:** done 2026-11-13 (tasks with projects, fixed and flexible, week / 2 weeks / month board).

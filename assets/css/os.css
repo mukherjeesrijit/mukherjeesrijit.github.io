@@ -3,7 +3,7 @@
 .os-tag { display: inline-block; margin-left: 4px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft);
   color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .06em; vertical-align: 2px; }
 .os .os-nav { display: flex; gap: 22px; }
-/* width: 100% — main is a flex item of body, and without it the column shrinks to its content (an empty journal
+/* width: 100% — main is a flex item of body, and without it the column shrinks to its content (an empty Strategy page
    made the writing page narrow) */
 .os-main { width: 100%; max-width: 820px; padding-top: 44px; padding-bottom: 96px; }
 .os-head { margin-bottom: 28px; }
@@ -51,7 +51,7 @@ textarea.write { font-size: 18px; min-height: 140px; padding: 16px 18px; }
 /* writing */
 /* an open page, like the blog editor: its column (720 px of text) and type (19 px), no box or border, and the page to
    write on fills the screen below the heading on any laptop or phone (the controls sit just under it) */
-.os[data-page="journal"] .os-main { max-width: 768px; }
+.os[data-page="strategy"] .os-main { max-width: 768px; }
 .compose { padding: 0; }
 .compose textarea.write { min-height: max(320px, calc(100vh - 330px)); min-height: max(320px, calc(100svh - 330px));
   font-size: 19px; line-height: 1.7; padding: 4px 0; border: 0; border-radius: 0; background: transparent; }

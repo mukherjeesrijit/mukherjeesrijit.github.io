@@ -1,4 +1,4 @@
-// Srijit's private OS (2026-11-13): /os/, /os/journal/, /os/projects/.
+// Srijit's private OS (2026-11-13): /os/, /os/strategy/ (was /os/journal/, which now forwards), /os/projects/, /os/schedule/.
 // These pages are empty shells: every entry and project lives only in Cloudflare D1, behind the Worker
 // (srijitmath-work/site-blog/worker, routes /os/*), and comes here only for Srijit: "Continue with Google" with his
 // own account (the Worker refuses every other), which leaves a session token in localStorage "sm_write_key" (shared
@@ -164,7 +164,7 @@ const ago = (ms) => {
 };
 const minutes = (ms) => ms >= 60000 ? `${Math.round(ms / 60000)} min` : `${Math.max(1, Math.round(ms / 1000))} s`;
 
-// -- the journal ---------------------------------------------------------------------------------------------------
+// -- Strategy: what is on his mind, by project ------------------------------------------------------------------
 function entryHTML(e) {
   const tz = e.tz && e.tz !== here ? ` <span class="muted">(${esc(e.tz.split("/").pop().replace(/_/g, " "))} ${esc(new Date(e.created).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", timeZone: e.tz }))})</span>` : "";
   const proj = e.project_id && byId.get(e.project_id)
@@ -205,7 +205,7 @@ function entriesPane(box, query, empty, first) {
   async function load(more) {
     const q = new URLSearchParams(query());
     if (more) q.set("before", oldest);
-    show(await call("GET", "/os/journal?" + q), more);
+    show(await call("GET", "/os/strategy?" + q), more);
   }
   box.innerHTML = `<div class="entries"></div><p class="center"><button class="btn ghost more" hidden>Older entries</button></p>`;
   $(".more", box).onclick = () => load(true).catch((e) => alert(say(e)));
@@ -215,7 +215,7 @@ function entriesPane(box, query, empty, first) {
     const art = b.closest(".entry"), e = cache.get(Number(art.dataset.id));
     if (b.dataset.act === "delete") {
       if (!confirm("Delete this entry for good?")) return;
-      try { await call("DELETE", `/os/journal/${e.id}`); cache.delete(e.id); art.remove(); } catch (x) { alert(say(x)); }
+      try { await call("DELETE", `/os/strategy/${e.id}`); cache.delete(e.id); art.remove(); } catch (x) { alert(say(x)); }
     }
     if (b.dataset.act === "edit") {
       art.classList.add("editing");
@@ -231,7 +231,7 @@ function entriesPane(box, query, empty, first) {
       if (!body) return alert(ERR.empty);
       b.disabled = true;
       try {
-        const r = await call("PATCH", `/os/journal/${e.id}`, { body, project_id });
+        const r = await call("PATCH", `/os/strategy/${e.id}`, { body, project_id });
         Object.assign(e, { body, project_id, updated: r.updated });
         art.outerHTML = entryHTML(e);
       } catch (x) { b.disabled = false; alert(say(x)); }
@@ -248,7 +248,7 @@ function entriesPane(box, query, empty, first) {
 function composer(box, { project, onSaved }) {
   const DRAFT = "os_draft", LAST = "os_last_project";
   box.innerHTML = `<form class="compose">
-    <textarea class="write" rows="5" placeholder="What are you thinking?" aria-label="Journal entry" spellcheck="true"></textarea>
+    <textarea class="write" rows="5" placeholder="What are you thinking?" aria-label="Strategy entry" spellcheck="true"></textarea>
     <div class="row"><select class="proj" aria-label="Project">${options(project ?? local.get(LAST))}</select>
       <span class="grow muted small hint">${navigator.platform.includes("Mac") ? "⌘" : "Ctrl"} + Enter to save</span>
       <button class="btn accent" type="submit">Save</button></div></form>`;
@@ -264,7 +264,7 @@ function composer(box, { project, onSaved }) {
     const project_id = Number($(".proj", box).value) || null, btn = $("button[type=submit]", box);
     btn.disabled = true; btn.textContent = "Saving…";
     try {
-      const r = await call("POST", "/os/journal", { body, project_id, tz: here, typed_ms: started ? Date.now() - started : null });
+      const r = await call("POST", "/os/strategy", { body, project_id, tz: here, typed_ms: started ? Date.now() - started : null });
       t.value = ""; started = 0; local.set(DRAFT, null); local.set(LAST, project_id ? String(project_id) : null);
       t.dispatchEvent(new Event("input"));
       onSaved(r.entry);
@@ -274,10 +274,10 @@ function composer(box, { project, onSaved }) {
   return t;
 }
 
-async function journalPage() {
+async function strategyPage() {
   const q = new URLSearchParams(location.search), pre = Number(q.get("project")) || null;
-  const first = setProjects(await call("GET", `/os/journal?projects=1${pre ? `&project=${pre}` : ""}`));
-  app.innerHTML = `<header class="os-head"><p class="kicker">Journal</p><h1>What's on your mind</h1></header>
+  const first = setProjects(await call("GET", `/os/strategy?projects=1${pre ? `&project=${pre}` : ""}`));
+  app.innerHTML = `<header class="os-head"><p class="kicker">Strategy</p><h1>What's on your mind</h1></header>
     <div id="compose"></div>
     <div class="filters row"><select id="filter" aria-label="Show entries from">
       <option value="">All entries</option><option value="none">No project</option>
@@ -342,7 +342,7 @@ async function projectsPage() {
   setProjects(await call("GET", "/os/projects"));
   const live = tree(), archived = tree(null, 0, [], null, true).filter(({ p }) => p.archived && !byId.get(p.parent_id)?.archived);
   app.innerHTML = `<header class="os-head"><p class="kicker">Projects</p><h1>Projects</h1>
-    <p class="muted">Projects inside projects: a thesis, its contributions, their pieces. Each has a description and its own journal entries.</p></header>
+    <p class="muted">Projects inside projects: a thesis, its contributions, their pieces. Each has a description and its own Strategy entries.</p></header>
     ${newProjectForm(null)}
     ${live.length ? `<ul class="proj-tree">${live.map(projectRow).join("")}</ul>` : `<p class="empty">No projects yet. Create the first one above.</p>`}
     ${archived.length ? `<details class="archived-list"><summary>Archived (${archived.length})</summary><ul class="proj-tree">${archived.map(({ p }) => projectRow({ p, depth: 0 })).join("")}</ul></details>` : ""}`;
@@ -351,7 +351,7 @@ async function projectsPage() {
 }
 
 async function projectPage(id) {
-  const first = setProjects(await call("GET", `/os/journal?projects=1&project=${id}`));
+  const first = setProjects(await call("GET", `/os/strategy?projects=1&project=${id}`));
   const p = byId.get(id), crumbs = path(id);
   if (!p) { history.replaceState(null, "", "/os/projects/"); return projectsPage(); }
   app.innerHTML = `<nav class="crumbs"><a href="/os/projects/">Projects</a>${crumbs.slice(0, -1).map((c) => ` › <a href="/os/projects/?id=${c.id}">${esc(c.name)}</a>`).join("")}</nav>
@@ -362,11 +362,11 @@ async function projectPage(id) {
       <div class="row tools"><button class="link" id="editp">Rename / describe / move</button>
         <button class="link" id="archp">${p.archived ? "Unarchive" : "Archive"}</button>
         <button class="link danger" id="delp">Delete</button>
-        <span class="grow"></span><a class="btn accent small" href="/os/journal/?project=${id}">Write about it</a></div>
+        <span class="grow"></span><a class="btn accent small" href="/os/strategy/?project=${id}">Write about it</a></div>
     </header>
     ${kids(id).length ? `<section><h2 class="label">Inside</h2><ul class="proj-tree">${tree(id, 0, [], null, true).map(projectRow).join("")}</ul></section>` : ""}
     ${newProjectForm(id)}
-    <section><h2 class="label">Journal</h2><div id="list"></div></section>`;
+    <section><h2 class="label">Strategy</h2><div id="list"></div></section>`;
   wireNewProject((nid) => go(`/os/projects/?id=${nid}`));
   $("#editp").onclick = () => {
     $("#editp").closest(".os-head").innerHTML = `<p class="kicker">Edit project</p><form class="card-form" id="pform">
@@ -397,13 +397,13 @@ async function projectPage(id) {
 
 // -- home ----------------------------------------------------------------------------------------------------------
 async function homePage() {
-  const d = setProjects(await call("GET", "/os/journal?projects=1&limit=10"));
+  const d = setProjects(await call("GET", "/os/strategy?projects=1&limit=10"));
   const today = d.entries.filter((e) => dayKey(e.created) === dayKey(Date.now())).length;
   const hour = new Date().getHours();
   app.innerHTML = `<header class="os-head"><p class="kicker">${esc(new Date().toLocaleDateString([], { weekday: "long", day: "numeric", month: "long", year: "numeric" }))}</p>
       <h1>Good ${hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening"}, Srijit</h1></header>
     <div class="os-cards">
-      <a class="os-card" href="/os/journal/"><span class="kicker">Journal</span><b>${today ? `${today}${today === d.entries.length && d.more ? "+" : ""} ${today === 1 ? "entry" : "entries"} today` : "Write today's first entry"}</b>
+      <a class="os-card" href="/os/strategy/"><span class="kicker">Strategy</span><b>${today ? `${today}${today === d.entries.length && d.more ? "+" : ""} ${today === 1 ? "entry" : "entries"} today` : "Write today's first entry"}</b>
         <span class="muted">${d.entries.length ? `Last written ${ago(d.entries[0].created)}` : "Nothing written yet"}</span></a>
       <a class="os-card" href="/os/projects/"><span class="kicker">Projects</span><b>${projects.filter((p) => !p.archived).length} projects</b>
         <span class="muted">${esc(tree().filter(({ depth }) => depth === 0).slice(0, 4).map(({ p }) => p.name).join(" · ")) || "Create your first project"}</span></a>
@@ -428,7 +428,7 @@ function go(href) { history.pushState(null, "", href); render(); }
 async function render() {
   window.scrollTo(0, 0);
   try {
-    if (page === "journal") await journalPage();
+    if (page === "strategy") await strategyPage();
     else if (page === "schedule") await (await import(`./os-schedule.js?v=${document.body.dataset.v}`)).schedulePage(toolkit);
     else if (page === "projects") await projectsPage();
     else await homePage();
