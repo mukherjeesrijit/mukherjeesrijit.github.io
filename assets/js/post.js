@@ -3,8 +3,9 @@
   var body = document.querySelector('.blog-post');
   if (!body) return;
 
-  // 1. Maths: $…$, $$…$$, \(…\), \[…\] (kramdown turns $$ into \( \) / \[ \]).
-  if (window.renderMathInElement) {
+  // 1. Maths: $…$, $$…$$, \(…\), \[…\] (kramdown turns $$ into \( \) / \[ \]). Posts from the editor arrive with
+  // their maths already rendered (data-prerendered), so nothing to do there.
+  if (window.renderMathInElement && !body.querySelector('[data-prerendered]')) {
     renderMathInElement(body, {
       delimiters: [
         { left: '$$', right: '$$', display: true },

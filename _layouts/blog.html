@@ -12,8 +12,9 @@ layout: default
     {%- for post in listed %}
     <li><a href="{{ post.url | relative_url }}">
       <h2>{{ post.title }}</h2>
-      {%- if post.blurb %}<p class="dek">{{ post.blurb }}</p>{% endif %}
-      {%- if site.post_dates %}<p class="byline">{{ post.date | date: "%B %-d, %Y" }}</p>{% endif %}
+      {%- assign dek = post.subtitle | default: post.blurb %}
+      {%- if dek %}<p class="dek">{{ dek }}</p>{% endif %}
+      {%- if site.post_dates or post.show_date %}<p class="byline">{{ post.date | date: "%-d %B %Y" }}{% if post.read %} · {{ post.read }} min read{% endif %}</p>{% endif %}
     </a></li>
     {%- else %}
     <li class="none">The first posts are on their way.</li>

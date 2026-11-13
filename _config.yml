@@ -33,8 +33,10 @@ links:
 # Show dates on posts and in the blog list
 post_dates: false
 
-# Post URLs use just the title (filename), no date segments
+# Post URLs use just the title (filename), no date segments. Posts from the blog editor set /blog/<slug>/ themselves.
 permalink: /:title/
+# a post published late in the evening (Eastern) is still built, whatever the build machine's clock says
+future: true
 
 markdown: kramdown
 plugins:

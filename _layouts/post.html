@@ -1,14 +1,14 @@
 ---
 layout: default
 ---
-<article class="blog-post">
+<article class="blog-post"{% if page.blog_id %} data-post="{{ page.blog_id }}"{% endif %}>
   {% if page.draft %}{% include draft-banner.html %}{% endif %}
   <p class="kicker"><a href="{{ page.back_link | default: '/blog/' | relative_url }}">← {{ page.back | default: "Blog" }}</a></p>
   <h1>{% if page.headline_formatted_title %}{{ page.headline_formatted_title | newline_to_br }}{% else %}{{ page.title }}{% endif %}</h1>
   {%- if page.subtitle or page.blurb %}<p class="dek">{{ page.subtitle | default: page.blurb }}</p>{% endif %}
-  <p class="byline">{{ page.author | default: site.title }}{% if site.post_dates %} · {{ page.date | date: "%B %-d, %Y" }}{% endif %}{% if page.meta %} · {{ page.meta }}{% endif %}</p>
+  <p class="byline">{{ page.author | default: site.title }}{% if site.post_dates or page.show_date %} · <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>{% endif %}{% if page.read %} · {{ page.read }} min read{% endif %}{% if page.meta %} · {{ page.meta }}{% endif %}</p>
 
-  <div class="post-body">
+  <div class="post-body"{% if page.prerendered %} data-prerendered{% endif %}>
     {{ content }}
   </div>
 
@@ -16,6 +16,9 @@ layout: default
 
   <footer class="post-foot">
     <p>Questions or thoughts? <a href="mailto:{{ site.email }}?subject={{ page.title | url_encode }}">Write to me</a>.</p>
+    {%- if page.blog_id %}
+    <p class="post-links"><a href="{{ '/blog/' | relative_url }}">More posts →</a></p>
+    {%- endif %}
   </footer>
   {% if page.draft %}{% include draft-banner.html %}{% endif %}
 </article>
