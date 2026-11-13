@@ -34,6 +34,21 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-13: the Schedule (live)
+
+- **srijitmukherjee.com/os/schedule/**: the paper weekly schedule (Mon–Sun, 6 AM – midnight), online.
+- **Tasks:** name, project, how long, how often (once, daily, weekly, every 2 weeks, monthly, yearly), **must do**
+  (can't be skipped), and **fixed** (own day and time, appears on the board by itself) or flexible.
+- **To place:** under the board, every flexible task still needing a day in the shown period (must-dos first, "×7"
+  for a daily task this week). Drag onto a day and time (15-minute steps, or "Any time"); drag across to move; drag
+  back to take off. Click a task: done, exact time, take off, edit.
+- **Views:** Week (hour grid), 2 weeks and Month (a cell a day).
+- **Light:** one request per view, one small request per change, the page updates from the answer; the schedule's
+  code loads only on its page. Data only in D1 (`os_tasks`, `os_plan`).
+- Also: the journal's writing box only grows while typing (no page jump while editing an entry), and the phone header
+  shows just "os" and the links.
+- **Next:** the strategy — Claude reads the tasks and proposes the week (what goes where, what doesn't fit).
+
 ### 2026-11-13: sign in with Google (support@srijitmukherjee.com only) and a lighter OS
 
 - **Continue with Google** on /os/ and /blog/write/. The Worker accepts only support@srijitmukherjee.com (Google
@@ -168,6 +183,7 @@ Domain DNS today: both srijitmukherjee.com and srijitmath.com use Google Domains
    **Journal + Projects:** done 2026-11-13 at /os/ (section 2), on the blog's Worker and key; the base below can grow from it.
 1. **Base:** `os.srijitmukherjee.com`, sign-in lock, Worker + D1 + R2, nightly encrypted backup.
 2. **Blog:** done 2026-11-12 (section 2). When the OS exists, the editor moves inside it.
+   **Schedule:** done 2026-11-13 (tasks with projects, fixed and flexible, week / 2 weeks / month board).
 3. **Today page:** daily tasks + journal entry on one screen, with today's Google Calendar events beside them
    (read from Google Calendar; Google stays the source of truth for alerts and invites).
 4. **Research second brain:**

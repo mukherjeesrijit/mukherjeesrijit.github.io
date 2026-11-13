@@ -107,7 +107,16 @@ function typedOnly(el) {
   el.addEventListener("beforeinput", (e) => { if (/^insertFrom(Paste|Drop|Yank)/.test(e.inputType)) no(e); });
   el.setAttribute("autocomplete", "off");
   if (el.tagName === "TEXTAREA") { // grows with the writing; empty or short, the stylesheet decides its size (by screen)
-    const grow = () => { el.style.height = ""; if (el.scrollHeight > el.clientHeight + 1) el.style.height = el.scrollHeight + 2 + "px"; };
+    let last = 0;
+    const grow = () => { // while writing it only grows (nothing moves); after deleting it is measured again, the page
+      const n = el.value.length; //  held where it is (some browsers scroll to the cursor while the box is measured)
+      if (n < last) {
+        const y = scrollY; el.style.height = "";
+        if (el.scrollHeight > el.clientHeight + 1) el.style.height = el.scrollHeight + 2 + "px";
+        if (scrollY !== y) scrollTo(0, y);
+      } else if (el.scrollHeight > el.clientHeight + 1) el.style.height = el.scrollHeight + 2 + "px";
+      last = n;
+    };
     el.addEventListener("input", grow); requestAnimationFrame(grow);
   }
   return el;
@@ -411,12 +420,16 @@ async function homePage() {
   }
 }
 
+// -- what the schedule page (os-schedule.js, loaded only there) uses from here --------------------------------------
+const toolkit = { call, esc, $, app, local, typedOnly, options, say, pathText: (id) => pathText(id), setProjects: (d) => setProjects(d) };
+
 // -- start ---------------------------------------------------------------------------------------------------------
 function go(href) { history.pushState(null, "", href); render(); }
 async function render() {
   window.scrollTo(0, 0);
   try {
     if (page === "journal") await journalPage();
+    else if (page === "schedule") await (await import(`./os-schedule.js?v=${document.body.dataset.v}`)).schedulePage(toolkit);
     else if (page === "projects") await projectsPage();
     else await homePage();
   } catch (e) { if (e.message !== "key") app.innerHTML = `<p class="err">${esc(say(e))}</p>`; }
