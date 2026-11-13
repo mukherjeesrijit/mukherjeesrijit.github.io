@@ -167,3 +167,44 @@ Domain DNS today: both srijitmukherjee.com and srijitmath.com use Google Domains
   stays here.
 - **Where this file lives:** here in the public repo for now; move it to the OS's private repo once that exists.
 - **Google Calendar for Claude:** the Google Calendar connector needs authorizing in claude.ai connector settings.
+
+---
+
+## 6. Ideas for the site (from the CV review, 2026-11-13)
+
+Compared with strong researcher sites (Jon Barron's widely copied page is the usual model): photo + one-line
+pitch, news, research summary, education, publications with links and code, awards, service, teaching and a blog
+are all here now. Still to do, most important first. **Needs from me** = what Claude needs before it can do it.
+
+### Fix first (the CV)
+
+- [ ] **Take the home address and phone off the public CV.** Anyone can download it from the site; most researchers
+  give only email and city. *Needs from me:* a new CV PDF.
+- [ ] **A permanent contact email.** szm6596@psu.edu (site + CV) stops working after graduation; use one at
+  srijitmukherjee.com instead. *Needs from me:* which address.
+- [ ] **Delete the old CV** `assets/MyCV_MukherjeeSrijit.pdf` (April 2026, still public) unless it should stay.
+  *Needs from me:* OK to delete.
+- [ ] **Small CV fixes:** "IEEE Transactions **of** Biomedical Engineering" → "**on**"; Hemibrain growth is
+  published, not "(preprint)"; the site says signals "ICP, ECG", the CV says only ICP.
+
+### Add to the site
+
+1. [ ] **Job-market line** under the name, e.g. "On the job market for 2027: postdoc / research scientist roles"
+   (Ph.D. ends Spring 2027). The most useful line a final-year Ph.D.'s site can carry. *Needs from me:* the wording
+   and which roles.
+2. [ ] **A teaser figure for every paper** on Publications (the GLAPAL-H figure exists:
+   `assets/img/publications/glapalh.png`). *Needs from me:* one figure each for EnSegNet-Cross, Hemibrain growth,
+   Triangle-free graphs.
+3. [ ] **A Research page** with the two directions from the CV, each with a figure and its headline numbers:
+   - Disease-informed diagnosis: GLAPAL-H (73 infants, AUC 0.92), HydroGeom (87.3% accuracy, AUC 0.88).
+   - Cross-modal segmentation and brain-volume biomarkers: EnSegNet-Cross (Dice 0.85, volume score 0.93),
+     Hemibrain growth (75 ESTHI-trial infants, 0.94 Dice).
+   - Where it is going: histopathology grading (DBIBD-Net), ICP signal analysis.
+4. [ ] **Software & demos:** Segment-Anything Live App, Annotated PDF Summary, Adaptive Learner App (on the CV).
+   *Needs from me:* links (and a screenshot each).
+5. [ ] **Teaching reach** on the Teaching page: the 55k+ community and 2.4k+ learners at srijitmath.com (on the
+   CV). Can be done straight away.
+6. [ ] **BibTeX button** on each paper (copies the citation). Can be done straight away.
+7. [ ] **A short third-person bio** people can copy to introduce a talk.
+8. [ ] **More profile links:** ORCID, Semantic Scholar. *Needs from me:* the profile URLs.
+9. [ ] **Talks** section, once there are talks to list.
