@@ -282,19 +282,20 @@ async function strategyPage() {
     <div class="filters row"><select id="filter" aria-label="Show entries from">
       <option value="">All entries</option><option value="none">No project</option>
       ${tree(null, 0, [], null, true).map(({ p, depth }) => `<option value="${p.id}">${" ".repeat(depth)}${esc(p.name)}</option>`).join("")}
-    </select><input id="search" type="search" placeholder="Search your entries" aria-label="Search"></div>
+    </select><input id="search" type="search" placeholder="Search your entries, then Enter" aria-label="Search" enterkeyhint="search"></div>
     <div id="list"></div>`;
   const filter = $("#filter"), search = $("#search");
+  let searched = ""; // the last search run (Enter), not what is half typed
   if (pre && byId.has(pre)) filter.value = String(pre);
   const pane = entriesPane($("#list"), () => {
     const o = {};
     if (filter.value === "none") o.none = 1; else if (filter.value) o.project = filter.value;
-    if (search.value.trim()) o.q = search.value.trim();
+    if (searched) o.q = searched;
     return o;
-  }, () => search.value.trim() || filter.value ? "No entries match." : "Nothing yet. Your first entry will appear here, with its time.", first);
+  }, () => searched || filter.value ? "No entries match." : "Nothing yet. Your first entry will appear here, with its time.", first);
   const t = composer($("#compose"), { project: pre, onSaved: (e) => { // show it at once if the list would include it
     const f = filter.value;
-    if (!search.value.trim() && (!f || (f === "none" ? !e.project_id : path(e.project_id).some((p) => p.id === Number(f))))) pane.add(e);
+    if (!searched && (!f || (f === "none" ? !e.project_id : path(e.project_id).some((p) => p.id === Number(f))))) pane.add(e);
   } });
   filter.onchange = () => {
     const u = new URL(location.href);
@@ -302,7 +303,10 @@ async function strategyPage() {
     history.replaceState(null, "", u);
     pane.load().catch((e) => alert(say(e)));
   };
-  let timer; search.oninput = () => { clearTimeout(timer); timer = setTimeout(() => pane.load().catch((e) => alert(say(e))), 400); };
+  // a search reads every entry, so it runs on Enter (not on each key); clearing the box shows everything again
+  const find = () => { const v = search.value.trim(); if (v === searched) return; searched = v; pane.load().catch((e) => alert(say(e))); };
+  search.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); find(); } };
+  search.oninput = () => { if (!search.value.trim()) find(); };
   t.focus();
 }
 
@@ -351,7 +355,7 @@ async function projectsPage() {
 }
 
 async function projectPage(id) {
-  const first = setProjects(await call("GET", `/os/strategy?projects=1&project=${id}`));
+  const first = setProjects(await call("GET", `/os/strategy?projects=full&project=${id}`)); // descriptions shown here
   const p = byId.get(id), crumbs = path(id);
   if (!p) { history.replaceState(null, "", "/os/projects/"); return projectsPage(); }
   app.innerHTML = `<nav class="crumbs"><a href="/os/projects/">Projects</a>${crumbs.slice(0, -1).map((c) => ` › <a href="/os/projects/?id=${c.id}">${esc(c.name)}</a>`).join("")}</nav>
@@ -397,7 +401,7 @@ async function projectPage(id) {
 
 // -- home ----------------------------------------------------------------------------------------------------------
 async function homePage() {
-  const d = setProjects(await call("GET", "/os/strategy?projects=1&limit=10"));
+  const d = setProjects(await call("GET", "/os/strategy?projects=1&limit=5"));
   const today = d.entries.filter((e) => dayKey(e.created) === dayKey(Date.now())).length;
   const hour = new Date().getHours();
   app.innerHTML = `<header class="os-head"><p class="kicker">${esc(new Date().toLocaleDateString([], { weekday: "long", day: "numeric", month: "long", year: "numeric" }))}</p>

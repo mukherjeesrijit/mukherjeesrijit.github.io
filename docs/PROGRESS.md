@@ -34,6 +34,15 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-13: the OS made lighter (it shares the Cloudflare account's daily allowance with srijitmath.com)
+
+- Separate databases (srijitmukherjee-site vs srijitmath-community) but one account, so the free plan's daily reads,
+  writes and requests are shared. Measured on 2026-11-13 over 24 h: this site 3,228 rows read (with testing), srijitmath
+  549,447.
+- Strategy shows 30 entries at a time (older on request); Home reads only the 5 it shows; search runs on Enter, not on
+  each key; project descriptions are sent only to the Projects pages; the Schedule loads its tasks once per visit and
+  moving between weeks reads just that week's placements.
+
 ### 2026-11-13: Journal renamed Strategy; every write one round trip
 
 - **Strategy** everywhere: the menu, page name, headings, project pages, home card; address **/os/strategy/**

@@ -45,9 +45,10 @@ export async function schedulePage(os) {
 
   async function load(first) {
     const [from, to] = range();
-    const d = await call("GET", `/os/schedule?from=${from}&to=${to}${first ? "&projects=1" : ""}`);
+    // the tasks and projects come once; moving between weeks asks only for that week's placements
+    const d = await call("GET", `/os/schedule?from=${from}&to=${to}${first ? "&tasks=1&projects=1" : ""}`);
     if (first) os.setProjects(d);
-    data = d; draw();
+    data = { ...d, tasks: d.tasks || data.tasks }; draw();
   }
 
   // -- what happens on a day ----------------------------------------------------------------------------------------
