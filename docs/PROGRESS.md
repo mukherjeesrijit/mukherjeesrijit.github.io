@@ -34,6 +34,17 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-13: sign in with Google (support@srijitmukherjee.com only) and a lighter OS
+
+- **Continue with Google** on /os/ and /blog/write/. The Worker accepts only support@srijitmukherjee.com (Google
+  Workspace) and refuses every other account; the browser then keeps a 90-day session (renewed as it is used).
+  **Sign out** and **Sign out on all devices** on the OS home and the editor's list. The write key still works as a
+  spare ("Use the key instead"). Google Cloud Console must list https://srijitmukherjee.com as an Authorized
+  JavaScript origin of the OAuth client (srijitmath.com's).
+- **Lighter, by the PERFORMANCE.md rules:** each OS page makes one request (projects come with the entries); entry
+  counts live on the project row (never counted on read); writes and counters go in one batch; saving an entry adds it
+  on the page without asking again; a session costs one small read per request and at most one write a day.
+
 ### 2026-11-13: the private OS begins: Journal and Projects (live)
 
 - **srijitmukherjee.com/os/** (today: entries today, projects, recent entries), **/os/journal/**, **/os/projects/**.

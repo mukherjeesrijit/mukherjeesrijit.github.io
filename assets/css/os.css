@@ -29,7 +29,11 @@ button.btn { font: inherit; font-weight: 600; cursor: pointer; }
 /* the key gate */
 .gate { max-width: 460px; margin: 10vh auto 0; }
 .gate h1 { font-size: 32px; letter-spacing: -.03em; margin: 0 0 8px; }
-.gate form { display: flex; gap: 10px; margin-top: 22px; }
+.gate form { display: flex; gap: 10px; margin-top: 14px; }
+.gbtn { margin-top: 28px; min-height: 44px; }
+.keyway { margin-top: 28px; }
+.keyway summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--muted); }
+.who { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
 
 /* inputs */
 input, select, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px;
