@@ -47,12 +47,12 @@ textarea.write { font-size: 18px; min-height: 140px; padding: 16px 18px; }
 .nudge { margin: 6px 0 0; font-size: 14px; font-weight: 600; color: var(--accent); }
 
 /* writing */
-.os[data-page="journal"] .os-main { max-width: 1000px; }
-/* an open page, like a document: no box, no border, just room to write (about half the screen's height, more on a big
-   screen, never cramped on a small one) */
+/* an open page, like the blog editor: its column (720 px of text) and type (19 px), no box or border, and the page to
+   write on fills the screen below the heading on any laptop or phone (the controls sit just under it) */
+.os[data-page="journal"] .os-main { max-width: 768px; }
 .compose { padding: 0; }
-.compose textarea.write { min-height: clamp(280px, 52vh, 640px); font-size: 20px; line-height: 1.8; padding: 4px 0;
-  border: 0; border-radius: 0; background: transparent; }
+.compose textarea.write { min-height: max(320px, calc(100vh - 330px)); min-height: max(320px, calc(100svh - 330px));
+  font-size: 19px; line-height: 1.7; padding: 4px 0; border: 0; border-radius: 0; background: transparent; }
 .compose textarea.write::placeholder { color: #b4b6bb; }
 .compose textarea.write:focus, .compose textarea.write:focus-visible { outline: none; }
 .compose .row { padding: 14px 0 0; }
@@ -120,7 +120,7 @@ textarea.write { font-size: 18px; min-height: 140px; padding: 16px 18px; }
   .os-main { padding-top: 28px; }
   .os-cards { grid-template-columns: minmax(0, 1fr); }
   .compose select, .filters select { max-width: 100%; flex: 1; }
-  .compose textarea.write { min-height: max(240px, 44vh); font-size: 18px; line-height: 1.7; }
+  .compose textarea.write { min-height: max(240px, calc(100vh - 300px)); min-height: max(240px, calc(100svh - 300px)); font-size: 17px; }
   .proj-row { flex-wrap: wrap; gap: 2px 12px; padding-left: calc(var(--d) * 18px); }
   .proj-row::before { left: calc(var(--d) * 18px - 12px); width: 7px; }
   .proj-row .count { width: 100%; }
