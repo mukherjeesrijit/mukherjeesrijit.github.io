@@ -43,12 +43,19 @@ export async function schedulePage(os) {
     if (p && counted(task(p.task_id))) data.placed[p.task_id] = Math.max(0, (data.placed[p.task_id] || 1) - 1);
   }
 
+  let asked = 0; // the latest view asked for: an earlier answer arriving late is dropped
   async function load(first) {
-    const [from, to] = range();
+    const [from, to] = range(), my = ++asked;
+    if (first) { // draw at once what this device kept from the last visit, then the server's answer
+      try { const c = JSON.parse(local.get("os_sched") || "null"); if (c && c.from === from && c.to === to) { data = c.data; draw(); } } catch (e) { /* none */ }
+    }
     // the tasks and projects come once; moving between weeks asks only for that week's placements
     const d = await call("GET", `/os/schedule?from=${from}&to=${to}${first ? "&projects=1" : "&tasks=0"}`);
+    if (my !== asked) return;
     if (first) os.setProjects(d);
-    data = { ...d, tasks: d.tasks || data.tasks }; draw();
+    data = { ...d, tasks: d.tasks || data.tasks };
+    if (!editing && !document.querySelector(".pop")) draw(); // never redraw under an open form or menu
+    local.set("os_sched", JSON.stringify({ from, to, data: { tasks: data.tasks, plan: data.plan, placed: data.placed } }));
   }
 
   // -- what happens on a day ----------------------------------------------------------------------------------------

@@ -34,6 +34,21 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-16: the OS made fast (and no more double projects)
+
+- **Double "Skills":** Create could be pressed again while the first save was still on its way. Every save button
+  (projects, tasks) now locks until the server answers; and a late answer never draws over the page asked for last.
+- **Pages draw at once:** Strategy (the writing box), Projects, a project, the Schedule draw immediately from what this
+  device kept from the last visit, then update when the server answers (measured: ~20 ms, with the answer 0.8 s late).
+- **One trip per request, not two:** the sign-in now travels inside the request (POST text/plain), so the browser no
+  longer asks the server first ("preflight") for every new address: each project, each week, each task moved.
+- **What growth costs:** every query uses an index (reads only what it returns); the project tree's counts are worked
+  out once per answer instead of again for every row.
+- **Still slow: the route.** From State College, `*.workers.dev` is answered in Stockholm or Paris (Cloudflare's lowest
+  priority for free workers.dev), then crosses to the database in eastern North America: 0.4–3 s a request, while the
+  database itself takes under 1 ms. srijitmath.com's Worker is on workers.dev too. **Fix: move srijitmukherjee.com's
+  DNS to Cloudflare** (section 5) and serve the Worker at api.srijitmukherjee.com.
+
 ### 2026-11-13: the OS made lighter (it shares the Cloudflare account's daily allowance with srijitmath.com)
 
 - Separate databases (srijitmukherjee-site vs srijitmath-community) but one account, so the free plan's daily reads,

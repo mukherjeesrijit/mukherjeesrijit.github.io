@@ -37,11 +37,12 @@ const say = (e) => ERR[e.message] || e.message || "Something went wrong.";
 async function call(method, path, body) {
   let r;
   try {
-    r = await fetch(API + path, { method, body: body == null ? undefined : JSON.stringify(body),
-      headers: { authorization: "Bearer " + token, "content-type": "application/json" } });
+    // one trip: sent as plain text (the sign-in inside), which browsers send without asking the server first
+    r = await fetch(API + path, { method: "POST", headers: { "content-type": "text/plain" },
+      body: JSON.stringify({ t: token, m: method, b: body ?? null }) });
   } catch (e) { throw new Error("Can't reach the server. Check the connection and try again."); }
   const d = await r.json().catch(() => ({ ok: false, error: "server" }));
-  if (r.status === 401) { local.set(KEY, null); token = null; keyGate(); throw new Error("key"); }
+  if (r.status === 401) { for (const k of [KEY, "os_cache", "os_sched"]) local.set(k, null); token = null; keyGate(); throw new Error("key"); }
   if (!d.ok) throw new Error(d.error || "server");
   return d;
 }
@@ -87,6 +88,7 @@ async function onGoogle(res) {
 }
 if (location.hostname === "localhost") window.__osGoogle = onGoogle; // testing on this Mac
 async function signOut(all) {
+  local.set(CACHE, null); local.set("os_sched", null);
   if (all && !confirm("Sign out on every device? Each one will need to sign in again.")) return;
   try { await call("POST", all ? "/auth/signout-all" : "/auth/signout"); } catch (e) { /* signed out here anyway */ }
   try { window.google?.accounts.id.disableAutoSelect(); } catch (e) { /* not loaded */ }
@@ -123,11 +125,23 @@ function typedOnly(el) {
 }
 
 // -- projects: a tree ----------------------------------------------------------------------------------------------
-let projects = [], byId = new Map(), me = null, full = false;
+let projects = [], byId = new Map(), childMap = new Map(), counts = new Map(), me = null, full = false;
+const CACHE = "os_cache"; // the last projects seen, on this device only, so a page can draw before the server answers
+function useProjects(list, who, isFull) {
+  projects = list; byId = new Map(projects.map((p) => [p.id, p])); me = who; full = isFull;
+  childMap = new Map(); counts = new Map(); // children once per answer (not searched again for every row)
+  for (const p of projects) { const k = p.parent_id || null; childMap.set(k, [...(childMap.get(k) || []), p]); }
+}
 function setProjects(d) { // from any answer that carries them (one request per page)
-  projects = d.projects; byId = new Map(projects.map((p) => [p.id, p])); me = d.me;
-  full = !projects.length || "description" in projects[0]; // the Projects pages get the descriptions too
+  const isFull = !d.projects.length || "description" in d.projects[0]; // the Projects pages get the descriptions too
+  // a lighter answer (no descriptions) keeps the descriptions already known
+  const list = isFull || !full ? d.projects : d.projects.map((p) => ({ ...p, description: byId.get(p.id)?.description ?? "" }));
+  useProjects(list, d.me, isFull || full);
+  local.set(CACHE, JSON.stringify({ projects, me, full }));
   return d;
+}
+{ // start from what this device kept, if anything
+  try { const c = JSON.parse(local.get(CACHE) || "null"); if (c && token) useProjects(c.projects, c.me, c.full); } catch (e) { /* none */ }
 }
 // A button that saves: locked until the server answers, so a second click or Enter can't save twice.
 async function once(btn, work) {
@@ -135,7 +149,7 @@ async function once(btn, work) {
   btn.disabled = true;
   try { await work(); } catch (x) { alert(say(x)); } finally { if (btn.isConnected) btn.disabled = false; }
 }
-const kids = (pid) => projects.filter((p) => (p.parent_id || null) === (pid || null));
+const kids = (pid) => childMap.get(pid || null) || [];
 function tree(pid = null, depth = 0, out = [], skip = null, archivedToo = false) { // depth-first, names in order
   for (const p of kids(pid)) {
     if (p.id === skip || (p.archived && !archivedToo)) continue;
@@ -146,7 +160,10 @@ function tree(pid = null, depth = 0, out = [], skip = null, archivedToo = false)
 }
 const path = (id) => { const out = []; for (let p = byId.get(id), n = 0; p && n < 50; p = byId.get(p.parent_id), n++) out.unshift(p); return out; };
 const pathText = (id) => path(id).map((p) => p.name).join(" › ");
-const subtreeCount = (id) => (byId.get(id)?.entries || 0) + kids(id).reduce((s, k) => s + subtreeCount(k.id), 0);
+const subtreeCount = (id) => { // entries in a project and everything inside it, worked out once per answer
+  if (!counts.has(id)) counts.set(id, (byId.get(id)?.entries || 0) + kids(id).reduce((s, k) => s + subtreeCount(k.id), 0));
+  return counts.get(id);
+};
 function options(selected, { none = "No project", skip = null, archivedToo = false } = {}) {
   return `<option value="">${esc(none)}</option>` + tree(null, 0, [], skip, archivedToo).map(({ p, depth }) =>
     `<option value="${p.id}"${p.id === Number(selected) ? " selected" : ""}>${" ".repeat(depth)}${esc(p.name)}</option>`).join("");
@@ -283,27 +300,33 @@ function composer(box, { project, onSaved }) {
 
 async function strategyPage() {
   const q = new URLSearchParams(location.search), pre = Number(q.get("project")) || null;
-  const first = setProjects(await call("GET", `/os/strategy?projects=1${pre ? `&project=${pre}` : ""}`));
+  const ask = call("GET", `/os/strategy?projects=1${pre ? `&project=${pre}` : ""}`); // asked first, drawn meanwhile
+  const filterOptions = () => `<option value="">All entries</option><option value="none">No project</option>
+      ${tree(null, 0, [], null, true).map(({ p, depth }) => `<option value="${p.id}">${" ".repeat(depth)}${esc(p.name)}</option>`).join("")}`;
   app.innerHTML = `<header class="os-head"><p class="kicker">Strategy</p><h1>What's on your mind</h1></header>
     <div id="compose"></div>
-    <div class="filters row"><select id="filter" aria-label="Show entries from">
-      <option value="">All entries</option><option value="none">No project</option>
-      ${tree(null, 0, [], null, true).map(({ p, depth }) => `<option value="${p.id}">${" ".repeat(depth)}${esc(p.name)}</option>`).join("")}
-    </select><input id="search" type="search" placeholder="Search your entries, then Enter" aria-label="Search" enterkeyhint="search"></div>
-    <div id="list"></div>`;
+    <div class="filters row"><select id="filter" aria-label="Show entries from">${filterOptions()}</select>
+    <input id="search" type="search" placeholder="Search your entries, then Enter" aria-label="Search" enterkeyhint="search"></div>
+    <div id="list"><p class="muted small">Loading…</p></div>`;
   const filter = $("#filter"), search = $("#search");
-  let searched = ""; // the last search run (Enter), not what is half typed
+  let searched = "", pane = null; const waiting = []; // the last search run (Enter); entries saved before the list came
   if (pre && byId.has(pre)) filter.value = String(pre);
-  const pane = entriesPane($("#list"), () => {
+  const t = composer($("#compose"), { project: pre, onSaved: (e) => { // show it at once if the list would include it
+    const f = filter.value;
+    if (!searched && (!f || (f === "none" ? !e.project_id : path(e.project_id).some((p) => p.id === Number(f))))) pane ? pane.add(e) : waiting.push(e);
+  } });
+  t.focus();
+  const first = setProjects(await ask);
+  // the pickers again, now with the server's projects (what was chosen stays chosen)
+  const keep = filter.value; filter.innerHTML = filterOptions(); filter.value = keep || (pre && byId.has(pre) ? String(pre) : "");
+  const cp = $("#compose .proj"), cpv = cp.value; cp.innerHTML = options(cpv); cp.value = cpv;
+  pane = entriesPane($("#list"), () => {
     const o = {};
     if (filter.value === "none") o.none = 1; else if (filter.value) o.project = filter.value;
     if (searched) o.q = searched;
     return o;
   }, () => searched || filter.value ? "No entries match." : "Nothing yet. Your first entry will appear here, with its time.", first);
-  const t = composer($("#compose"), { project: pre, onSaved: (e) => { // show it at once if the list would include it
-    const f = filter.value;
-    if (!searched && (!f || (f === "none" ? !e.project_id : path(e.project_id).some((p) => p.id === Number(f))))) pane.add(e);
-  } });
+  for (const e of waiting) if (!first.entries.some((x) => x.id === e.id)) pane.add(e);
   filter.onchange = () => {
     const u = new URL(location.href);
     filter.value && filter.value !== "none" ? u.searchParams.set("project", filter.value) : u.searchParams.delete("project");
@@ -314,7 +337,6 @@ async function strategyPage() {
   const find = () => { const v = search.value.trim(); if (v === searched) return; searched = v; pane.load().catch((e) => alert(say(e))); };
   search.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); find(); } };
   search.oninput = () => { if (!search.value.trim()) find(); };
-  t.focus();
 }
 
 // -- projects ------------------------------------------------------------------------------------------------------
