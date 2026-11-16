@@ -227,6 +227,8 @@ export async function schedulePage(os) {
     };
     f.onsubmit = async (e) => {
       e.preventDefault();
+      const btn = f.querySelector("button[type=submit]");
+      if (btn.disabled) return; // already saving: a second click or Enter must not add the task twice
       const r = f.repeat.value, fixed = f.fixed.checked;
       const [hh, mm] = (f.time.value || "").split(":").map(Number);
       const at_day = !fixed ? null : { once: f.date.value, daily: "", weekly: f.dow.value, biweekly: f.dow.value, monthly: f.dom.value, yearly: f.date.value.slice(5) }[r];
@@ -234,12 +236,13 @@ export async function schedulePage(os) {
       if (fixed && (f.time.value === "" || (r !== "daily" && !at_day))) return alert("A fixed task needs its day and time.");
       const body = { name: f.tname.value, project_id: Number(f.project.value), minutes: Number(f.minutes.value), repeat: r,
         must: f.must.checked, fixed, at_day, at_time: fixed ? hh * 60 + mm : null, anchor: editing === "new" ? monday(today()) : editing.anchor };
+      btn.disabled = true;
       try {
         const d = editing === "new" ? await call("POST", "/os/tasks", body) : await call("PATCH", `/os/tasks/${editing.id}`, body);
         local.set("os_task_project", String(body.project_id));
         data.tasks = [...data.tasks.filter((t) => t.id !== d.task.id), d.task].sort((a, b) => b.must - a.must || a.name.localeCompare(b.name));
         editing = null; draw();
-      } catch (x) { alert(os.say(x)); }
+      } catch (x) { btn.disabled = false; alert(os.say(x)); }
     };
   }
 

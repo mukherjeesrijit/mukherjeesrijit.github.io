@@ -123,10 +123,17 @@ function typedOnly(el) {
 }
 
 // -- projects: a tree ----------------------------------------------------------------------------------------------
-let projects = [], byId = new Map(), me = null;
+let projects = [], byId = new Map(), me = null, full = false;
 function setProjects(d) { // from any answer that carries them (one request per page)
   projects = d.projects; byId = new Map(projects.map((p) => [p.id, p])); me = d.me;
+  full = !projects.length || "description" in projects[0]; // the Projects pages get the descriptions too
   return d;
+}
+// A button that saves: locked until the server answers, so a second click or Enter can't save twice.
+async function once(btn, work) {
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  try { await work(); } catch (x) { alert(say(x)); } finally { if (btn.isConnected) btn.disabled = false; }
 }
 const kids = (pid) => projects.filter((p) => (p.parent_id || null) === (pid || null));
 function tree(pid = null, depth = 0, out = [], skip = null, archivedToo = false) { // depth-first, names in order
@@ -331,33 +338,50 @@ function wireNewProject(after) {
   const f = $("#newproj");
   if (!f) return;
   typedOnly(f.pname); typedOnly(f.description);
-  f.onsubmit = async (e) => {
+  f.onsubmit = (e) => {
     e.preventDefault();
-    try {
+    once($("button[type=submit]", f), async () => {
       const r = await call("POST", "/os/projects", { name: f.pname.value, description: f.description.value, parent_id: Number(f.parent.value) || null });
       after(r.id);
-    } catch (x) { alert(say(x)); }
+    });
   };
 }
 
 async function projectsPage() {
   const id = Number(new URLSearchParams(location.search).get("id"));
   if (id) return projectPage(id);
-  setProjects(await call("GET", "/os/projects"));
-  const live = tree(), archived = tree(null, 0, [], null, true).filter(({ p }) => p.archived && !byId.get(p.parent_id)?.archived);
-  app.innerHTML = `<header class="os-head"><p class="kicker">Projects</p><h1>Projects</h1>
-    <p class="muted">Projects inside projects: a thesis, its contributions, their pieces. Each has a description and its own Strategy entries.</p></header>
-    ${newProjectForm(null)}
-    ${live.length ? `<ul class="proj-tree">${live.map(projectRow).join("")}</ul>` : `<p class="empty">No projects yet. Create the first one above.</p>`}
+  const my = renderId;
+  const listHTML = () => {
+    const live = tree(), archived = tree(null, 0, [], null, true).filter(({ p }) => p.archived && !byId.get(p.parent_id)?.archived);
+    return `${live.length ? `<ul class="proj-tree">${live.map(projectRow).join("")}</ul>` : `<p class="empty">No projects yet. Create the first one above.</p>`}
     ${archived.length ? `<details class="archived-list"><summary>Archived (${archived.length})</summary><ul class="proj-tree">${archived.map(({ p }) => projectRow({ p, depth: 0 })).join("")}</ul></details>` : ""}`;
-  if (live.length) $(".new-proj").open = false;
-  wireNewProject((nid) => go(`/os/projects/?id=${nid}`));
+  };
+  const paint = () => {
+    app.innerHTML = `<header class="os-head"><p class="kicker">Projects</p><h1>Projects</h1>
+      <p class="muted">Projects inside projects: a thesis, its contributions, their pieces. Each has a description and its own Strategy entries.</p></header>
+      ${newProjectForm(null)}<div id="ptree">${listHTML()}</div>`;
+    if (projects.length) $(".new-proj").open = false;
+    wireNewProject((nid) => go(`/os/projects/?id=${nid}`));
+  };
+  const early = full && projects.length; // coming from another project: draw now, refresh the list when it arrives
+  if (early) paint();
+  setProjects(await call("GET", "/os/projects"));
+  if (my !== renderId) return; // another page was asked for meanwhile
+  if (early) $("#ptree").innerHTML = listHTML(); else paint();
 }
 
 async function projectPage(id) {
+  const my = renderId;
+  const early = full && byId.has(id); // coming from the list or another project: draw it now, entries when they arrive
+  if (early) paintProject(id, null);
   const first = setProjects(await call("GET", `/os/strategy?projects=full&project=${id}`)); // descriptions shown here
+  if (my !== renderId) return; // another page was asked for meanwhile
+  if (!byId.get(id)) { history.replaceState(null, "", "/os/projects/"); return projectsPage(); }
+  if (early) entriesPane($("#list"), () => ({ project: id }), () => "No entries yet. Press “Write about it”.", first);
+  else paintProject(id, first);
+}
+function paintProject(id, first) {
   const p = byId.get(id), crumbs = path(id);
-  if (!p) { history.replaceState(null, "", "/os/projects/"); return projectsPage(); }
   app.innerHTML = `<nav class="crumbs"><a href="/os/projects/">Projects</a>${crumbs.slice(0, -1).map((c) => ` › <a href="/os/projects/?id=${c.id}">${esc(c.name)}</a>`).join("")}</nav>
     <header class="os-head">
       <p class="kicker">Project${p.archived ? " · archived" : ""}</p>
@@ -381,22 +405,22 @@ async function projectPage(id) {
     const f = $("#pform");
     typedOnly(f.pname).value = p.name; typedOnly(f.description).value = p.description; f.description.dispatchEvent(new Event("input"));
     f.pname.focus();
-    f.onsubmit = async (e) => {
+    f.onsubmit = (e) => {
       e.preventDefault();
-      try {
-        await call("PATCH", `/os/projects/${id}`, { name: f.pname.value, description: f.description.value, parent_id: Number(f.parent.value) || null });
-        projectPage(id);
-      } catch (x) { alert(say(x)); }
+      once($("button[type=submit]", f), async () => {
+        const d = { name: f.pname.value, description: f.description.value, parent_id: Number(f.parent.value) || null };
+        await call("PATCH", `/os/projects/${id}`, d);
+        Object.assign(p, d); go(`/os/projects/?id=${id}`); // drawn at once with the new name, then refreshed
+      });
     };
   };
-  $("#archp").onclick = async () => {
-    try { await call("PATCH", `/os/projects/${id}`, { archived: !p.archived }); projectPage(id); } catch (x) { alert(say(x)); }
-  };
-  $("#delp").onclick = async () => {
+  $("#archp").onclick = (e) => once(e.currentTarget, async () => { await call("PATCH", `/os/projects/${id}`, { archived: !p.archived }); go(`/os/projects/?id=${id}`); });
+  $("#delp").onclick = (e) => {
     if (!confirm(`Delete the project "${p.name}"? Only an empty project can be deleted.`)) return;
-    try { await call("DELETE", `/os/projects/${id}`); go("/os/projects/"); } catch (x) { alert(say(x)); }
+    once(e.currentTarget, async () => { await call("DELETE", `/os/projects/${id}`); go("/os/projects/"); });
   };
-  entriesPane($("#list"), () => ({ project: id }), () => "No entries yet. Press “Write about it”.", first);
+  if (first) entriesPane($("#list"), () => ({ project: id }), () => "No entries yet. Press “Write about it”.", first);
+  else $("#list").innerHTML = `<p class="muted small">Loading…</p>`;
 }
 
 // -- home ----------------------------------------------------------------------------------------------------------
@@ -429,7 +453,9 @@ const toolkit = { call, esc, $, app, local, typedOnly, options, say, pathText: (
 
 // -- start ---------------------------------------------------------------------------------------------------------
 function go(href) { history.pushState(null, "", href); render(); }
+let renderId = 0; // the latest page asked for; an answer for an earlier one is dropped (fast clicks between projects)
 async function render() {
+  renderId++;
   window.scrollTo(0, 0);
   try {
     if (page === "strategy") await strategyPage();
