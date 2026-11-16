@@ -42,7 +42,7 @@ async function call(method, path, body) {
       body: JSON.stringify({ t: token, m: method, b: body ?? null }) });
   } catch (e) { throw new Error("Can't reach the server. Check the connection and try again."); }
   const d = await r.json().catch(() => ({ ok: false, error: "server" }));
-  if (r.status === 401) { for (const k of [KEY, "os_cache", "os_sched"]) local.set(k, null); token = null; keyGate(); throw new Error("key"); }
+  if (r.status === 401) { for (const k of [KEY, "os_cache", "os_sched", "os_latest"]) local.set(k, null); token = null; keyGate(); throw new Error("key"); }
   if (!d.ok) throw new Error(d.error || "server");
   return d;
 }
@@ -88,7 +88,7 @@ async function onGoogle(res) {
 }
 if (location.hostname === "localhost") window.__osGoogle = onGoogle; // testing on this Mac
 async function signOut(all) {
-  local.set(CACHE, null); local.set("os_sched", null);
+  local.set(CACHE, null); local.set("os_sched", null); local.set(LATEST, null);
   if (all && !confirm("Sign out on every device? Each one will need to sign in again.")) return;
   try { await call("POST", all ? "/auth/signout-all" : "/auth/signout"); } catch (e) { /* signed out here anyway */ }
   try { window.google?.accounts.id.disableAutoSelect(); } catch (e) { /* not loaded */ }
@@ -126,6 +126,8 @@ function typedOnly(el) {
 
 // -- projects: a tree ----------------------------------------------------------------------------------------------
 let projects = [], byId = new Map(), childMap = new Map(), counts = new Map(), me = null, full = false;
+const LATEST = "os_latest"; // the latest entries seen (Strategy's first page), drawn at once on the next visit
+const kept = () => { try { return JSON.parse(local.get(LATEST) || "null"); } catch (e) { return null; } };
 const CACHE = "os_cache"; // the last projects seen, on this device only, so a page can draw before the server answers
 function useProjects(list, who, isFull) {
   projects = list; byId = new Map(projects.map((p) => [p.id, p])); me = who; full = isFull;
@@ -264,6 +266,7 @@ function entriesPane(box, query, empty, first) {
   show(first, false);
   return {
     load: () => load(false),
+    show: (d) => show(d, false), // the server's answer, replacing what was drawn from the device's copy
     add(e) { cache.set(e.id, e); shown.unshift(e); listEntries($(".entries", box), shown, false); },
   };
 }
@@ -310,13 +313,17 @@ async function strategyPage() {
     <div id="list"><p class="muted small">Loading…</p></div>`;
   const filter = $("#filter"), search = $("#search");
   let searched = "", pane = null; const waiting = []; // the last search run (Enter); entries saved before the list came
+  const copy = !pre && kept(); // showing everything: draw the latest entries this device kept, at once
+  if (copy) listEntries($("#list"), copy.entries, false);
   if (pre && byId.has(pre)) filter.value = String(pre);
   const t = composer($("#compose"), { project: pre, onSaved: (e) => { // show it at once if the list would include it
+    const c = kept(); if (c) local.set(LATEST, JSON.stringify({ entries: [e, ...c.entries].slice(0, 30), more: c.more }));
     const f = filter.value;
     if (!searched && (!f || (f === "none" ? !e.project_id : path(e.project_id).some((p) => p.id === Number(f))))) pane ? pane.add(e) : waiting.push(e);
   } });
   t.focus();
   const first = setProjects(await ask);
+  if (!pre) local.set(LATEST, JSON.stringify({ entries: first.entries, more: first.more }));
   // the pickers again, now with the server's projects (what was chosen stays chosen)
   const keep = filter.value; filter.innerHTML = filterOptions(); filter.value = keep || (pre && byId.has(pre) ? String(pre) : "");
   const cp = $("#compose .proj"), cpv = cp.value; cp.innerHTML = options(cpv); cp.value = cpv;
@@ -447,7 +454,13 @@ function paintProject(id, first) {
 
 // -- home ----------------------------------------------------------------------------------------------------------
 async function homePage() {
+  const my = renderId, copy = kept();
+  if (copy && me) paintHome({ entries: copy.entries.slice(0, 5), more: copy.entries.length > 5 }); // at once
   const d = setProjects(await call("GET", "/os/strategy?projects=1&limit=5"));
+  if (my !== renderId) return;
+  paintHome(d);
+}
+function paintHome(d) {
   const today = d.entries.filter((e) => dayKey(e.created) === dayKey(Date.now())).length;
   const hour = new Date().getHours();
   app.innerHTML = `<header class="os-head"><p class="kicker">${esc(new Date().toLocaleDateString([], { weekday: "long", day: "numeric", month: "long", year: "numeric" }))}</p>

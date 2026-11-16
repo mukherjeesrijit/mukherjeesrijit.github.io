@@ -42,6 +42,9 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
   device kept from the last visit, then update when the server answers (measured: ~20 ms, with the answer 0.8 s late).
 - **One trip per request, not two:** the sign-in now travels inside the request (POST text/plain), so the browser no
   longer asks the server first ("preflight") for every new address: each project, each week, each task moved.
+- **srijitmath.com's method, applied (rules 8 and 10 of its PERFORMANCE.md):** Strategy's and Home's latest entries are
+  drawn at once from this device's copy and then replaced by the server's answer (entries in ~20 ms instead of
+  0.5–0.65 s live); the OS pages open their connection to the server while the page loads (preconnect).
 - **What growth costs:** every query uses an index (reads only what it returns); the project tree's counts are worked
   out once per answer instead of again for every row.
 - **Still slow: the route.** From State College, `*.workers.dev` is answered in Stockholm or Paris (Cloudflare's lowest
