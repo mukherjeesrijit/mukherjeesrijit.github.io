@@ -34,6 +34,12 @@ everything is, holds what is purely mine (journal, tasks), and lets Claude read 
 
 ## 2. Done
 
+### 2026-11-16: speed rules written down
+
+How the site and its database are built to stay fast and light (srijitmath.com's rules, applied here): the rules, what
+each page costs, the checklist for new features, the baseline numbers and the ideas not yet done are in
+`site-blog/PERFORMANCE.md` in the private repo `srijitmath-work`.
+
 ### 2026-11-16: the OS made fast (and no more double projects)
 
 - **Double "Skills":** Create could be pressed again while the first save was still on its way. Every save button
